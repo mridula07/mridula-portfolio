@@ -11,10 +11,8 @@
     }
   })},{threshold:.2}).observe(footerEl);
 
-  /* svgEl removed — helper was unused after extraction. */
-
   function initPit(){
-    const {Engine,Bodies,Body,Composite,Mouse,MouseConstraint,Runner}=Matter;
+    const {Engine,Bodies,Body,Composite,Runner}=Matter;
     const W=()=>pit.clientWidth,H=()=>pit.clientHeight;
     const engine=Engine.create();engine.gravity.y=1;
     const wallOpts={isStatic:true,restitution:.4};
@@ -33,48 +31,98 @@
       {src:'images/index_img5b0a3b8c90.png', w:120, h:119},
       {src:'images/index_img97aae65ad3.png', w:118, h:120},
       {src:'images/index_img8715b7c0aa.png', w:98,  h:125},
+      {src:'images/sticker_01.svg',          w:100, h:111},
+      {src:'images/sticker_02.svg',          w:108, h:108},
+      {src:'images/sticker_03.svg',          w:120, h:89},
     ];
-    const defs = stickerSrcs.map(s => ({t:'sticker', ...s}));
+    const defs = stickerSrcs.map(function(s){return {t:'sticker', src:s.src, w:s.w, h:s.h};});
     const items=[];
     const startDelay = 1100;
-    defs.forEach((d,i)=>{
-      setTimeout(()=>{
-        const x = 40 + Math.random()*(W()-80);
-        const el = document.createElement('div');
+    defs.forEach(function(d,i){
+      setTimeout(function(){
+        var x = 40 + Math.random()*(W()-80);
+        var el = document.createElement('div');
         el.className = 'tool sticker-tool';
         el.style.width = d.w+'px'; el.style.height = d.h+'px';
-        el.innerHTML = `<img src="${d.src}" width="${d.w}" height="${d.h}" alt="" draggable="false" style="display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));"/>`;
-        const body = Bodies.rectangle(x, -60, d.w*.85, d.h*.85, {
+        el.innerHTML = '<img src="'+d.src+'" width="'+d.w+'" height="'+d.h+'" alt="" draggable="false" style="display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));"/>';
+        var body = Bodies.rectangle(x, -60, d.w*.85, d.h*.85, {
           chamfer:{radius:d.w*0.15},restitution:.5, friction:.12, frictionAir:.012
         });
         Body.setAngle(body, (Math.random()-.5)*.8);
         Body.setAngularVelocity(body, (Math.random()-.5)*.05);
-        pit.appendChild(el); items.push({body,el});
+        pit.appendChild(el); items.push({body:body,el:el});
         Composite.add(engine.world, body);
       }, startDelay + i*140);
     });
-    if(window.APP && window.APP.fine){
-      const mouse=Mouse.create(pit);
-      const mc=MouseConstraint.create(engine,{mouse,constraint:{stiffness:.15,damping:.1}});
-      Composite.add(engine.world,mc);
-      mouse.element.removeEventListener('wheel',mouse.mousewheel);
-      mouse.element.removeEventListener('DOMMouseScroll',mouse.mousewheel);
-    }
+
+    /* hover-based interaction: invisible pusher body that follows the cursor */
+    var pusherRadius = 30;
+    var pusher = Bodies.circle(-100, -100, pusherRadius, {
+      isStatic: true,
+      restitution: .8,
+      render: {visible: false}
+    });
+    Composite.add(engine.world, pusher);
+    var mouseActive = false;
+    var lastMouse = {x:-100, y:-100};
+    var currentMouse = {x:-100, y:-100};
+
+    pit.addEventListener('mousemove', function(e){
+      var rect = pit.getBoundingClientRect();
+      lastMouse.x = currentMouse.x;
+      lastMouse.y = currentMouse.y;
+      currentMouse.x = e.clientX - rect.left;
+      currentMouse.y = e.clientY - rect.top;
+      mouseActive = true;
+      /* move the pusher body to the cursor position —
+         Matter.js static bodies push dynamic bodies when repositioned via setPosition */
+      Body.setPosition(pusher, {x: currentMouse.x, y: currentMouse.y});
+      /* also compute velocity from mouse movement to impart momentum */
+      Body.setVelocity(pusher, {
+        x: (currentMouse.x - lastMouse.x) * 0.5,
+        y: (currentMouse.y - lastMouse.y) * 0.5
+      });
+    });
+    pit.addEventListener('mouseleave', function(){
+      mouseActive = false;
+      Body.setPosition(pusher, {x:-100, y:-100});
+    });
+    /* touch support */
+    pit.addEventListener('touchmove', function(e){
+      var rect = pit.getBoundingClientRect();
+      var touch = e.touches[0];
+      lastMouse.x = currentMouse.x;
+      lastMouse.y = currentMouse.y;
+      currentMouse.x = touch.clientX - rect.left;
+      currentMouse.y = touch.clientY - rect.top;
+      mouseActive = true;
+      Body.setPosition(pusher, {x: currentMouse.x, y: currentMouse.y});
+      Body.setVelocity(pusher, {
+        x: (currentMouse.x - lastMouse.x) * 0.5,
+        y: (currentMouse.y - lastMouse.y) * 0.5
+      });
+    }, {passive:true});
+    pit.addEventListener('touchend', function(){
+      mouseActive = false;
+      Body.setPosition(pusher, {x:-100, y:-100});
+    });
+
     Runner.run(Runner.create(),engine);
     (function render(){
-      const w=W(),h=H();
-      for(const {body,el} of items){
+      var w=W(),h=H();
+      for(var j=0;j<items.length;j++){
+        var b=items[j].body, el=items[j].el;
         /* safety net: reset any sticker that escapes bounds */
-        if(body.position.y>h+200||body.position.y<-400||body.position.x<-200||body.position.x>w+200){
-          Body.setPosition(body,{x:40+Math.random()*(w-80),y:-40});
-          Body.setVelocity(body,{x:0,y:0});
-          Body.setAngularVelocity(body,0);
+        if(b.position.y>h+200||b.position.y<-400||b.position.x<-200||b.position.x>w+200){
+          Body.setPosition(b,{x:40+Math.random()*(w-80),y:-40});
+          Body.setVelocity(b,{x:0,y:0});
+          Body.setAngularVelocity(b,0);
         }
-        el.style.transform=`translate(${body.position.x-el.offsetWidth/2}px,${body.position.y-el.offsetHeight/2}px) rotate(${body.angle}rad)`;
+        el.style.transform='translate('+(b.position.x-el.offsetWidth/2)+'px,'+(b.position.y-el.offsetHeight/2)+'px) rotate('+b.angle+'rad)';
       }
       requestAnimationFrame(render);
     })();
-    let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{
+    var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){
       Body.setPosition(floor,{x:W()/2,y:H()+30});
       Body.setPosition(right,{x:W()+30,y:H()/2});
       Body.setPosition(ceiling,{x:W()/2,y:-260});
