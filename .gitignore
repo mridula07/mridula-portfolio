@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Claude local project files
+.claude/
+
+# Backup files
+*.bak
+
+# VS Code workspace settings (optional)
+.vscode/
+
+# Node dependencies (if you ever add them)
+node_modules/

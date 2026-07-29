@@ -1,0 +1,38 @@
+/* ---------- responsive ---------- */
+
+  /* footer assemble animation */
+  .foot-anim{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+  footer.in .foot-anim{opacity:1;transform:none;}
+  footer.in .foot-anim[data-a="0"]{transition-delay:.05s;}
+  footer.in .foot-anim[data-a="1"]{transition-delay:.18s;}
+  footer.in .foot-anim[data-a="2"]{transition-delay:.32s;}
+  footer.in .foot-anim[data-a="3"]{transition-delay:.44s;}
+  footer.in .foot-anim[data-a="4"]{transition-delay:.7s;}
+
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:36px;}
+    .about-photo{order:-1;}
+    .work-grid{grid-template-columns:1fr;}
+    .play-grid{grid-template-columns:1fr;}
+    .kind-grid{grid-template-columns:1fr 1fr;}
+    .sec{padding:88px 20px 10px;}
+  }
+  @media (max-width:640px){
+    .hero{padding:100px 20px 40px;min-height:92vh;}
+    h1{font-size:clamp(2.1rem,9.6vw,3rem);}
+    h1 .qp{white-space:normal;}
+    .hero-sub{font-size:.95rem;}
+    #cassette,#gloves,#polaroid,#bpass{display:none;}
+    #lamp{width:96px;top:9%;right:3%;}
+    #coffee{width:84px;bottom:6%;right:5%;}
+    #shuttle{width:60px;top:auto;bottom:9%;left:8%;}
+    nav a:not(.talk){display:none;}
+    .kind-grid{grid-template-columns:1fr;}
+    .vx-tile{height:170px;}
+    .pit{height:240px;}
+    .foot-fine{grid-template-columns:1fr;justify-items:center;text-align:center;}
+    .ff-left,.ff-right{text-align:center;}
+    .pane p{font-size:1rem;line-height:1.8;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;}
+    .rv{opacity:1;transform:none;}}
