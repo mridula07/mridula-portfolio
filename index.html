@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Mridula Mistry — Product Designer</title>
 <meta name="description" content="India-based product designer who turns ambiguity into product direction and ships it end to end." />
-<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="icon" type="image/svg+xml" href="images/mm-favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Caveat:wght@600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,9 +19,26 @@
 </head>
 <body>
 
+<!-- ================= PRELOADER ================= -->
+<div id="preloader" aria-hidden="true">
+  <div id="preloader-mark">
+    <svg width="36" height="36" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148"
+            fill="none" stroke="#FFF8EE" stroke-width="16"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
 <div class="nav-wrap">
   <nav>
-    <span class="nav-mark">m</span>
+    <span class="nav-mark">
+      <svg width="22" height="22" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148"
+              fill="none" stroke="#FFF8EE" stroke-width="16"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
     <a href="#about">About</a><a href="#work">Work</a><a href="#play">Playground</a><a href="#kind">Testimonials</a>
     <a class="talk" href="mailto:mistry.mridula6@gmail.com">Let&rsquo;s talk</a>
   </nav>
@@ -30,6 +47,7 @@
 <main class="main-content">
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
+  <div class="hero-grid" aria-hidden="true"></div>
   <svg class="spark" style="left:28%;top:22%;--d:.4s" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c1 6.5 4.5 10 11.5 12C16.5 14 13 17.5 12 24 11 17.5 7.5 14 .5 12 7.5 10 11 6.5 12 0z"/></svg>
   <svg class="spark" style="right:30%;top:28%;--d:1.6s" width="13" height="13" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c1 6.5 4.5 10 11.5 12C16.5 14 13 17.5 12 24 11 17.5 7.5 14 .5 12 7.5 10 11 6.5 12 0z"/></svg>
 
@@ -292,6 +310,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <script src="js/utilities.js"></script>
+<script src="js/preloader.js"></script>
 <script src="js/music.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/interactions.js"></script>

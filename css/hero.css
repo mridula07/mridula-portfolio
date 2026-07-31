@@ -1,11 +1,15 @@
 /* ---------- hero ---------- */
   .hero{position:relative;max-width:1240px;margin:0 auto;min-height:100vh;padding:110px 28px 60px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-  .hero::before{content:"";position:absolute;inset:0;z-index:0;
+
+  /* Grid lives on a separate full-bleed element so it isn't clipped by max-width */
+  .hero-grid{position:absolute;inset:0;left:50%;transform:translateX(-50%);
+    width:100vw;z-index:0;pointer-events:none;overflow:hidden;
     background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-    background-size:64px 64px;pointer-events:none;
-    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent);}
-  body.dim .hero::before{background-image:linear-gradient(rgba(255,220,170,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,220,170,.05) 1px,transparent 1px);}
+    background-size:64px 64px;
+    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);
+    mask-image:linear-gradient(180deg,#000 82%,transparent);}
+  body.dim .hero-grid{background-image:linear-gradient(rgba(255,220,170,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,220,170,.05) 1px,transparent 1px);}
   .hero-head{position:relative;z-index:6;max-width:840px;pointer-events:none;}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--sienna);color:#fff;border-radius:999px;
     padding:10px 20px;font-weight:600;font-size:.95rem;box-shadow:0 12px 26px rgba(176,74,44,.28);margin-bottom:26px;
@@ -42,12 +46,12 @@
 
   #lamp{width:150px;top:8%;right:6%;--dur:8s;}
   #lamp .lampwrap{position:relative;}
-  #lamp .beam{position:absolute;left:8%;top:38%;width:80px;height:220px;
-    background:linear-gradient(180deg,rgba(255,214,120,.50),rgba(255,214,120,0) 82%);
-    clip-path:polygon(36% 0,64% 0,100% 100%,0 100%);opacity:0;transition:opacity .45s;pointer-events:none;filter:none;z-index:-1;
-    transform:rotate(-6deg);transform-origin:top center;}
+  #lamp .beam{position:absolute;left:18%;top:20%;width:100px;height:260px;
+    background:linear-gradient(180deg,rgba(255,214,120,.45),rgba(255,214,120,0) 85%);
+    clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);opacity:0;transition:opacity .45s;pointer-events:none;filter:none;z-index:-1;
+    transform:rotate(-28deg);transform-origin:top center;}
   #lamp.on .beam{opacity:1;}
-  #lamp .glow{position:absolute;left:20%;top:34%;width:36px;height:36px;border-radius:50%;
+  #lamp .glow{position:absolute;left:26%;top:18%;width:36px;height:36px;border-radius:50%;
     background:radial-gradient(circle,rgba(255,226,150,.90),rgba(255,226,150,0) 70%);opacity:0;transition:opacity .45s;filter:none;}
   #lamp.on .glow{opacity:1;}
 
