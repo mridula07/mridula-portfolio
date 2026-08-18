@@ -12,10 +12,9 @@
   @media (max-width:900px){
     .about-grid{grid-template-columns:1fr;gap:36px;}
     .about-photo{order:-1;}
-    .work-grid{grid-template-columns:1fr;}
     .play-grid{grid-template-columns:1fr;}
     .kind-grid{grid-template-columns:1fr 1fr;}
-    .sec{padding:88px 20px 10px;}
+    .sec{padding:176px 20px 20px;}
   }
   @media (max-width:640px){
     .hero{padding:100px 20px 40px;min-height:92vh;}

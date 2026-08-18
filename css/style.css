@@ -43,9 +43,12 @@
   body.dim .main-content{background:#2B2218;}
 
 /* ---------- sections shared ---------- */
-  .sec{max-width:1180px;margin:0 auto;padding:104px 28px 16px;position:relative;}
-  #kind{padding-bottom:80px;}
-  .sec-head{margin-bottom:40px;}
+  .sec{max-width:1180px;margin:0 auto;padding:208px 28px 32px;position:relative;}
+  /* #kind (Testimonials) precedes the sticky-bottom footer, not another .sec — its own
+     bottom padding is what creates breathing room before the footer's sticky reveal begins,
+     since footer isn't part of the normal .sec-to-.sec padding rhythm. */
+  #kind{padding-bottom:140px;}
+  .sec-head{margin-bottom:50px;}
   .sec-head h2{font-weight:700;font-size:clamp(1.75rem,3.6vw,2.3125rem);letter-spacing:-.018em;line-height:1.1;}
   .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .rv.in{opacity:1;transform:none;}

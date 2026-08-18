@@ -1,9 +1,19 @@
-/* ---------- work 2x2 ---------- */
-  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+/* ---------- work stack (1x3) ---------- */
+  .work-grid{display:flex;flex-direction:column;gap:32px;}
+  .case{position:sticky;top:96px;}
+  .case:nth-of-type(1){z-index:1;}
+  .case:nth-of-type(2){z-index:2;}
+  .case:nth-of-type(3){z-index:3;margin-bottom:-269px;}
+  .work-tail{height:369px;}
   .case{background:var(--card);border-radius:24px;box-shadow:inset 0 0 0 1.5px rgba(90,70,50,.12);
-    display:flex;flex-direction:column;overflow:hidden;
+    display:flex;flex-direction:column;overflow:hidden;width:100%;
+    transform-origin:top center;
     transition:transform .5s var(--ease),box-shadow .5s;}
-  .case:hover{transform:translateY(-5px);box-shadow:inset 0 0 0 1.5px rgba(90,70,50,.12),0 24px 48px rgba(70,48,24,.14);}
+  .case:hover{box-shadow:inset 0 0 0 1.5px rgba(90,70,50,.12),0 24px 48px rgba(70,48,24,.14);}
+  /* .rv/.rv.in (style.css) also drive transform on this element; these win via higher specificity */
+  .case.rv{transform:scale(.72) translateY(26px);}
+  .case.rv.in{transform:scale(.72);}
+  .case.rv.in:hover{transform:scale(.72) translateY(-5px);}
   body.dim .case{background:#3A3128;box-shadow:inset 0 0 0 1.5px rgba(255,220,170,.12);}
   body.dim .case:hover{box-shadow:inset 0 0 0 1.5px rgba(255,220,170,.12),0 24px 48px rgba(0,0,0,.35);}
   .case-media{position:relative;aspect-ratio:16/10;overflow:hidden;display:grid;place-items:center;}
