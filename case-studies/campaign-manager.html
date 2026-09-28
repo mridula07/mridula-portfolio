@@ -10,68 +10,194 @@
 <link rel="preload" href="/fonts/karla-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/style.css">
 <style>
-  .cs{padding:128px 24px 96px;}
-  .cs-col{max-width:720px;margin:0 auto;}
-  .cs-fig{max-width:1100px;margin:40px auto;text-align:center;}
-  /* smaller visuals: natural size, capped by the 1100px figure */
-  .cs-fig img{display:block;margin:0 auto;max-width:100%;height:auto;border-radius:12px;box-shadow:var(--shadow);}
-  /* product screens: fill the figure, up to 1100px */
-  .cs-fig img.screen{width:100%;}
-  /* transparent / non-rectangular visuals: same values as --shadow, as a filter so it follows the shape */
-  .cs-fig img.shape{border-radius:0;box-shadow:none;
-    filter:drop-shadow(0 14px 17px rgba(var(--shade),.10)) drop-shadow(0 2px 3px rgba(var(--shade),.04));}
+  /* Figma: "Case study page: Campaign Manager" 28:150 — 1100px content column, spacing from its "space N" frames */
+  .cs{--gap-section:112px;padding:128px 24px 0;}
+  .cs-wrap{max-width:1100px;margin:0 auto;}
 
-  .cs-back{display:inline-block;font-size:.92rem;font-weight:700;color:var(--ink);text-decoration:none;margin-bottom:40px;}
+  /* ---------- shared type ---------- */
+  .cs p{margin:0;}
+  .cs-eyebrow{font-weight:700;font-size:12.5px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);}
+  .cs-h2{margin-top:10px;font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;
+    font-size:clamp(1.75rem,4vw,2.2rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink);}
+  .cs-text{font-size:17px;line-height:1.55;color:var(--body);}
+  .cs-h2 + .cs-text{margin-top:24px;}
+  .cs-text + .cs-text{margin-top:16px;}
+  .cs-label{font-weight:700;font-size:12px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs-label.ink{color:var(--ink);}
+  .cs-label + .cs-text{margin-top:6px;}
+  /* "01  Title" rows: number in ink, title in body */
+  .cs-title{font-weight:700;font-size:20.8px;line-height:1.3;letter-spacing:-.01em;color:var(--body);}
+  .cs-title .num{color:var(--ink);margin-right:.5em;}
+  .cs-sec{margin-top:var(--gap-section);}
+
+  /* ---------- screens (12px radius + site shadow, as in Figma) ---------- */
+  .cs-screen{margin-top:40px;}
+  .cs-screen img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:var(--shadow);}
+
+  /* ---------- header 28:160 ---------- */
+  .cs-back{display:block;width:max-content;font-weight:700;font-size:.92rem;line-height:normal;color:var(--ink);text-decoration:none;}
   .cs-back:hover{text-decoration:underline;}
+  .cs-tags{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;padding:0;margin:40px 0 0;
+    font-weight:700;font-size:12px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs h1{margin-top:18px;font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;
+    font-size:clamp(2rem,5vw,3rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink);}
+  .cs .cs-summary{margin-top:20px;font-size:1.2rem;line-height:1.55;color:var(--body);}
+  .cs-meta{display:flex;gap:24px;margin:44px 0 0;padding:24px 0;
+    border-top:1.5px solid var(--hairline);border-bottom:1.5px solid var(--hairline);}
+  .cs-meta > div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;}
+  .cs-meta dt{font-weight:700;font-size:11.5px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs-meta dd{margin:0;font-weight:700;font-size:.95rem;line-height:1.4;color:var(--body);}
 
-  .cs .cs-tags{padding:0;}
-  .cs .cs-tags li{margin:0;font-size:inherit;line-height:1.5;}
-  .cs-tags{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;margin-bottom:18px;
-    font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
-  .cs h1,.cs h2{font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;letter-spacing:-.01em;}
-  .cs h1{font-size:clamp(2rem,5vw,3rem);line-height:1.08;}
-  .cs-summary{font-size:1.2rem;line-height:1.55;color:var(--body);margin-top:20px;}
+  /* ---------- 02 journey 30:327 ---------- */
+  .journey{margin-top:40px;background:var(--paper);border:1px solid var(--hairline);border-radius:16px;
+    padding:55px 14px 104px;display:flex;justify-content:center;}   /* Figma strokes sit inside the frame */
+  .journey ol{list-style:none;margin:0;padding:0;display:flex;align-items:flex-start;}
+  .journey li{display:flex;align-items:flex-start;}
+  /* fixed widths from Figma (30:328…30:348); text centred */
+  .journey-pill{display:block;width:var(--pw);height:35px;padding:0;text-align:center;border:1px solid var(--hairline);border-radius:30px;
+    background:var(--cream);font-weight:500;font-size:16px;line-height:33px;color:var(--body);white-space:nowrap;}
+  /* connector between pills; its friction label hangs centred underneath */
+  .journey ol{width:100%;justify-content:center;}
+  .journey li{flex:0 1 auto;min-width:0;}
+  /* connectors are 56px (Figma) but may shrink a little when the card is narrower than 1100px */
+  .journey-friction{position:relative;flex:0 1 auto;width:56px;min-width:30px;height:35px;}
+  .journey-pill{flex:none;}
+  .journey-friction::before{content:"";position:absolute;left:0;right:0;top:18px;height:1px;
+    background:color-mix(in srgb,var(--ink) 40%,transparent);}
+  .journey-friction span{position:absolute;top:47px;left:50%;transform:translateX(-50%);width:var(--w);
+    font-size:15px;line-height:1.3;text-align:center;color:var(--ink);}
 
-  .cs-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:20px 24px;
-    margin:44px 0 0;padding:24px 0;border-top:1.5px solid var(--hairline);border-bottom:1.5px solid var(--hairline);}
-  .cs-meta dt{font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-  .cs-meta dd{font-weight:700;font-size:.95rem;line-height:1.4;}
+  /* ---------- 02 problem items 28:211 ---------- */
+  .cs-items{list-style:none;margin:72px 0 0;padding:0;}   /* space 40 + space 32 */
+  .cs-items li + li{margin-top:32px;}
+  .cs-items .cs-title{font-size:18.4px;}
+  .cs-items .cs-text{margin-top:8px;}
 
-  .cs-sec{margin-top:112px;}
-  .cs-eyebrow{font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:10px;}
-  .cs h2{font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.08;margin-bottom:24px;}
-  .cs h3{font-weight:700;font-size:1.3rem;line-height:1.3;letter-spacing:-.01em;margin:56px 0 14px;}
-  .cs h3 .num{color:var(--ink);margin-right:10px;}
-  .cs p,.cs li{font-size:1.06rem;line-height:1.55;}
-  .cs p + p{margin-top:16px;}
-  .cs ul,.cs ol{padding-left:1.25em;}
-  .cs li + li{margin-top:6px;}
+  /* ---------- 03 pinned notes 33:207 ---------- */
+  .notes{margin-top:32px;min-height:360px;display:grid;grid-template-columns:repeat(3,minmax(0,330px));
+    justify-content:space-between;align-items:start;}
+  .note{position:relative;display:flex;flex-direction:column;gap:12px;padding:40px 28px 32px;
+    background:var(--paper);border:1px solid var(--hairline);border-radius:8px;
+    box-shadow:0 2px 5px rgba(var(--shade),.05),0 12px 28px rgba(var(--shade),.10);
+    transform:translate(var(--dx),0) rotate(var(--rot));margin-top:var(--top);}
+  .note::before{content:"";position:absolute;width:92px;height:26px;left:calc(50% - 46px + var(--tape-dx));top:var(--tape-top);
+    background:color-mix(in srgb,var(--sky) 85%,transparent);transform:rotate(var(--tape-rot));}
+  .note:nth-child(1){--dx:5px;--top:36px;--rot:2deg;--tape-dx:6px;--tape-top:-12px;--tape-rot:-3deg;}
+  .note:nth-child(2){--dx:14px;--top:26px;--rot:-1.5deg;--tape-dx:-3px;--tape-top:-9px;--tape-rot:7.5deg;}
+  .note:nth-child(3){--dx:7px;--top:33px;--rot:1deg;--tape-dx:4px;--tape-top:-8px;--tape-rot:0deg;}
+  .note-num{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:40px;line-height:1;color:var(--ink);}
+  .note-title{font-weight:700;font-size:19px;line-height:1.3;letter-spacing:-.01em;color:var(--body);}
+  .note .cs-text{font-size:16px;}
 
-  .cs-label{font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:28px 0 6px;}
-  .cs-label.issue{color:var(--ink);}
-  .cs-label.outcome{color:var(--ink);}
-  .cs-label + p{margin-top:0;}
+  /* ---------- 05 decisions 35:150 ---------- */
+  .decisions{margin-top:56px;}
+  .dec + .dec{margin-top:72px;}
+  .dec-rule{height:1.5px;background:var(--hairline);margin-top:14px;}
+  /* DOM order is column by column (early, image, issue, then final, image, outcome); grid lines the rows up */
+  .dec-compare{margin-top:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-rows:auto auto auto;grid-auto-flow:column;column-gap:40px;}
+  .dec-compare.text-only{grid-template-rows:auto;}
+  .dec-card{margin-top:20px;height:var(--h);padding:32px;border-radius:16px;background:var(--paper);
+    display:flex;align-items:center;justify-content:center;}
+  .dec-card img{display:block;max-width:100%;height:auto;}
+  .dec-result{margin-top:24px;}
+  .dec-compare.text-only .dec-result{margin-top:24px;}
 
-  .cs-items{list-style:none;padding:0 !important;}
-  .cs-items li{margin-top:32px;}
-  .cs-items h3{margin:0 0 8px;font-size:1.15rem;}
+  /* ---------- 06 final design steps ---------- */
+  .step{margin-top:64px;}
+  .step.first{margin-top:56px;}
+  .step .cs-text{margin-top:14px;}
+  .note-card{margin-top:24px;display:flex;flex-direction:column;gap:4px;padding:18px 22px;
+    background:var(--paper);border:1.5px solid var(--hairline);border-radius:12px;}
+  .note-card ul{margin:0;padding:0;list-style:disc outside;}
+  .note-card li{margin-left:25.5px;font-size:17px;line-height:1.55;color:var(--body);}
+  .note-card .cs-label + .cs-text{margin-top:0;}
 
-  .cs-note{background:var(--paper);border-radius:12px;padding:18px 22px;margin-top:24px;box-shadow:inset 0 0 0 1.5px var(--hairline);}
-  .cs-note .cs-label{margin-top:0;}
-  .cs-note ul{margin-top:4px;}
+  /* ---------- 07 digging deeper 40:153 ---------- */
+  .details{margin-top:64px;}
+  .detail{display:flex;align-items:center;gap:64px;}
+  .detail + .detail{margin-top:96px;}
+  .detail.flip{flex-direction:row-reverse;}   /* image left, text right; DOM stays text-first */
+  .detail-text{flex:1 1 0;min-width:0;}
+  .detail-text .cs-text{margin-top:14px;}
+  .detail-fig{flex:0 0 var(--w);max-width:var(--w-max);margin:0;}
+  .detail-fig img{display:block;width:100%;height:auto;}
+  .detail-fig.ui img{border-radius:7px;}      /* Figma frames are 6.72px radius, no shadow */
 
-  .cs-close{margin-top:128px;padding-top:48px;border-top:1.5px solid var(--hairline);}
-  .cs-close a{color:var(--ink);font-weight:700;}
-  .cs-close .cs-back{margin:32px 0 0;}
+  /* ---------- 08 key learnings 28:459 ---------- */
+  .learnings{list-style:none;margin:40px 0 0;padding:0;}
+  .learnings li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;}
+  .learnings li + li{border-top:1.5px solid var(--hairline);}
+  .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
+    font-size:72px;line-height:.9;color:var(--sky);}
+  .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
 
-  .cs-foot{text-align:center;padding:32px 24px 40px;font-size:.85rem;color:var(--muted);}
+  /* ---------- dark footer 43:166 ---------- */
+  .cs-footer{margin-top:80px;background:var(--deep);color:var(--on-deep);border-radius:80px 80px 0 0;
+    padding:112px 24px 40px;transition:background .6s var(--ease);}
+  .cs-closing{max-width:720px;margin:0 auto;}
+  .cs-closing .cs-h2{margin-top:0;color:var(--on-deep);}
+  .cs-closing .cs-text{color:color-mix(in srgb,var(--on-deep) 82%,transparent);}
+  .next-card{margin-top:56px;display:flex;align-items:center;gap:24px;padding:28px 32px;border-radius:16px;
+    background:color-mix(in srgb,var(--on-deep) 7%,transparent);border:1.5px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+  .next-text{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+  .next-text .cs-label{color:color-mix(in srgb,var(--on-deep) 70%,transparent);}
+  .next-title{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:24px;line-height:1.15;
+    letter-spacing:-.01em;color:var(--on-deep);}
+  /* min-width keeps the Figma CTA's footprint (43:178) so the card lays out the same */
+  .next-soon{flex:none;min-width:176px;text-align:center;padding:12.5px 22.5px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--on-deep) 60%,transparent);
+    font-weight:700;font-size:15px;line-height:normal;color:var(--on-deep);white-space:nowrap;cursor:default;}
+  .cs-bottom{max-width:1100px;margin:96px auto 0;padding-top:24px;line-height:normal;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    border-top:1px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+  .cs-bottom a{font-weight:700;font-size:.92rem;color:var(--on-deep);text-decoration:none;}
+  .cs-bottom a:hover{text-decoration:underline;}
+  .cs-bottom small{font-size:.85rem;color:color-mix(in srgb,var(--on-deep) 65%,transparent);}
 
+  /* below the 1100px design width the notes lose their exact offsets and get a real gap */
+  @media (max-width:1150px){
+    .notes{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+    .notes .note{--dx:0px;}
+  }
+  /* journey needs ~1060px for its labels; below that it becomes the vertical timeline */
+  @media (max-width:1060px){
+    /* journey: vertical timeline */
+    .journey{padding:28px 24px;justify-content:flex-start;}
+    .journey ol{flex-direction:column;}
+    .journey li{flex-direction:column;align-items:flex-start;}
+    .journey-pill{width:auto;padding:0 15px;}
+    .journey-friction{flex:none;min-width:0;width:auto;height:auto;margin-left:24px;padding:12px 0 12px 22px;
+      border-left:1px solid color-mix(in srgb,var(--ink) 40%,transparent);}
+    .journey-friction::before{display:none;}
+    .journey-friction span{position:static;transform:none;width:auto;text-align:left;display:block;}
+  }
+  /* ---------- below 900px: the design is desktop-only, so adapt ---------- */
+  @media (max-width:900px){
+    .cs{--gap-section:88px;}
+    .cs-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 24px;}
+    /* notes: stacked, gentler tilt */
+    .notes{grid-template-columns:minmax(0,1fr);gap:40px;min-height:0;}
+    .notes .note{margin-top:0;--dx:0px;}
+    .note:nth-child(1){--rot:1deg;} .note:nth-child(2){--rot:-1deg;} .note:nth-child(3){--rot:.5deg;}
+    /* decisions: one column, in DOM order */
+    .dec-compare,.dec-compare.text-only{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-auto-flow:row;}
+    .dec-compare > .dec-block:not(.dec-result):not(:first-child){margin-top:40px;}
+    .dec-card{height:auto;padding:24px;}
+    /* digging deeper: text first, then image */
+    .detail,.detail.flip{flex-direction:column;align-items:stretch;gap:28px;}
+    .detail-fig{flex:none;max-width:100%;width:auto;}
+    .detail-fig.states{max-width:488px;}
+    .cs-footer{border-radius:40px 40px 0 0;padding-top:80px;}
+    .next-card{flex-direction:column;align-items:flex-start;}
+  }
   @media (max-width:640px){
     nav a:not(.talk){display:none;}
-    .cs{padding:108px 16px 72px;}
-    .cs-fig{margin:28px auto;}
-    .cs-sec{margin-top:80px;}
+    .cs{--gap-section:72px;padding:108px 16px 0;}
     .cs-summary{font-size:1.08rem;}
+    .learnings li{gap:18px;}
+    .learn-num{width:64px;font-size:48px;}
+    .cs-footer{padding:64px 16px 32px;}
+    .next-card{padding:24px;}
+    .cs-bottom{margin-top:64px;}
   }
 </style>
 </head>
@@ -92,16 +218,16 @@
 </div>
 
 <main class="cs">
-  <article>
-    <div class="cs-col">
-      <a class="cs-back" href="/#work">&larr; Back to work</a>
+  <article class="cs-wrap">
 
+    <!-- Header 28:160 -->
+    <header>
+      <a class="cs-back" href="/#work">&larr; Back to work</a>
       <ul class="cs-tags">
         <li>UX Case Study</li><li>AI Campaign Manager</li><li>Version 2.0</li><li>2026</li>
       </ul>
       <h1>Helping Solopreneurs Run Campaigns Without Operational Chaos</h1>
       <p class="cs-summary">Designing an AI campaign manager that helps solopreneurs maintain momentum without operational chaos.</p>
-
       <dl class="cs-meta">
         <div><dt>Role</dt><dd>Product Designer</dd></div>
         <div><dt>Industry</dt><dd>AI Marketing / SaaS</dd></div>
@@ -109,155 +235,187 @@
         <div><dt>Core focus</dt><dd>Agentic UX, Workflow Design</dd></div>
         <div><dt>Duration</dt><dd>12 Weeks</dd></div>
       </dl>
-    </div>
+    </header>
 
-    <!-- 01 Overview -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">01 - overview</p>
-        <h2>What Is This Project?</h2>
-        <p>An AI-powered campaign management system designed for solopreneurs who need to run multi-platform campaigns without a marketing team. The central intelligence is Rex, AI agent that captures intent, structures campaigns, and run them.</p>
-        <p>More than just a content generation, copywriting, scheduling, or publishing tool, it helps users plan and run campaigns through a structured workflow that keeps everything organised in one place.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/overview-campaign-workspace.png" width="1152" height="648" loading="lazy"
+    <!-- 01 Overview 28:190 + screen 28:199 -->
+    <section class="cs-sec" aria-labelledby="s-overview">
+      <p class="cs-eyebrow">01 - overview</p>
+      <h2 class="cs-h2" id="s-overview">What Is This Project?</h2>
+      <p class="cs-text">An AI-powered campaign management system designed for solopreneurs who need to run multi-platform campaigns without a marketing team. The central intelligence is Rex, AI agent that captures intent, structures campaigns, and run them.</p>
+      <p class="cs-text">More than just a content generation, copywriting, scheduling, or publishing tool, it helps users plan and run campaigns through a structured workflow that keeps everything organised in one place.</p>
+      <figure class="cs-screen">
+        <img src="/images/case-studies/campaign-manager/overview-campaign-workspace.png" width="1152" height="648" loading="lazy"
              alt="Campaign workspace for a draft 'New product launch campaign': a week-by-week timeline of scheduled posts, with connected accounts and a 62% campaign-readiness bar listing what still needs setup.">
       </figure>
     </section>
 
-    <!-- 02 The problem -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">02 - The problem</p>
-        <h2>The campaign lifecycle breaks at every hand-off</h2>
-        <p>Solopreneurs usually have the idea. The friction starts when planning, drafting, scheduling, and follow-through happen across disconnected tools.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/current-journey.png" width="1280" height="313" loading="lazy"
-             alt="Current journey diagram: Campaign Idea, Planning, Content Creation, Scheduling, Publishing and Follow-through, with friction marked between every step.">
-      </figure>
-      <div class="cs-col">
-        <ol class="cs-items">
-          <li>
-            <h3><span class="num">01</span>Too many tools</h3>
-            <p>Planning, content creation, scheduling, publishing, and tracking are typically handled across multiple tools. As campaigns grow, keeping everything organised requires additional effort and constant context switching.</p>
-          </li>
-          <li>
-            <h3><span class="num">02</span>Difficult for Non-Marketers</h3>
-            <p>Campaign tools often assume familiarity with audience targeting, content strategy, platform selection, and campaign planning. For solopreneurs without a marketing background, even getting started can feel complicated.</p>
-          </li>
-          <li>
-            <h3><span class="num">03</span>Hard to Manage</h3>
-            <p>Once a campaign is underway, content, schedules, platform activity, and launch requirements all need to stay aligned. Without a structured system, coordination becomes increasingly difficult as more moving parts are introduced.</p>
-          </li>
+    <!-- 02 The problem 28:202, journey 30:327, items 28:211 -->
+    <section class="cs-sec" aria-labelledby="s-problem">
+      <p class="cs-eyebrow">02 - The problem</p>
+      <h2 class="cs-h2" id="s-problem">The campaign lifecycle breaks at every hand-off</h2>
+      <p class="cs-text">Solopreneurs usually have the idea. The friction starts when planning, drafting, scheduling, and follow-through happen across disconnected tools.</p>
+
+      <div class="journey">
+        <ol aria-label="Current campaign journey">
+          <li><span class="journey-pill" style="--pw:148px">Campaign Idea</span><span class="journey-friction"><span style="--w:106px">Idea stays in a notes app</span></span></li>
+          <li><span class="journey-pill" style="--pw:99px">Planning</span><span class="journey-friction"><span style="--w:133px">Plan gets retyped into prompts</span></span></li>
+          <li><span class="journey-pill" style="--pw:164px">Content Creation</span><span class="journey-friction"><span style="--w:127px">Drafts copied into a scheduler</span></span></li>
+          <li><span class="journey-pill" style="--pw:118px">Scheduling</span><span class="journey-friction"><span style="--w:124px">Posted platform by platform</span></span></li>
+          <li><span class="journey-pill" style="--pw:112px">Publishing</span><span class="journey-friction"><span style="--w:159px">Results spread across dashboards</span></span></li>
+          <li><span class="journey-pill" style="--pw:149px">Follow-through</span></li>
         </ol>
       </div>
+
+      <ol class="cs-items">
+        <li>
+          <h3 class="cs-title"><span class="num">01</span>Too many tools</h3>
+          <p class="cs-text">Planning, content creation, scheduling, publishing, and tracking are typically handled across multiple tools. As campaigns grow, keeping everything organised requires additional effort and constant context switching.</p>
+        </li>
+        <li>
+          <h3 class="cs-title"><span class="num">02</span>Difficult for Non-Marketers</h3>
+          <p class="cs-text">Campaign tools often assume familiarity with audience targeting, content strategy, platform selection, and campaign planning. For solopreneurs without a marketing background, even getting started can feel complicated.</p>
+        </li>
+        <li>
+          <h3 class="cs-title"><span class="num">03</span>Hard to Manage</h3>
+          <p class="cs-text">Once a campaign is underway, content, schedules, platform activity, and launch requirements all need to stay aligned. Without a structured system, coordination becomes increasingly difficult as more moving parts are introduced.</p>
+        </li>
+      </ol>
     </section>
 
-    <!-- 03 Goals -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">03 - goals</p>
-        <h2>The solution needed to reduce complexity without taking control away from users.</h2>
-        <ol class="cs-items">
-          <li>
-            <h3><span class="num">01</span>Make Campaign Creation More Accessible</h3>
-            <p>Campaigns should be easy to create and manage without requiring deep marketing knowledge or prior experience.</p>
-          </li>
-          <li>
-            <h3><span class="num">02</span>Bring The Workflow Together</h3>
-            <p>Planning, content creation, scheduling, publishing, and tracking should feel like one connected experience instead of separate activities spread across multiple tools.</p>
-          </li>
-          <li>
-            <h3><span class="num">03</span>Simplify Campaign Management</h3>
-            <p>Users should be able to understand what has been planned, what is ready, and what still needs attention without manually coordinating every part of the campaign</p>
-          </li>
-        </ol>
+    <!-- 03 Goals 28:225 + pinned notes 33:207 -->
+    <section class="cs-sec" aria-labelledby="s-goals">
+      <p class="cs-eyebrow">03 - goals</p>
+      <h2 class="cs-h2" id="s-goals">The solution needed to reduce complexity without taking control away from users.</h2>
+      <ol class="notes" style="list-style:none;padding:0">
+        <li class="note">
+          <span class="note-num" aria-hidden="true">01</span>
+          <h3 class="note-title">Make Campaign Creation More Accessible</h3>
+          <p class="cs-text">Campaigns should be easy to create and manage without requiring deep marketing knowledge or prior experience.</p>
+        </li>
+        <li class="note">
+          <span class="note-num" aria-hidden="true">02</span>
+          <h3 class="note-title">Bring The Workflow Together</h3>
+          <p class="cs-text">Planning, content creation, scheduling, publishing, and tracking should feel like one connected experience instead of separate activities spread across multiple tools.</p>
+        </li>
+        <li class="note">
+          <span class="note-num" aria-hidden="true">03</span>
+          <h3 class="note-title">Simplify Campaign Management</h3>
+          <p class="cs-text">Users should be able to understand what has been planned, what is ready, and what still needs attention without manually coordinating every part of the campaign.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 04 Core insight 28:243 -->
+    <section class="cs-sec" style="--gap-section:80px" aria-labelledby="s-insight">
+      <p class="cs-eyebrow">04 - core insight</p>
+      <h2 class="cs-h2" id="s-insight">The real gap wasn’t content creation. It was turning ideas into campaigns.</h2>
+      <p class="cs-text">Most tools help generate content, write copy, schedule posts, or publish across platforms. The larger challenge lies in planning, coordinating, and executing a campaign from start to finish.</p>
+      <p class="cs-text">The opportunity was not to create another content tool, but to build a system that could turn campaign intent into coordinated execution.</p>
+    </section>
+
+    <!-- 05 Key product decisions 28:252 + 35:150 -->
+    <section class="cs-sec" style="--gap-section:72px" aria-labelledby="s-decisions">
+      <p class="cs-eyebrow">05 - Key product decisions</p>
+      <h2 class="cs-h2" id="s-decisions">What Changed And Why</h2>
+
+      <div class="decisions">
+        <div class="dec">
+          <h3 class="cs-title"><span class="num">01</span>One Question at a Time → Grouped Decision Cards</h3>
+          <div class="dec-rule"></div>
+          <div class="dec-compare">
+            <div class="dec-block">
+              <p class="cs-label">Early exploration</p>
+              <p class="cs-text">Users answered campaign questions one by one through a sequential conversation.</p>
+            </div>
+            <div class="dec-card" style="--h:442px">
+              <img src="/images/case-studies/campaign-manager/decision-01-early.png" width="412" height="346" loading="lazy"
+                   alt="Early exploration: Rex asks 'How long should this campaign run?' as a single question with a date-picker calendar.">
+            </div>
+            <div class="dec-block dec-result">
+              <p class="cs-label ink">Issue</p>
+              <p class="cs-text">Reduce panic and help users recover quickly during an unexpected disruption.</p>
+            </div>
+            <div class="dec-block">
+              <p class="cs-label">Final decision</p>
+              <p class="cs-text">Related inputs were grouped into structured decision cards.</p>
+            </div>
+            <div class="dec-card" style="--h:442px">
+              <img src="/images/case-studies/campaign-manager/decision-01-final.png" width="378" height="259" loading="lazy"
+                   alt="Final decision: one card groups what is being launched, platforms, campaign duration and primary goal, with a single Continue button.">
+            </div>
+            <div class="dec-block dec-result">
+              <p class="cs-label ink">Outcome</p>
+              <p class="cs-text">Reduced interaction steps and made campaign setup easier to scan and update.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dec">
+          <h3 class="cs-title"><span class="num">02</span>Chat Composer → In-Context Selection</h3>
+          <div class="dec-rule"></div>
+          <div class="dec-compare">
+            <div class="dec-block">
+              <p class="cs-label">Early exploration</p>
+              <p class="cs-text">Users responded through a traditional chat input at the bottom of the screen.</p>
+            </div>
+            <div class="dec-card" style="--h:325px">
+              <img src="/images/case-studies/campaign-manager/decision-02-early.png" width="435" height="90" loading="lazy"
+                   alt="Early exploration: a standard chat composer reading 'Select from the options above or type your message...'.">
+            </div>
+            <div class="dec-block dec-result">
+              <p class="cs-label ink">Issue</p>
+              <p class="cs-text">Most responses were structured selections rather than free-form conversations.</p>
+            </div>
+            <div class="dec-block">
+              <p class="cs-label">Final decision</p>
+              <p class="cs-text">Selections were embedded directly within Rex’s messages.</p>
+            </div>
+            <div class="dec-card" style="--h:325px">
+              <img src="/images/case-studies/campaign-manager/decision-02-final.png" width="340" height="229" loading="lazy"
+                   alt="Final decision: target audience, language, location, campaign duration and posting frequency selectors sit inside Rex's message, ending in a Generate Strategies button.">
+            </div>
+            <div class="dec-block dec-result">
+              <p class="cs-label ink">Outcome</p>
+              <p class="cs-text">The experience became more guided and eliminated unnecessary interaction.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dec">
+          <h3 class="cs-title"><span class="num">03</span>Immediate Generation → Strategy Selection</h3>
+          <div class="dec-rule"></div>
+          <div class="dec-compare text-only">
+            <div class="dec-block">
+              <p class="cs-label">Early exploration</p>
+              <p class="cs-text">Campaigns were generated immediately after collecting inputs.</p>
+              <div class="dec-result">
+                <p class="cs-label ink">Issue</p>
+                <p class="cs-text">Users had little visibility into why the campaign was structured a certain way.</p>
+              </div>
+            </div>
+            <div class="dec-block">
+              <p class="cs-label">Final decision</p>
+              <p class="cs-text">Rex presents multiple campaign approaches before generation.</p>
+              <div class="dec-result">
+                <p class="cs-label ink">Outcome</p>
+                <p class="cs-text">Users remain in control and understand the trade-offs behind each direction.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 04 Core insight -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">04 - core insight</p>
-        <h2>The real gap wasn't content creation. It was turning ideas into campaigns.</h2>
-        <p>Most tools help generate content, write copy, schedule posts, or publish across platforms. The larger challenge lies in planning, coordinating, and executing a campaign from start to finish.</p>
-        <p>The opportunity was not to create another content tool, but to build a system that could turn campaign intent into coordinated execution.</p>
-      </div>
-    </section>
+    <!-- 06 Final design 28:331 + steps -->
+    <section class="cs-sec" aria-labelledby="s-final">
+      <p class="cs-eyebrow">06 - Final design</p>
+      <h2 class="cs-h2" id="s-final">Walking through the happy flow, screen by screen.</h2>
+      <p class="cs-text">Solopreneurs usually have the idea. The friction starts when planning, drafting, scheduling, and follow-through happen across disconnected tools.</p>
 
-    <!-- 05 Key product decisions -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">05 - KEY PRODUCT DECISIONS</p>
-        <h2>What Changed And Why</h2>
-
-        <h3><span class="num">01</span>One Question at a Time &rarr; Grouped Decision Cards</h3>
-        <p class="cs-label">Early exploration</p>
-        <p>Users answered campaign questions one by one through a sequential conversation.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/decision-01-early.png" width="412" height="346" loading="lazy"
-             alt="Early exploration: Rex asks 'How long should this campaign run?' as a single question with a date-picker calendar.">
-      </figure>
-      <div class="cs-col">
-        <p class="cs-label issue">Issue</p>
-        <p>Reduce panic and help users recover quickly during an unexpected disruption.</p>
-        <p class="cs-label">Final decision</p>
-        <p>Related inputs were grouped into structured decision cards.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/decision-01-final.png" width="378" height="259" loading="lazy"
-             alt="Final decision: one card groups what is being launched, platforms, campaign duration and primary goal, with a single Continue button.">
-      </figure>
-      <div class="cs-col">
-        <p class="cs-label outcome">Outcome</p>
-        <p>Reduced interaction steps and made campaign setup easier to scan and update.</p>
-
-        <h3><span class="num">02</span>Chat Composer &rarr; In-Context Selection</h3>
-        <p class="cs-label">Early exploration</p>
-        <p>Users responded through a traditional chat input at the bottom of the screen.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/decision-02-early.png" width="435" height="90" loading="lazy"
-             alt="Early exploration: a standard chat composer reading 'Select from the options above or type your message...'.">
-      </figure>
-      <div class="cs-col">
-        <p class="cs-label issue">Issue</p>
-        <p>Most responses were structured selections rather than free-form conversations.</p>
-        <p class="cs-label">Final decision</p>
-        <p>Selections were embedded directly within Rex's messages.</p>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/decision-02-final.png" width="340" height="229" loading="lazy"
-             alt="Final decision: target audience, language, location, campaign duration and posting frequency selectors sit inside Rex's message, ending in a Generate Strategies button.">
-      </figure>
-      <div class="cs-col">
-        <p class="cs-label outcome">Outcome</p>
-        <p>The experience became more guided and eliminated unnecessary interaction.</p>
-
-        <h3><span class="num">03</span>Immediate Generation &rarr; Strategy Selection</h3>
-        <p class="cs-label">Early exploration</p>
-        <p>Campaigns were generated immediately after collecting inputs.</p>
-        <p class="cs-label issue">Issue</p>
-        <p>Users had little visibility into why the campaign was structured a certain way.</p>
-        <p class="cs-label">Final decision</p>
-        <p>Rex presents multiple campaign approaches before generation.</p>
-        <p class="cs-label outcome">Outcome</p>
-        <p>Users remain in control and understand the trade-offs behind each direction.</p>
-      </div>
-    </section>
-
-    <!-- 06 Final design -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">06 - Final design</p>
-        <h2>Walking through the happy flow, screen by screen.</h2>
-        <p>Solopreneurs usually have the idea. The friction starts when planning, drafting, scheduling, and follow-through happen across disconnected tools.</p>
-
-        <h3><span class="num">01</span>Campaign Intent</h3>
-        <p>Every campaign starts with a few key decisions. Rex captures the campaign objective, platforms, duration, and primary goal upfront to establish the right context before moving into planning.</p>
-        <div class="cs-note">
+      <div class="step first">
+        <h3 class="cs-title"><span class="num">01</span>Campaign Intent</h3>
+        <p class="cs-text">Every campaign starts with a few key decisions. Rex captures the campaign objective, platforms, duration, and primary goal upfront to establish the right context before moving into planning.</p>
+        <div class="note-card">
           <p class="cs-label">Why this approach?</p>
           <ul>
             <li>Captures the campaign intent early</li>
@@ -265,16 +423,16 @@
             <li>Creates a strong foundation for the steps that follow</li>
           </ul>
         </div>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-01-campaign-intent.png" width="1152" height="648" loading="lazy"
+               alt="Campaign Agent screen where Rex asks what is being launched, with platform chips, campaign duration and primary goal in one card.">
+        </figure>
       </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-01-campaign-intent.png" width="1152" height="648" loading="lazy"
-             alt="Campaign Agent screen where Rex asks what is being launched, with platform chips, campaign duration and primary goal in one card.">
-      </figure>
 
-      <div class="cs-col">
-        <h3><span class="num">02</span>Campaign Refinement</h3>
-        <p>Rex uses this step to understand who the content is for, when the campaign starts, and how often it should run. These inputs help shape the content direction and make the later strategy recommendations more relevant.</p>
-        <div class="cs-note">
+      <div class="step">
+        <h3 class="cs-title"><span class="num">02</span>Campaign Refinement</h3>
+        <p class="cs-text">Rex uses this step to understand who the content is for, when the campaign starts, and how often it should run. These inputs help shape the content direction and make the later strategy recommendations more relevant.</p>
+        <div class="note-card">
           <p class="cs-label">Why this approach?</p>
           <ul>
             <li>Helps Rex tailor content to the right audience</li>
@@ -282,16 +440,16 @@
             <li>Keeps the campaign setup focused and easy to review</li>
           </ul>
         </div>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-02-campaign-refinement.png" width="1152" height="648" loading="lazy"
+               alt="Campaign refinement screen where Rex collects target audience, age, gender, language, location, start date and weekly posting frequency.">
+        </figure>
       </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-02-campaign-refinement.png" width="1152" height="648" loading="lazy"
-             alt="Campaign refinement screen where Rex collects target audience, age, gender, language, location, start date and weekly posting frequency.">
-      </figure>
 
-      <div class="cs-col">
-        <h3><span class="num">03</span>Campaign Analysis</h3>
-        <p>Rather than showing a generic loading state, Rex surfaces what it's currently working on. This gives users visibility into the planning process and reassures them that the campaign is actively being structured before recommendations are generated.</p>
-        <div class="cs-note">
+      <div class="step">
+        <h3 class="cs-title"><span class="num">03</span>Campaign Analysis</h3>
+        <p class="cs-text">Rather than showing a generic loading state, Rex surfaces what it’s currently working on. This gives users visibility into the planning process and reassures them that the campaign is actively being structured before recommendations are generated.</p>
+        <div class="note-card">
           <p class="cs-label">System Status</p>
           <ul>
             <li>Reviewing campaign</li>
@@ -301,16 +459,16 @@
             <li>Balancing platforms</li>
           </ul>
         </div>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-03-campaign-analysis.png" width="1152" height="648" loading="lazy"
+               alt="After the user confirms their audience and schedule, Rex shows its current task, 'Reviewing Campaign...', instead of a generic loader.">
+        </figure>
       </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-03-campaign-analysis.png" width="1152" height="648" loading="lazy"
-             alt="After the user confirms their audience and schedule, Rex shows its current task, 'Reviewing Campaign...', instead of a generic loader.">
-      </figure>
 
-      <div class="cs-col">
-        <h3><span class="num">04</span>Strategy Selection</h3>
-        <p>There is no single way to run a successful campaign. Instead of generating content immediately, Rex presents multiple rollout approaches based on the campaign objective, audience, and timeline. This allows users to compare strategies, understand the rationale behind each one, and choose the direction that best fits their goals.</p>
-        <div class="cs-note">
+      <div class="step">
+        <h3 class="cs-title"><span class="num">04</span>Strategy Selection</h3>
+        <p class="cs-text">There is no single way to run a successful campaign. Instead of generating content immediately, Rex presents multiple rollout approaches based on the campaign objective, audience, and timeline. This allows users to compare strategies, understand the rationale behind each one, and choose the direction that best fits their goals.</p>
+        <div class="note-card">
           <p class="cs-label">Why this step matters</p>
           <ul>
             <li>Gives users control over the campaign direction</li>
@@ -318,16 +476,16 @@
             <li>Creates transparency before content generation begins</li>
           </ul>
         </div>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-04-strategy-selection.png" width="1152" height="648" loading="lazy"
+               alt="Three strategy cards to choose from: Trust-First Launch Build-Up (recommended), Fast Conversion Push, and Warm-Up &amp; Social Proof, each with best-for, weekly flow and per-platform focus.">
+        </figure>
       </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-04-strategy-selection.png" width="1152" height="648" loading="lazy"
-             alt="Three strategy cards to choose from: Trust-First Launch Build-Up (recommended), Fast Conversion Push, and Warm-Up &amp; Social Proof, each with best-for, weekly flow and per-platform focus.">
-      </figure>
 
-      <div class="cs-col">
-        <h3><span class="num">05</span>Campaign Workspace</h3>
-        <p>Once a strategy is selected, Rex transforms it into a campaign workspace where planning and execution come together. Instead of leaving users with a strategy document or a list of generated posts, the campaign is organised into a timeline that shows what is planned, what is ready, and what still needs attention before launch.</p>
-        <div class="cs-note">
+      <div class="step">
+        <h3 class="cs-title"><span class="num">05</span>Campaign Workspace</h3>
+        <p class="cs-text">Once a strategy is selected, Rex transforms it into a campaign workspace where planning and execution come together. Instead of leaving users with a strategy document or a list of generated posts, the campaign is organised into a timeline that shows what is planned, what is ready, and what still needs attention before launch.</p>
+        <div class="note-card">
           <p class="cs-label">Why this step matters</p>
           <ul>
             <li>Turns strategy into an actionable campaign plan</li>
@@ -335,16 +493,16 @@
             <li>Brings content, scheduling, and platform setup into one place</li>
           </ul>
         </div>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-05-campaign-workspace.png" width="1152" height="648" loading="lazy"
+               alt="Campaign workspace showing the generated posts on a weekly timeline, filterable by week and platform.">
+        </figure>
       </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-05-campaign-workspace.png" width="1152" height="648" loading="lazy"
-             alt="Campaign workspace showing the generated posts on a weekly timeline, filterable by week and platform.">
-      </figure>
 
-      <div class="cs-col">
-        <h3><span class="num">06</span>Reviewing &amp; Editing Content</h3>
-        <p>Before launch, users can review every post individually, inspect the generated assets, and make adjustments where needed. Opening a post reveals the content, scheduling details, platform assignment, and generation inputs that were used to create it.</p>
-        <div class="cs-note">
+      <div class="step">
+        <h3 class="cs-title"><span class="num">06</span>Reviewing &amp; Editing Content</h3>
+        <p class="cs-text">Before launch, users can review every post individually, inspect the generated assets, and make adjustments where needed. Opening a post reveals the content, scheduling details, platform assignment, and generation inputs that were used to create it.</p>
+        <div class="note-card">
           <p class="cs-label">Why this step matters</p>
           <ul>
             <li>Gives users control before publishing</li>
@@ -352,109 +510,144 @@
             <li>Keeps edits connected to the overall campaign plan</li>
           </ul>
         </div>
-      </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/final-06-reviewing-editing.png" width="1152" height="648" loading="lazy"
-             alt="Edit post view: an Instagram post marked Ready with its posting time, Previous/Next navigation and Regenerate Post, plus a side panel showing credits used, image prompt, caption, hashtags and assigned account.">
-      </figure>
-    </section>
-
-    <!-- 07 Digging deeper -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">07 - Digging Deeper</p>
-        <h2>The Details That Shape The Experience</h2>
-
-        <h3><span class="num">0.1</span>Editing Previous Decisions</h3>
-        <p>Campaign decisions remain editable throughout. If a user changes an earlier input, the workflow updates the dependent outputs instead of forcing a restart. This keeps the campaign flexible while still making the impact of each change visible.</p>
-        <div class="cs-note">
-          <p class="cs-label">Key behaviour</p>
-          <p>Changing one decision visibly updates the outputs that depend on it.</p>
-        </div>
-      </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/deeper-01-editing-decisions.png" width="645" height="362" loading="lazy"
-             alt="After an earlier answer is edited, Rex shows 'Campaign settings updated' with options to keep the existing strategies or re-generate them; the old strategy cards are dimmed.">
-      </figure>
-
-      <div class="cs-col">
-        <h3><span class="num">0.2</span>Campaign Completion &amp; Visibility</h3>
-        <p>A campaign can only move forward when every required component is in place. Rex highlights missing platform connections, recipient groups, and setup requirements early, helping users resolve issues before they impact the launch.</p>
-        <div class="cs-note">
-          <p class="cs-label">Key behaviour</p>
-          <p>Launch blockers are identified before they become launch failures.</p>
-        </div>
-      </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/deeper-02-completion-visibility.png" width="691" height="388" loading="lazy"
-             alt="Workspace with the accounts and readiness panel highlighted: campaign readiness at 62%, with warnings that LinkedIn and WhatsApp are not connected and no WhatsApp recipient group is selected.">
-      </figure>
-
-      <div class="cs-col">
-        <h3><span class="num">0.3</span>Adding WhatsApp Recipients</h3>
-        <p>WhatsApp requires a different setup from the organic platforms. Instead of connecting a publishing account alone, the workflow also needs a recipient group before the campaign can go live. This keeps the distribution logic aligned with how WhatsApp actually works.</p>
-        <div class="cs-note">
-          <p class="cs-label">Key behaviour</p>
-          <p>WhatsApp behaves like a direct distribution channel, not just another social platform.</p>
-        </div>
-      </div>
-      <figure class="cs-fig">
-        <img class="screen" src="/images/case-studies/campaign-manager/deeper-03-whatsapp-recipients.png" width="691" height="388" loading="lazy"
-             alt="Select Recipients dialog for WhatsApp: search contacts or groups, create a new group, or pick an existing group such as Existing customers, Product launch waitlist or VIP customers.">
-      </figure>
-
-      <div class="cs-col">
-        <h3><span class="num">0.4</span>Campaign And Post States</h3>
-        <p>The product uses simple states to make progress easy to understand. Campaigns move through a small lifecycle, while individual posts show their publishing status inside the workspace. This gives users a quick sense of what is still being prepared, what is ready, and what has already gone live.</p>
-        <div class="cs-note">
-          <p class="cs-label">Key behaviour</p>
-          <p>Status stays clear and lightweight — never overloaded with labels.</p>
-        </div>
-      </div>
-      <figure class="cs-fig">
-        <img class="shape" src="/images/case-studies/campaign-manager/deeper-04-campaign-post-states.png" width="488" height="374" loading="lazy"
-             alt="State reference. Campaign states: Draft, Ready, Active, Paused, Completed. Post states: Draft, Ready, Scheduled, Published, Failed, each with a one-line description.">
-      </figure>
-    </section>
-
-    <!-- 08 Key learnings -->
-    <section class="cs-sec">
-      <div class="cs-col">
-        <p class="cs-eyebrow">08 - Key Learnings</p>
-        <h2>Lessons beyond the interface</h2>
-        <ol class="cs-items">
-          <li>
-            <h3><span class="num">01</span>Every Decision Has a Trade-off</h3>
-            <p>There is rarely a perfect solution. Designing means balancing speed and depth, guidance and flexibility, automation and control, while understanding what matters most in a given context.</p>
-          </li>
-          <li>
-            <h3><span class="num">02</span>Great Experiences Are Built Across Systems</h3>
-            <p>The most meaningful improvements often come from connecting workflows, information, and decisions together. Individual screens matter, but the experience between them matters more.</p>
-          </li>
-          <li>
-            <h3><span class="num">03</span>Trust Must Be Designed</h3>
-            <p>People are more likely to adopt a product when they understand what is happening and why. Transparency, feedback, and visibility can be just as important as functionality.</p>
-          </li>
-          <li>
-            <h3><span class="num">04</span>Progress Beats Perfection</h3>
-            <p>Waiting for the perfect solution can slow down learning. Shipping, testing, and refining ideas often leads to better outcomes than trying to solve everything upfront.</p>
-          </li>
-        </ol>
+        <figure class="cs-screen">
+          <img src="/images/case-studies/campaign-manager/final-06-reviewing-editing.png" width="1152" height="648" loading="lazy"
+               alt="Edit post view: an Instagram post marked Ready with its posting time, Previous/Next navigation and Regenerate Post, plus a side panel showing credits used, image prompt, caption, hashtags and assigned account.">
+        </figure>
       </div>
     </section>
 
-    <!-- Closing -->
-    <section class="cs-col cs-close">
-      <h2>That's a wrap! :)</h2>
-      <p>Building this case study was a chance to explore how AI can support real workflow, not just output.</p>
-      <p>If you're looking for a Product Designer who enjoys simplifying complex workflows and building AI-powered products, would love to connect.</p>
-      <p><a href="mailto:mistry.mridula6@gmail.com">mistry.mridula6@gmail.com</a> &middot; <a href="https://www.linkedin.com/in/mridulamistry" target="_blank" rel="noopener">LinkedIn</a></p>
-      <a class="cs-back" href="/#work">&larr; Back to work</a>
+    <!-- 07 Digging deeper 28:409 + 40:153 -->
+    <section class="cs-sec" aria-labelledby="s-deeper">
+      <p class="cs-eyebrow">07 - Digging Deeper</p>
+      <h2 class="cs-h2" id="s-deeper">The Details That Shape The Experience</h2>
+
+      <div class="details">
+        <div class="detail">
+          <div class="detail-text">
+            <h3 class="cs-title"><span class="num">0.1</span>Editing Previous Decisions</h3>
+            <p class="cs-text">Campaign decisions remain editable throughout. If a user changes an earlier input, the workflow updates the dependent outputs instead of forcing a restart. This keeps the campaign flexible while still making the impact of each change visible.</p>
+            <div class="note-card">
+              <p class="cs-label">Key behaviour</p>
+              <p class="cs-text">Changing one decision visibly updates the outputs that depend on it.</p>
+            </div>
+          </div>
+          <figure class="detail-fig ui" style="--w:58.64%;--w-max:645px">
+            <img src="/images/case-studies/campaign-manager/deeper-01-editing-decisions.png" width="645" height="362" loading="lazy"
+                 alt="After an earlier answer is edited, Rex shows 'Campaign settings updated' with options to keep the existing strategies or re-generate them; the old strategy cards are dimmed.">
+          </figure>
+        </div>
+
+        <div class="detail flip">
+          <div class="detail-text">
+            <h3 class="cs-title"><span class="num">0.2</span>Campaign Completion &amp; Visibility</h3>
+            <p class="cs-text">A campaign can only move forward when every required component is in place. Rex highlights missing platform connections, recipient groups, and setup requirements early, helping users resolve issues before they impact the launch.</p>
+            <div class="note-card">
+              <p class="cs-label">Key behaviour</p>
+              <p class="cs-text">Launch blockers are identified before they become launch failures.</p>
+            </div>
+          </div>
+          <figure class="detail-fig ui" style="--w:62.84%;--w-max:691px">
+            <img src="/images/case-studies/campaign-manager/deeper-02-completion-visibility.png" width="691" height="388" loading="lazy"
+                 alt="Workspace with the accounts and readiness panel highlighted: campaign readiness at 62%, with warnings that LinkedIn and WhatsApp are not connected and no WhatsApp recipient group is selected.">
+          </figure>
+        </div>
+
+        <div class="detail">
+          <div class="detail-text">
+            <h3 class="cs-title"><span class="num">0.3</span>Adding WhatsApp Recipients</h3>
+            <p class="cs-text">WhatsApp requires a different setup from the organic platforms. Instead of connecting a publishing account alone, the workflow also needs a recipient group before the campaign can go live. This keeps the distribution logic aligned with how WhatsApp actually works.</p>
+            <div class="note-card">
+              <p class="cs-label">Key behaviour</p>
+              <p class="cs-text">WhatsApp behaves like a direct distribution channel, not just another social platform.</p>
+            </div>
+          </div>
+          <figure class="detail-fig ui" style="--w:62.84%;--w-max:691px">
+            <img src="/images/case-studies/campaign-manager/deeper-03-whatsapp-recipients.png" width="691" height="388" loading="lazy"
+                 alt="Select Recipients dialog for WhatsApp: search contacts or groups, create a new group, or pick an existing group such as Existing customers, Product launch waitlist or VIP customers.">
+          </figure>
+        </div>
+
+        <div class="detail flip">
+          <div class="detail-text">
+            <h3 class="cs-title"><span class="num">0.4</span>Campaign And Post States</h3>
+            <p class="cs-text">The product uses simple states to make progress easy to understand. Campaigns move through a small lifecycle, while individual posts show their publishing status inside the workspace. This gives users a quick sense of what is still being prepared, what is ready, and what has already gone live.</p>
+            <div class="note-card">
+              <p class="cs-label">Key behaviour</p>
+              <p class="cs-text">Status stays clear and lightweight — never overloaded with labels.</p>
+            </div>
+          </div>
+          <figure class="detail-fig states" style="--w:44.36%;--w-max:488px">
+            <img src="/images/case-studies/campaign-manager/deeper-04-campaign-post-states.webp" width="488" height="366" loading="lazy"
+                 alt="State reference. Campaign states: Draft, Ready, Active, Paused, Completed. Post states: Draft, Ready, Scheduled, Published, Failed, each with a one-line description.">
+          </figure>
+        </div>
+      </div>
     </section>
+
+    <!-- 08 Key learnings 28:459 -->
+    <section class="cs-sec" aria-labelledby="s-learnings">
+      <p class="cs-eyebrow">08 - Key Learnings</p>
+      <h2 class="cs-h2" id="s-learnings">Lessons beyond the interface</h2>
+      <ol class="learnings">
+        <li>
+          <span class="learn-num" aria-hidden="true">01</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Every Decision Has a Trade-off</h3>
+            <p class="cs-text">There is rarely a perfect solution. Designing means balancing speed and depth, guidance and flexibility, automation and control, while understanding what matters most in a given context.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">02</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Great Experiences Are Built Across Systems</h3>
+            <p class="cs-text">The most meaningful improvements often come from connecting workflows, information, and decisions together. Individual screens matter, but the experience between them matters more.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">03</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Trust Must Be Designed</h3>
+            <p class="cs-text">People are more likely to adopt a product when they understand what is happening and why. Transparency, feedback, and visibility can be just as important as functionality.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">04</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Progress Beats Perfection</h3>
+            <p class="cs-text">Waiting for the perfect solution can slow down learning. Shipping, testing, and refining ideas often leads to better outcomes than trying to solve everything upfront.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
   </article>
 </main>
 
-<footer class="cs-foot">&copy; Mridula Mistry</footer>
+<!-- Dark footer 43:166 -->
+<footer class="cs-footer">
+  <div class="cs-closing">
+    <h2 class="cs-h2">That’s a wrap! :)</h2>
+    <p class="cs-text">Building this case study was a chance to explore how AI can support real workflow, not just output.</p>
+    <p class="cs-text">If you’re looking for a Product Designer who enjoys simplifying complicated workflows and building AI-powered products, I would love to connect.</p>
+
+    <div class="next-card">
+      <div class="next-text">
+        <p class="cs-label">Next case study</p>
+        <p class="next-title">Building a Design System from Zero: MailCue</p>
+      </div>
+      <!-- MailCue case study isn't live yet. When it is, replace this span with:
+           <a class="next-cta" href="/case-studies/mailcue.html">View case study →</a>
+           (Figma 43:178: --sun fill, --on-sun text, 14px 24px padding, pill radius, Karla 700 15px) -->
+      <span class="next-soon" aria-disabled="true">Coming soon</span>
+    </div>
+  </div>
+
+  <div class="cs-bottom">
+    <a href="/#work">&larr; Back to work</a>
+    <small>&copy; Mridula Mistry</small>
+  </div>
+</footer>
 
 </body>
 </html>
