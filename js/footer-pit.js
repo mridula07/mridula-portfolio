@@ -23,17 +23,17 @@
     Composite.add(engine.world,[floor,left,right,ceiling]);
 
     const stickerSrcs = [
-      {src:'images/index_imgcd07ac57f9.png', w:132, h:86},
-      {src:'images/index_imgd8af42af9e.png', w:115, h:107},
-      {src:'images/index_img46b8b6fa5b.png', w:115, h:119},
-      {src:'images/index_img77d90494a7.png', w:115, h:120},
-      {src:'images/index_img72bfd84c9f.png', w:120, h:88},
-      {src:'images/index_img5b0a3b8c90.png', w:120, h:119},
-      {src:'images/index_img97aae65ad3.png', w:118, h:120},
-      {src:'images/index_img8715b7c0aa.png', w:98,  h:125},
-      {src:'images/sticker_01.svg',          w:100, h:111},
-      {src:'images/sticker_02.svg',          w:108, h:108},
-      {src:'images/sticker_03.svg',          w:120, h:89},
+      {src:'images/stickers/wave.webp',       w:130, h:107},
+      {src:'images/stickers/shell.webp',      w:130, h:125},
+      {src:'images/stickers/whale.webp',      w:130, h:108},
+      {src:'images/stickers/heart.webp',      w:130, h:129},
+      {src:'images/stickers/hearts-row.webp', w:130, h:50},
+      {src:'images/stickers/ukulele.webp',    w:130, h:65},
+      {src:'images/stickers/smiley.webp',     w:130, h:130},
+      {src:'images/stickers/milk.webp',       w:108, h:130},
+      {src:'images/stickers/popsicle.webp',   w:130, h:128},
+      {src:'images/stickers/cherries.webp',   w:130, h:122},
+      {src:'images/stickers/bow.webp',        w:126, h:130},
     ];
     const defs = stickerSrcs.map(function(s){return {t:'sticker', src:s.src, w:s.w, h:s.h};});
     const items=[];
@@ -44,7 +44,7 @@
         var el = document.createElement('div');
         el.className = 'tool sticker-tool';
         el.style.width = d.w+'px'; el.style.height = d.h+'px';
-        el.innerHTML = '<img src="'+d.src+'" width="'+d.w+'" height="'+d.h+'" alt="" draggable="false" style="display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));"/>';
+        el.innerHTML = '<img src="'+d.src+'" width="'+d.w+'" height="'+d.h+'" alt="" draggable="false" style="display:block;filter:drop-shadow(0 6px 14px rgba(3,16,26,.35));"/>';
         var body = Bodies.rectangle(x, -60, d.w*.85, d.h*.85, {
           chamfer:{radius:d.w*0.15},restitution:.5, friction:.12, frictionAir:.012
         });
