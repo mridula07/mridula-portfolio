@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Designing the system behind a calmer inbox — Mridula Mistry</title>
+<meta name="description" content="Building MailQ's design system from the ground up: a three-tier token architecture, light and dark theming, a documented component library, and developer handoff." />
+<link rel="icon" type="image/svg+xml" href="/images/mm-favicon.svg" />
+<link rel="preload" href="/fonts/calistoga-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/karla-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  /* Figma: "Case study page: MailQ (website version)" 618:2 — sibling of /case-studies/campaign-manager.html.
+     1100px content column; vertical gaps come from the Figma "space N" frames. */
+  .cs{--g112:112px;--g128:128px;padding:128px 24px 0;}
+  .cs-wrap{max-width:1100px;margin:0 auto;}
+  .mt-40{margin-top:40px;} .mt-48{margin-top:48px;} .mt-56{margin-top:56px;} .mt-64{margin-top:64px;}
+  .mt-112{margin-top:var(--g112);} .mt-128{margin-top:var(--g128);}
+
+  /* ---------- shared type (same as Campaign Manager) ---------- */
+  .cs p{margin:0;}
+  .cs-h2{font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;
+    font-size:clamp(1.75rem,4vw,2.2rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink);}
+  .cs-text{font-size:17px;line-height:1.55;color:var(--body);}
+  .cs-h2 + .cs-text{margin-top:24px;}
+  .cs-text + .cs-text{margin-top:16px;}
+  .cs-text strong{font-weight:700;color:var(--ink);}
+  .cs-label{font-weight:700;font-size:12px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs-title{font-weight:700;font-size:20.8px;line-height:1.3;letter-spacing:-.01em;color:var(--body);}
+
+  /* ---------- header 618:12 ---------- */
+  .cs-back{display:block;width:max-content;font-weight:700;font-size:.92rem;line-height:normal;color:var(--ink);text-decoration:none;}
+  .cs-back:hover{text-decoration:underline;}
+  .cs-tags{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;padding:0;margin:40px 0 0;
+    font-weight:700;font-size:12px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs h1{margin-top:18px;font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;
+    font-size:clamp(2rem,5vw,3rem);line-height:1.08;letter-spacing:-.01em;color:var(--ink);}
+  .cs .cs-summary{margin-top:20px;font-size:1.2rem;line-height:1.55;color:var(--body);}
+  .cs-meta{display:flex;gap:24px;margin:44px 0 0;padding:24px 0;
+    border-top:1.5px solid var(--hairline);border-bottom:1.5px solid var(--hairline);}
+  .cs-meta > div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;}
+  .cs-meta dt{font-weight:700;font-size:11.5px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .cs-meta dd{margin:0;font-weight:700;font-size:.95rem;line-height:1.4;color:var(--body);}
+
+  /* ---------- exported visuals ---------- */
+  .cs-fig{margin-left:0;margin-right:0;}
+  .cs-fig img{display:block;width:100%;height:auto;border-radius:12px;}
+  .cs-fig.screen img{box-shadow:var(--shadow);}          /* screens: radius + tinted shadow */
+  /* documentation board is 1440 wide in Figma: full-bleed up to 1440, scrolls inside itself when narrow */
+  .cs-bleed{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);}
+  .doc-board{max-width:1440px;margin-left:auto;margin-right:auto;overflow-x:auto;overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;}
+  .doc-board img{display:block;width:100%;min-width:900px;height:auto;}
+
+  /* ---------- 03 trade-off cards 631:7156 ---------- */
+  .tradeoffs{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
+  .tradeoffs li{display:flex;flex-direction:column;gap:6px;padding:28px;background:var(--paper);
+    border:1.5px solid var(--hairline);border-radius:16px;}
+  .to-win{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:28px;line-height:1.1;letter-spacing:-.01em;color:var(--ink);}
+  /* Figma's 10px spacer is itself a flex item, so it adds another 6px gap: title → OVER = 6 + 10 + 6 */
+  .tradeoffs .cs-label{margin-top:16px;line-height:1.2;}
+  .to-lose{font-size:20px;line-height:1.2;color:var(--muted);text-decoration:line-through;}
+
+  /* ---------- chapter bands 618:482 / 631:7144 / 618:5044 ---------- */
+  .band{display:flex;flex-direction:column;align-items:center;gap:12px;padding:96px 24px;border-radius:24px;
+    background:var(--deep);text-align:center;transition:background .6s var(--ease);}
+  .band-label{font-weight:700;font-size:12.5px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;
+    color:color-mix(in srgb,var(--on-deep) 70%,transparent);}
+  .band-title{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:56px;line-height:1.08;
+    letter-spacing:-.01em;color:var(--on-deep);}
+
+  /* ---------- 07 token stats 618:5004 ---------- */
+  .stats{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
+  .stats li{display:flex;flex-direction:column;gap:6px;padding:24px;background:var(--paper);
+    border:1.5px solid var(--hairline);border-radius:12px;}
+  .stat-num{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:56px;line-height:1;color:var(--ink);}
+  .stat-name{font-weight:700;font-size:15px;line-height:normal;color:var(--body);}
+  .stat-sub{font-size:14px;line-height:normal;color:var(--muted);}
+
+  /* ---------- 07 three layers 618:5022 ---------- */
+  .layers .cs-title + .cs-text{margin-top:14px;}
+
+  /* ---------- 08 light/dark crossover 627:2261 ----------
+     Two stacked exports of the same screen; the dark one is revealed by an animated clip-path.
+     Seam and LIGHT/DARK pills are MailQ's own UI colours (part of the product visual, like the images). */
+  @property --split{syntax:'<percentage>';inherits:true;initial-value:50%;}
+  .ld{--split:50%;--ld-seam:#2E8A80;position:relative;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);
+    aspect-ratio:1100/611;}
+  .ld img{position:absolute;inset:0;display:block;width:100%;height:100%;}
+  .ld-dark{position:absolute;inset:0;clip-path:inset(0 0 0 var(--split));}
+  .ld-edge{position:absolute;top:0;bottom:0;left:var(--split);width:0;pointer-events:none;}
+  .ld-edge::before{content:"";position:absolute;top:0;bottom:0;left:-.86px;width:1.72px;background:var(--ld-seam);}
+  .ld-pill{position:absolute;bottom:17.2px;padding:5.16px 10.3px;border-radius:999px;border:.86px solid;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:9.45px;line-height:normal;letter-spacing:.04em;white-space:nowrap;}
+  .ld-pill.light{right:13px;background:rgba(255,255,255,.92);border-color:rgba(0,0,0,.12);color:#121717;}
+  .ld-pill.dark{left:14.6px;background:rgba(18,23,23,.92);border-color:rgba(255,255,255,.12);color:#E5EDEB;}
+  @media (prefers-reduced-motion:no-preference){
+    /* wipe in right→left (1.4s), hold dark (1.2s), wipe back (1.4s), hold light (1.2s) */
+    .ld{animation:ld-wipe 5.2s infinite;}
+    @keyframes ld-wipe{
+      0%{--split:100%;animation-timing-function:ease-in-out;}
+      26.92%{--split:0%;}
+      50%{--split:0%;animation-timing-function:ease-in-out;}
+      76.92%{--split:100%;}
+      100%{--split:100%;}
+    }
+  }
+
+  /* ---------- key learnings 634:9170 (same as Campaign Manager) ---------- */
+  .learnings{list-style:none;margin:40px 0 0;padding:0;}
+  .learnings li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;}
+  .learnings li + li{border-top:1.5px solid var(--hairline);}
+  .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
+    font-size:72px;line-height:.9;color:var(--sky);}
+  .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+
+  /* ---------- dark footer 618:5099 ---------- */
+  .cs-footer{margin-top:var(--g128,128px);background:var(--deep);color:var(--on-deep);border-radius:80px 80px 0 0;
+    padding:112px 24px 40px;transition:background .6s var(--ease);}
+  .cs-closing{max-width:1100px;margin:0 auto;}
+  .cs-closing .cs-h2{color:var(--on-deep);}
+  .cs-closing .cs-text{color:color-mix(in srgb,var(--on-deep) 82%,transparent);}
+  .next-card{margin-top:56px;display:flex;align-items:center;gap:24px;padding:28px 32px;border-radius:16px;
+    background:color-mix(in srgb,var(--on-deep) 7%,transparent);border:1.5px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+  .next-text{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+  .next-text .cs-label{color:color-mix(in srgb,var(--on-deep) 70%,transparent);}
+  .next-title{font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:24px;line-height:1.15;
+    letter-spacing:-.01em;color:var(--on-deep);}
+  .next-cta{flex:none;padding:14px 24px;border-radius:999px;background:var(--sun);color:var(--on-sun);
+    font-weight:700;font-size:15px;line-height:normal;text-decoration:none;white-space:nowrap;transition:transform .3s var(--spring);}
+  .next-cta:hover{transform:translateY(-2px);}
+  .cs-bottom{max-width:1100px;margin:96px auto 0;padding-top:24px;line-height:normal;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    border-top:1px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+  .cs-bottom a{font-weight:700;font-size:.92rem;color:var(--on-deep);text-decoration:none;}
+  .cs-bottom a:hover{text-decoration:underline;}
+  .cs-bottom small{font-size:.85rem;color:color-mix(in srgb,var(--on-deep) 65%,transparent);}
+
+  /* cards: 4 across needs ~1000px before 28px "Accessibility" outgrows its card, so go to 2 columns a little early */
+  @media (max-width:1000px){
+    .tradeoffs,.stats{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  /* ---------- below 900px: the design is desktop-only, so adapt ---------- */
+  @media (max-width:900px){
+    .cs{--g112:88px;--g128:96px;}
+    .cs-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px;}
+    .band{padding:72px 24px;}
+    .band-title{font-size:44px;}
+    .cs-footer{border-radius:40px 40px 0 0;padding-top:80px;}
+    .next-card{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:640px){
+    nav a:not(.talk){display:none;}
+    .cs{--g112:72px;--g128:80px;padding:108px 16px 0;}
+    .cs-summary{font-size:1.08rem;}
+    .band{padding:56px 20px;border-radius:20px;}
+    .band-title{font-size:36px;}
+    .learnings li{gap:18px;}
+    .learn-num{width:64px;font-size:48px;}
+    .ld-pill{font-size:8px;padding:4px 8px;bottom:10px;}
+    .cs-footer{padding:64px 16px 32px;}
+    .next-card{padding:24px;}
+    .cs-bottom{margin-top:64px;}
+  }
+  @media (max-width:560px){
+    .tradeoffs,.stats{grid-template-columns:minmax(0,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <nav>
+    <span class="nav-mark">
+      <svg width="22" height="22" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148"
+              fill="none" style="stroke:var(--on-ink)" stroke-width="16"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <a href="/#about">About</a><a href="/#work">Work</a><a href="/#play">Playground</a><a href="/#kind">Testimonials</a>
+    <a class="talk" href="mailto:mistry.mridula6@gmail.com">Let&rsquo;s talk</a>
+  </nav>
+</div>
+
+<main class="cs">
+  <article class="cs-wrap">
+
+    <!-- Header 618:12 -->
+    <header>
+      <a class="cs-back" href="/#work">&larr; Back to work</a>
+      <ul class="cs-tags">
+        <li>UX Case Study</li><li>Design System</li><li>MailQ</li><li>Take-home</li>
+      </ul>
+      <h1>Designing the system behind a calmer inbox</h1>
+      <p class="cs-summary">MailQ is a desktop email client that uses AI to summarize threads and cut through inbox noise. I built its design system from the ground up: a three-tier token architecture, light and dark theming, a documented component library, and developer handoff.</p>
+      <dl class="cs-meta">
+        <div><dt>Role</dt><dd>Product designer</dd></div>
+        <div><dt>Timeline</dt><dd>2 weeks</dd></div>
+        <div><dt>Tool</dt><dd>Figma, Claude, ChatGPT</dd></div>
+        <div><dt>Platform</dt><dd>Desktop web</dd></div>
+      </dl>
+    </header>
+
+    <!-- Hero screen 627:1475 -->
+    <figure class="cs-fig screen mt-56">
+      <img src="/images/case-studies/mailq/hero-email-list.webp" width="1100" height="611"
+           alt="MailQ inbox in light mode: a teal Compose button and folder list on the left, and a list of emails with sender, coloured team label, subject, preview and time.">
+    </figure>
+
+    <!-- 01 Context 618:443 -->
+    <section class="mt-112">
+      <h2 class="cs-h2">The starting point</h2>
+      <p class="cs-text">MailQ was a take-home assignment to design a desktop email client with an AI feature. The deliverables included the core product screens and a small, component-based design system to support them.</p>
+      <p class="cs-text">The system only needed to be big enough to build the screens consistently: a few colours, a type scale, and the components the screens actually used.</p>
+    </section>
+
+    <!-- 02 Scope 618:452 -->
+    <section class="mt-112">
+      <h2 class="cs-h2">I decided to go further</h2>
+      <p class="cs-text">Once the core screens were taking shape, I saw an opportunity to go beyond the minimum deliverable, and use it to explore variables, tokens, theming, reusable components, and design-to-development handoff.</p>
+      <p class="cs-text">A take-home is a safe place to test questions that are hard to test on a live team: what a token architecture costs to maintain, where dark mode should live, and how much documentation a component really needs.</p>
+    </section>
+
+    <!-- 03 Principles 618:461 + trade-offs 631:7156 -->
+    <section class="mt-112">
+      <h2 class="cs-h2">Defining the system</h2>
+      <p class="cs-text">The goal was to create a system that was practical to use, easy to scale, and grounded in the needs of the product rather than built as a collection of UI components in isolation.</p>
+      <ul class="tradeoffs">
+        <li><p class="to-win">Consistency</p><p class="cs-label">Over</p><p class="to-lose">Rigidity</p></li>
+        <li><p class="to-win">Reuse</p><p class="cs-label">Over</p><p class="to-lose">Duplication</p></li>
+        <li><p class="to-win">Accessibility</p><p class="cs-label">Over</p><p class="to-lose">Decoration</p></li>
+        <li><p class="to-win">Adaptability</p><p class="cs-label">Over</p><p class="to-lose">One-off fixes</p></li>
+      </ul>
+    </section>
+
+    <!-- Chapter band 618:482 -->
+    <section class="mt-112" aria-labelledby="part-1">
+      <div class="band">
+        <p class="band-label">Part one</p>
+        <h2 class="band-title" id="part-1">Building the foundations</h2>
+      </div>
+
+      <!-- 04 Colour 618:4967 + board 627:1581 -->
+      <div class="mt-112">
+        <h3 class="cs-h2">Colors</h3>
+        <p class="cs-text">I used teal as MailQ’s primary colour to give the product a distinct identity while keeping the interface calm enough for a productivity-focused tool. Instead of a generic grey scale, the neutrals carry a subtle teal hue, so surfaces, borders and text stay connected to the brand without competing with it.</p>
+        <figure class="cs-fig mt-48">
+          <img src="/images/case-studies/mailq/colour-palette.webp" width="1100" height="367" loading="lazy"
+               alt="MailQ colour palette: Primary teal/500 (#2E8A7F) with its full teal ramp, Surface grey/50, Ink grey/990, and the status colours Error red/500, Info blue/500, Warning yellow/500 and Success green/500.">
+        </figure>
+      </div>
+
+      <!-- 05 Type 618:4977 + board 627:1639 -->
+      <div class="mt-112">
+        <h3 class="cs-h2">Typography</h3>
+        <p class="cs-text">Type is set in Geist, on a deliberately tight 11–18px scale that steps up by roughly a Major Second. An email client is dense: senders, subjects, timestamps and labels all compete for one row, so the scale gives enough hierarchy to scan without big jumps.</p>
+        <figure class="cs-fig mt-48">
+          <img src="/images/case-studies/mailq/typography.webp" width="1100" height="438" loading="lazy"
+               alt="Type specimen: Geist as the primary UI typeface in Regular 400, Medium 500 and SemiBold 600, and a type scale from Heading 16/24 down to Caption 11/16.">
+        </figure>
+      </div>
+
+      <!-- 06 Icons 618:4987 + board 627:1686 -->
+      <div class="mt-112">
+        <h3 class="cs-h2">Icons</h3>
+        <p class="cs-text">Icons come from Phosphor, used at 14 and 16px to keep controls compact without losing recognition. Spacing runs on a 4px base from 2 to 32px. Borders are a 1px stroke with 8px and 12px radii in everyday use.</p>
+        <figure class="cs-fig mt-48">
+          <img src="/images/case-studies/mailq/iconography.webp" width="1100" height="459" loading="lazy"
+               alt="Iconography board: a magnifying-glass icon enlarged on a 16 by 16px keyline grid, next to the full set of MailQ&#39;s Phosphor icons, from archive and compose to reply, forward, pin and print.">
+        </figure>
+      </div>
+    </section>
+
+    <!-- Chapter band 631:7144 -->
+    <section class="mt-64" aria-labelledby="part-2">
+      <div class="band">
+        <p class="band-label">Part two</p>
+        <h2 class="band-title" id="part-2">Tokens</h2>
+      </div>
+
+      <!-- 07 Tokens 618:4997, stats 618:5004, three layers 618:5022, diagram 627:1831 -->
+      <div class="mt-64">
+        <p class="cs-text">Every colour, gap and corner in MailQ comes from a token: a named design decision that screens point at instead of hard-coding a value. There are 222 of them, organised into three layers so that each kind of change happens in exactly one place.</p>
+        <ul class="stats">
+          <li><span class="stat-num">97</span><span class="stat-name">Primitives</span><span class="stat-sub">raw values</span></li>
+          <li><span class="stat-num">68</span><span class="stat-name">Alias</span><span class="stat-sub">colour roles</span></li>
+          <li><span class="stat-num">57</span><span class="stat-name">Semantic</span><span class="stat-sub">purposes</span></li>
+          <li><span class="stat-num">2</span><span class="stat-name">Themes</span><span class="stat-sub">light and dark</span></li>
+        </ul>
+      </div>
+
+      <div class="layers mt-64">
+        <h3 class="cs-title">Three layers, each with one job</h3>
+        <p class="cs-text"><strong>Primitives</strong> are the raw material: every colour ramp, plus the spacing, radius and border-width scales. They describe what exists, not where it goes.</p>
+        <p class="cs-text"><strong>Alias</strong> gives colour a role. Teal becomes primary, grey becomes neutral, red becomes error. If MailQ is ever rebranded, this is the only layer that changes.</p>
+        <p class="cs-text"><strong>Semantic</strong> describes purpose, like the fill of an action or the colour of body text. Components only ever use this layer, so no screen refers to a raw colour.</p>
+        <figure class="cs-fig mt-48">
+          <img src="/images/case-studies/mailq/token-layer-diagram.webp" width="1100" height="1220" loading="lazy"
+               alt="Token layer diagram. 97 Primitives: colour ramps plus spacing, radius and border-width scales. 68 Alias: each hue mapped to a role, such as teal to primary and red to error. 57 Semantic: purpose tokens for text, surface, border, icon and overlay, each with a light and dark value.">
+        </figure>
+      </div>
+
+      <!-- 08 Theming 618:5034 + light/dark crossover 627:2261 -->
+      <div class="mt-64">
+        <h3 class="cs-h2">Seamless theme switching through Semantic tokens</h3>
+        <p class="cs-text">I built dark mode into the variables themselves. The Semantic collection has two modes, Light and Dark, so every token carries a value for each theme, and each colour changes only as much as it needs to: body text flips from near-black to near-white, while the teal action colour just gets slightly lighter. Components only ask for tokens, so switching a frame to Dark re-themes everything inside it, with nothing redrawn or recoloured by hand.</p>
+        <figure class="ld mt-48" role="img" aria-label="The same MailQ inbox screen shown in light and dark themes, with a divider sweeping across to reveal one theme over the other.">
+          <img src="/images/case-studies/mailq/light-dark-split-light.webp" width="1100" height="611" loading="lazy" alt="">
+          <div class="ld-dark"><img src="/images/case-studies/mailq/light-dark-split-dark.webp" width="1100" height="611" loading="lazy" alt=""></div>
+          <div class="ld-edge" aria-hidden="true"><span class="ld-pill light">LIGHT</span><span class="ld-pill dark">DARK</span></div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Chapter band 618:5044 -->
+    <section class="mt-112" aria-labelledby="part-3">
+      <div class="band">
+        <p class="band-label">Part three</p>
+        <h2 class="band-title" id="part-3">Components</h2>
+      </div>
+
+      <!-- 09 Components 618:5048 + board 627:2480 -->
+      <div class="mt-112">
+        <h3 class="cs-h2">Every screen built from the same set of parts</h3>
+        <figure class="cs-fig" style="margin-top:24px">
+          <img src="/images/case-studies/mailq/component-board.webp" width="1100" height="721" loading="lazy"
+               alt="Component board with nine MailQ components and their variant counts: Button (25), Icon (29), Checkbox (2), Chip (6), Avatar (2), Nav Item (2), Sender Info Block (1), Attachment Card (1) and Search Input (3).">
+        </figure>
+      </div>
+
+      <!-- 10 Documentation 618:5057 + board 634:8312 -->
+      <div class="mt-64">
+        <h3 class="cs-h2">Documenting the system</h3>
+        <p class="cs-text">Each component gets one documentation sheet with the same sections, in the same order: an overview, anatomy, variants and properties, behaviour, states and tokens, usage, spacing and sizing, accessibility, and developer handoff.</p>
+        <p class="cs-text">The states and tokens table is the part people actually use while building, so it gets the most care. Its swatches are bound to the real variables rather than pasted as hex codes, so the documentation can’t drift away from the component it describes.</p>
+      </div>
+    </section>
+  </article>
+
+  <!-- documentation board is 1440 wide in Figma, so it sits outside the 1100 column -->
+  <figure class="cs-fig cs-bleed mt-48" aria-label="Button documentation sheet">
+    <div class="doc-board" tabindex="0">
+      <img src="/images/case-studies/mailq/documentation-board.webp" width="1440" height="888" loading="lazy"
+           alt="Documentation sheet for the Button component: title and description, a live preview, and the Anatomy section numbering the label, leading icon and trailing icon with their text style, font and icon names.">
+    </div>
+  </figure>
+
+  <article class="cs-wrap">
+    <!-- 11 Handoff 618:5069 + code block 627:3169 -->
+    <section class="mt-112">
+      <h3 class="cs-h2">Design to dev</h3>
+      <p class="cs-text">Token names map one to one to CSS custom properties: slashes become hyphens, so a designer’s text/action/hover is a developer’s var(--text-action-hover). There’s no translation table to maintain.</p>
+      <p class="cs-text">Every colour a component uses comes from a Semantic token, so dark mode never touches component styles; it only redefines the values underneath.</p>
+      <figure class="cs-fig mt-48">
+        <img src="/images/case-studies/mailq/token-code.webp" width="1100" height="442" loading="lazy"
+             alt="CSS for the secondary button using only Semantic tokens: var(--surface-neutral-raised), var(--border-action-default), var(--text-action-default) and a hover state; a dark-mode rule redefines --surface-neutral-raised under [data-theme=&quot;dark&quot;] without changing the button's CSS.">
+      </figure>
+    </section>
+
+    <!-- Key learnings 634:9170 -->
+    <section class="mt-128" aria-labelledby="s-learnings">
+      <h2 class="cs-h2" id="s-learnings">Lessons beyond the interface</h2>
+      <ol class="learnings">
+        <li>
+          <span class="learn-num" aria-hidden="true">01</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Earn Every Layer</h3>
+            <p class="cs-text">I built a Component tier and tested it on 6 components. All 39 tokens were 1:1 copies of Semantic, so I retired it. A new layer now needs 3–5 real use cases first.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">02</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Naming Is Architecture</h3>
+            <p class="cs-text">A strict property / role / emphasis / state structure made the rules enforceable. Renaming late also showed the cost: docs drift unless they update with the system.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">03</span>
+          <div class="learn-body">
+            <h3 class="cs-title">A Migration Isn’t Done Until It’s Verified</h3>
+            <p class="cs-text">Moving components to Semantic tokens only counted as done once a full sweep of light and dark screens found zero old tokens left.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">04</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Structure Matters as Much as Tokens</h3>
+            <p class="cs-text">Icons lost their colour because of inconsistent layers, not wrong tokens. Rebuilding 28 icons into one flat set fixed it for good.</p>
+          </div>
+        </li>
+        <li>
+          <span class="learn-num" aria-hidden="true">05</span>
+          <div class="learn-body">
+            <h3 class="cs-title">Standards Cost Time Per Component</h3>
+            <p class="cs-text">Only Button meets the full documentation and accessibility standard so far. Setting the template is quick; applying it everywhere needs real time.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </article>
+</main>
+
+<!-- Dark footer 618:5099 -->
+<footer class="cs-footer">
+  <div class="cs-closing">
+    <h2 class="cs-h2">Thanks for reading.</h2>
+    <p class="cs-text">If you’re looking for a Product Designer who builds systems that stay consistent as products grow, I would love to connect.</p>
+
+    <div class="next-card">
+      <div class="next-text">
+        <p class="cs-label">Next case study</p>
+        <p class="next-title">From 4 Tools to One Workspace: Rethinking How Solopreneurs Run Campaigns</p>
+      </div>
+      <a class="next-cta" href="/case-studies/campaign-manager.html">View case study →</a>
+    </div>
+  </div>
+
+  <div class="cs-bottom">
+    <a href="/#work">&larr; Back to work</a>
+    <small>&copy; Mridula Mistry</small>
+  </div>
+</footer>
+
+</body>
+</html>
