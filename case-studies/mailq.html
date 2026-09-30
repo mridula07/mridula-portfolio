@@ -82,18 +82,18 @@
 
   /* ---------- 08 light/dark crossover 627:2261 ----------
      Two stacked exports of the same screen; the dark one is revealed by an animated clip-path.
-     Seam and LIGHT/DARK pills are MailQ's own UI colours (part of the product visual, like the images). */
+     Seam and LIGHT/DARK pills use fixed palette tokens (they sit on the screenshots, so they don't flip in lamp mode). */
   @property --split{syntax:'<percentage>';inherits:true;initial-value:50%;}
-  .ld{--split:50%;--ld-seam:#2E8A80;position:relative;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);
+  .ld{--split:50%;--ld-seam:var(--sun);position:relative;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);
     aspect-ratio:1100/611;}
   .ld img{position:absolute;inset:0;display:block;width:100%;height:100%;}
   .ld-dark{position:absolute;inset:0;clip-path:inset(0 0 0 var(--split));}
   .ld-edge{position:absolute;top:0;bottom:0;left:var(--split);width:0;pointer-events:none;}
   .ld-edge::before{content:"";position:absolute;top:0;bottom:0;left:-.86px;width:1.72px;background:var(--ld-seam);}
   .ld-pill{position:absolute;bottom:17.2px;padding:5.16px 10.3px;border-radius:999px;border:.86px solid;
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:9.45px;line-height:normal;letter-spacing:.04em;white-space:nowrap;}
-  .ld-pill.light{right:13px;background:rgba(255,255,255,.92);border-color:rgba(0,0,0,.12);color:#121717;}
-  .ld-pill.dark{left:14.6px;background:rgba(18,23,23,.92);border-color:rgba(255,255,255,.12);color:#E5EDEB;}
+    font-family:var(--f-body);font-weight:700;font-size:9.45px;line-height:normal;letter-spacing:.04em;white-space:nowrap;}
+  .ld-pill.light{right:13px;background:var(--on-deep);border-color:var(--on-sun);color:var(--on-sun);}
+  .ld-pill.dark{left:14.6px;background:var(--on-sun);border-color:var(--on-deep);color:var(--on-deep);}
   @media (prefers-reduced-motion:no-preference){
     /* wipe in right→left (1.4s), hold dark (1.2s), wipe back (1.4s), hold light (1.2s) */
     .ld{animation:ld-wipe 5.2s infinite;}
@@ -112,6 +112,7 @@
   .learnings li + li{border-top:1.5px solid var(--hairline);}
   .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
     font-size:72px;line-height:.9;color:var(--sky);}
+  body.dim .learn-num{color:var(--hairline);}
   .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
 
   /* ---------- dark footer 618:5099 ---------- */

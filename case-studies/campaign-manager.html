@@ -82,6 +82,7 @@
     transform:translate(var(--dx),0) rotate(var(--rot));margin-top:var(--top);}
   .note::before{content:"";position:absolute;width:92px;height:26px;left:calc(50% - 46px + var(--tape-dx));top:var(--tape-top);
     background:color-mix(in srgb,var(--sky) 85%,transparent);transform:rotate(var(--tape-rot));}
+  body.dim .note::before{background:color-mix(in srgb,var(--hairline) 85%,transparent);}
   .note:nth-child(1){--dx:5px;--top:36px;--rot:2deg;--tape-dx:6px;--tape-top:-12px;--tape-rot:-3deg;}
   .note:nth-child(2){--dx:14px;--top:26px;--rot:-1.5deg;--tape-dx:-3px;--tape-top:-9px;--tape-rot:7.5deg;}
   .note:nth-child(3){--dx:7px;--top:33px;--rot:1deg;--tape-dx:4px;--tape-top:-8px;--tape-rot:0deg;}
@@ -130,6 +131,7 @@
   .learnings li + li{border-top:1.5px solid var(--hairline);}
   .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
     font-size:72px;line-height:.9;color:var(--sky);}
+  body.dim .learn-num{color:var(--hairline);}
   .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
 
   /* ---------- dark footer 43:166 ---------- */

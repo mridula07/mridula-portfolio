@@ -33,10 +33,14 @@
   .badge{align-self:flex-start;border-radius:999px;padding:6px 13px;font-size:.7rem;font-weight:700;
     letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;}
   .badge.feat{background:var(--ink);color:var(--on-ink);}
+  /* Featured sits on the thumbnail, top-left, 16px inset */
+  .case-media .badge{position:absolute;top:16px;left:16px;z-index:1;margin-bottom:0;}
   .badge.soon{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);}
   .case-txt h3{font-size:clamp(1.25rem,1.7vw,1.5rem);line-height:1.08;margin-bottom:11px;}
   .case-txt p{color:var(--body);line-height:1.55;font-size:.92rem;}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  /* case cards: tag row pinned to the bottom of the card body (padding keeps the 16px minimum gap) */
+  .case-txt .tags{margin-top:auto;padding-top:16px;}
   /* one chip style for case study tags and playground tech chips */
   .chip{font-size:.78rem;font-weight:500;color:var(--ink);
     background:var(--cream);border-radius:8px;padding:6px 12px;}
@@ -59,7 +63,12 @@
     overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s;}
   .term:hover{transform:translateY(-5px);box-shadow:inset 0 0 0 1.5px var(--hairline),0 22px 44px rgba(var(--shade),.12);}
   .term-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1.5px solid var(--hairline);}
-  .term-bar i{width:11px;height:11px;border-radius:50%;background:var(--hairline);}
+  .term-bar i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(15,53,80,.14);}
+  /* window controls: red and green are deliberate hardcoded colours tuned to the palette (allowed exception
+     to the token rule, like the Behance/LinkedIn icons); all three stay the same in lamp mode */
+  .term-bar i:nth-child(1){background:#EE6A5A;}
+  .term-bar i:nth-child(2){background:var(--sun);}
+  .term-bar i:nth-child(3){background:#5DBB7A;}
   .term-bar span{font-size:.85rem;color:var(--muted);margin-left:6px;}
   .term-body{padding:26px 28px 28px;}
   .term-cmt{font-size:.85rem;color:var(--muted);margin-bottom:12px;}

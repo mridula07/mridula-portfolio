@@ -2,37 +2,36 @@
   .hero{position:relative;max-width:1240px;margin:0 auto;min-height:100vh;padding:110px 28px 60px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
 
-  /* Grid lives on a separate full-bleed element so it isn't clipped by max-width;
-     it also carries the hero's sky background for the same reason */
+  /* Full-bleed layer behind the hero so the flat sky background isn't clipped by max-width */
   .hero-grid{position:absolute;inset:0;left:50%;transform:translateX(-50%);
     width:100vw;z-index:0;pointer-events:none;overflow:hidden;
     background:var(--sky);transition:background-color .6s var(--ease);}
-  /* grid lines on their own layer so the fade-out mask doesn't also fade the flat sky */
-  .hero-grid::before{content:"";position:absolute;inset:0;
-    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-    background-size:64px 64px;
-    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);
-    mask-image:linear-gradient(180deg,#000 82%,transparent);}
   .hero-head{position:relative;z-index:6;max-width:840px;pointer-events:none;}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--on-ink);border-radius:999px;
-    padding:10px 20px;font-weight:700;font-size:.95rem;box-shadow:0 12px 26px rgba(var(--shade),.28);margin-bottom:26px;
-    pointer-events:auto;animation:pop .6s var(--spring) .3s both;}
-  @keyframes pop{from{opacity:0;transform:scale(.7) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  .hero-name{font-family:var(--f-body);font-weight:700;font-size:.75rem;line-height:normal;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--body);margin-bottom:26px;}
   h1{font-size:clamp(2.125rem,5.6vw,3.125rem);line-height:1.02;}
   h1 .qp{color:var(--ink);white-space:nowrap;}
+  .hero h1{text-wrap:balance;}
+  h1 .h1-end{white-space:nowrap;} /* keep "shipped product." together on its own line */
   .hero-sub{margin-top:24px;font-size:clamp(1rem,1.5vw,1.3125rem);line-height:1.55;color:var(--body);max-width:52ch;margin-inline:auto;pointer-events:auto;}
 
   .objects{position:absolute;inset:0;z-index:4;pointer-events:none;}
-  .obj{position:absolute;cursor:pointer;pointer-events:auto;transition:transform .4s var(--spring);
-    animation:drift var(--dur,7s) ease-in-out var(--del,0s) infinite;}
+  /* objects rest in place: one staggered entrance on load, then a small lift + tilt on hover.
+     Uses the individual translate/rotate properties so it stacks with each object's own transform. */
+  .obj{position:absolute;cursor:pointer;pointer-events:auto;
+    transition:transform .4s var(--spring),translate .2s ease-out,rotate .2s ease-out;}
+  @media (prefers-reduced-motion:no-preference){
+    .obj{animation:obj-in .6s var(--ease) var(--in,0s) backwards;}
+    .obj:hover{translate:0 -4px;rotate:2deg;}
+  }
+  @keyframes obj-in{from{opacity:0;translate:0 12px;}}
   .obj img,.obj svg{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 26px rgba(var(--shade),.20));}
-  @keyframes drift{0%,100%{translate:0 0}50%{translate:0 -12px}}
   .obj-label{position:absolute;left:50%;top:-30px;transform:translateX(-50%);white-space:nowrap;
     background:var(--ink);color:var(--on-ink);font-weight:700;font-size:.72rem;
     padding:5px 11px;border-radius:999px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;}
   .obj:hover .obj-label{opacity:1;transform:translateX(-50%) translateY(-3px);}
 
-  #cassette{width:150px;top:11%;left:5%;--dur:9s;--del:.6s;}
+  #cassette{width:150px;top:11%;left:5%;--in:.1s;}
   .now-playing{position:absolute;left:50%;bottom:-40px;transform:translateX(-50%);white-space:nowrap;
     background:var(--ink);color:var(--on-ink);font-weight:700;font-size:.72rem;padding:6px 13px;border-radius:999px;
     display:flex;align-items:center;gap:6px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;
@@ -45,7 +44,7 @@
   .eq i:nth-child(2){animation-delay:.2s}.eq i:nth-child(3){animation-delay:.4s}
   @keyframes eq{0%,100%{height:4px}50%{height:11px}}
 
-  #lamp{width:150px;top:8%;right:6%;--dur:8s;}
+  #lamp{width:150px;top:8%;right:6%;--in:.18s;}
   #lamp .lampwrap{position:relative;}
   /* lighting effect: --sun at the original alphas (not one of the four UI uses) */
   #lamp .beam{position:absolute;left:-5%;top:40%;width:140px;height:260px;
@@ -57,13 +56,12 @@
     background:radial-gradient(circle,color-mix(in srgb,var(--sun) 90%,transparent),color-mix(in srgb,var(--sun) 0%,transparent) 70%);opacity:0;transition:opacity .45s;filter:none;}
   #lamp.on .glow{opacity:1;}
 
-  #gloves{width:104px;top:30%;right:11%;--dur:7.5s;--del:1s;transform-origin:top center;}
+  #gloves{width:104px;top:30%;right:11%;--in:.26s;transform-origin:top center;}
   #gloves:hover img{animation:swing 1.2s ease-in-out;}
   @keyframes swing{0%,100%{rotate:0deg}20%{rotate:-11deg}50%{rotate:9deg}80%{rotate:-4deg}}
 
-  #polaroid{width:158px;top:39%;left:3.5%;--dur:9.5s;--del:.9s;}
+  #polaroid{width:158px;top:39%;left:3.5%;--in:.34s;}
   .pola{background:var(--paper);padding:9px 9px 0;border-radius:8px;box-shadow:0 18px 40px rgba(var(--shade),.22);transition:transform .5s var(--spring);}
-  #polaroid:hover .pola{transform:rotate(-2deg) scale(1.04);}
   .pola-imgwrap{position:relative;width:100%;aspect-ratio:3/3.6;border-radius:5px;overflow:hidden;}
   .pola-imgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .45s var(--ease);}
   .pola-imgwrap .pov{opacity:0;}
@@ -71,20 +69,15 @@
   #polaroid:hover .pola-imgwrap .main{opacity:0;}
   .pola-cap{font-weight:500;font-size:1.05rem;color:var(--muted);text-align:center;padding:6px 0 8px;}
 
-  #bpass{width:236px;bottom:11%;left:4%;--dur:10s;--del:.3s;}
-  #bpass:hover{transform:rotate(-2deg) translateY(-6px) scale(1.03);}
+  #bpass{width:236px;bottom:11%;left:4%;--in:.42s;}
 
-  #coffee{width:118px;bottom:9%;right:6%;--dur:8.5s;--del:.9s;}
-  .coffee-note{position:absolute;left:50%;top:-42px;transform:translateX(-50%) translateY(6px);white-space:nowrap;
-    background:var(--paper);color:var(--body);font-weight:500;font-size:1.15rem;padding:6px 15px;border-radius:14px;
-    box-shadow:var(--shadow);opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;}
-  #coffee:hover .coffee-note{opacity:1;transform:translateX(-50%) translateY(0);}
+  #coffee{width:118px;bottom:9%;right:6%;--in:.5s;}
   #coffee .steam{position:absolute;left:36%;top:-4%;width:5px;height:20px;border-radius:3px;background:color-mix(in srgb,var(--muted) 40%,transparent);opacity:0;}
   #coffee:hover .steam{opacity:1;animation:steam 1.4s ease-in-out infinite;}
   @keyframes steam{0%{opacity:.5;translate:0 4px}100%{opacity:0;translate:0 -12px}}
 
-  #shuttle{width:80px;top:56%;left:88%;--dur:0s;z-index:5;
-    transition:top .5s var(--spring),left .5s var(--spring),transform .5s var(--spring);}
+  #shuttle{width:80px;top:56%;left:88%;--in:.58s;z-index:5;
+    transition:top .5s var(--spring),left .5s var(--spring),transform .5s var(--spring),translate .2s ease-out,rotate .2s ease-out;}
   #shuttle .smash-label{position:absolute;left:50%;top:-26px;transform:translateX(-50%);white-space:nowrap;
     background:var(--ink);color:var(--on-ink);font-weight:700;font-size:.72rem;
     padding:5px 12px;border-radius:999px;box-shadow:0 6px 14px rgba(var(--shade),.3);}
@@ -92,6 +85,18 @@
     background:var(--ink);color:var(--on-ink);font-weight:700;font-size:.72rem;padding:5px 11px;border-radius:999px;opacity:0;}
   #shuttle.caught img{animation:spinS .7s var(--spring);}
   @keyframes spinS{0%{rotate:0}100%{rotate:360deg}}
+
+  /* desktop only (900px+): each object sits 16px further towards its nearest hero corner.
+     Gloves + shuttlecock (with its "smash me" label) move together as one group. Below 900px keeps the base values. */
+  @media (min-width:900px){
+    #cassette{top:calc(11% - 16px);left:calc(5% - 16px);}
+    #lamp{top:calc(8% - 16px);right:calc(6% - 16px);}
+    #polaroid{top:calc(39% + 16px);left:calc(3.5% - 16px);}
+    #gloves{top:calc(30% - 16px);right:calc(11% - 16px);}
+    #shuttle{top:calc(56% - 16px);left:calc(88% + 16px);}
+    #bpass{bottom:calc(11% - 16px);left:calc(4% - 16px);}
+    #coffee{bottom:calc(9% - 16px);right:calc(6% - 16px);}
+  }
 
   .spark{position:absolute;color:var(--ink);animation:tw 3.6s ease-in-out var(--d,0s) infinite;pointer-events:none;z-index:3;}
   @keyframes tw{0%,100%{opacity:.1;scale:.7}50%{opacity:.7;scale:1}}
