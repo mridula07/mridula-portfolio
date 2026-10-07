@@ -26,7 +26,7 @@
     #lamp{width:96px;top:9%;right:3%;}
     #coffee{width:84px;bottom:6%;right:5%;}
     #shuttle{width:60px;top:auto;bottom:9%;left:8%;}
-    nav a:not(.talk){display:none;}
+    nav a:not(.talk):not(.nav-mark){display:none;}
     .kind-grid{grid-template-columns:1fr;}
     .vx-tile{height:170px;}
     .pit{height:240px;}

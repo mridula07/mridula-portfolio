@@ -56,6 +56,9 @@
   nav a{text-decoration:none;color:var(--body);font-size:.87rem;font-weight:500;padding:9px 14px;border-radius:999px;transition:background .25s;}
   nav a:hover{background:var(--hairline);color:var(--ink);}
   nav a.talk{background:var(--sun);color:var(--on-sun);font-weight:700;margin-left:6px;}
+  nav a.nav-mark{padding:0;border-radius:12px;background:var(--ink);transition:transform .3s var(--spring);}
+  nav a.nav-mark:hover{background:var(--ink);transform:rotate(0deg) scale(1.06);}
+  nav a.nav-mark:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
   nav a.talk:hover{background:var(--sun);color:var(--on-sun);}
 
 

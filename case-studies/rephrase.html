@@ -47,6 +47,9 @@ nav{display:flex;align-items:center;background:color-mix(in srgb,var(--paper) 85
 .nav-mark svg{display:block;width:22px;height:22px;}
 nav a{text-decoration:none;color:var(--body);font-size:.87rem;font-weight:500;padding:9px 14px;border-radius:999px;transition:background .25s;}
 nav a:hover{background:var(--hairline);color:var(--ink);}
+nav a.nav-mark{padding:0;border-radius:12px;background:var(--ink);transition:transform .3s var(--spring);}
+nav a.nav-mark:hover{background:var(--ink);transform:rotate(0deg) scale(1.06);}
+nav a.nav-mark:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
 nav a.talk{background:var(--sun);color:var(--on-sun);font-weight:700;margin-left:6px;}
 
 /* ---------- page + shared type (same scale as the other case studies) ---------- */
@@ -204,7 +207,7 @@ h2 + .text{margin-top:24px;}
   .next-card{flex-direction:column;align-items:flex-start;}
 }
 @media (max-width:640px){
-  nav a:not(.talk){display:none;}
+  nav a:not(.talk):not(.nav-mark){display:none;}
   .cs{--gap-section:72px;padding:108px 16px 0;}
   .cs-summary{font-size:1.08rem;}
   .keys{grid-template-columns:minmax(0,1fr);}
@@ -224,8 +227,8 @@ h2 + .text{margin-top:24px;}
 
 <div class="nav-wrap">
   <nav aria-label="Site">
-    <span class="nav-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 200 200"><path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148" fill="none" stroke="#F5EEDD" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-    <a href="/#about">About</a><a href="/#work">Work</a><a href="/#play">Playground</a>
+    <a href="/" aria-label="Home" class="nav-mark"><svg width="22" height="22" viewBox="0 0 200 200"><path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148" fill="none" stroke="#F5EEDD" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a href="/#about">About</a><a href="/#work">Work</a><a href="/#play">Playground</a><a href="/#kind">Testimonials</a>
     <a class="talk" href="mailto:mistry.mridula6@gmail.com">Let&rsquo;s talk</a>
   </nav>
 </div>
@@ -240,7 +243,7 @@ h2 + .text{margin-top:24px;}
       <div><dt>Role</dt><dd>Designer who builds</dd></div>
       <div><dt>Platform</dt><dd>Desktop &amp; mobile</dd></div>
       <div><dt>Built with</dt><dd>Figma, Claude Code, Gemini</dd></div>
-      <div><dt>Links</dt><dd><a href="https://rephrase-lovat.vercel.app">Live app</a> · <a href="https://github.com/mridula07/Rephrase">GitHub</a></dd></div>
+      <div><dt>Links</dt><dd><a href="https://rephrase-lovat.vercel.app" target="_blank" rel="noopener noreferrer">Live app</a> · <a href="https://github.com/mridula07/Rephrase" target="_blank" rel="noopener noreferrer">GitHub</a></dd></div>
     </dl>
     <figure class="stage" aria-label="Rephrase on a MacBook Pro">
       <div class="mbp"><div class="mbp-in">
@@ -403,7 +406,7 @@ h2 + .text{margin-top:24px;}
         <p class="label">Try it yourself</p>
         <p class="next-title">Type the message you&rsquo;ve been putting off</p>
       </div>
-      <a class="next-cta" href="https://rephrase-lovat.vercel.app">Open Rephrase &rarr;</a>
+      <a class="next-cta" href="https://rephrase-lovat.vercel.app" target="_blank" rel="noopener noreferrer">Open Rephrase &rarr;</a>
     </div>
   </div>
   <div class="cs-bottom">

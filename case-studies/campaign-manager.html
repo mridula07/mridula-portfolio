@@ -192,7 +192,7 @@
     .next-card{flex-direction:column;align-items:flex-start;}
   }
   @media (max-width:640px){
-    nav a:not(.talk){display:none;}
+    nav a:not(.talk):not(.nav-mark){display:none;}
     .cs{--gap-section:72px;padding:108px 16px 0;}
     .cs-summary{font-size:1.08rem;}
     .learnings li{gap:18px;}
@@ -207,13 +207,13 @@
 
 <div class="nav-wrap">
   <nav>
-    <span class="nav-mark">
+    <a href="/" aria-label="Home" class="nav-mark">
       <svg width="22" height="22" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148"
               fill="none" style="stroke:var(--on-ink)" stroke-width="16"
               stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </span>
+    </a>
     <a href="/#about">About</a><a href="/#work">Work</a><a href="/#play">Playground</a><a href="/#kind">Testimonials</a>
     <a class="talk" href="mailto:mistry.mridula6@gmail.com">Let&rsquo;s talk</a>
   </nav>
