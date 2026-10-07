@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Corporate Phrasebook I Wish I Had — Mridula Mistry</title>
+<meta name="description" content="Rephrase: an AI tool that turns what you actually want to say into a message you can send at work. Designed in Figma, built with Claude Code." />
+<link rel="icon" type="image/svg+xml" href="/images/mm-favicon.svg" />
+<link rel="preload" href="/fonts/calistoga-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/karla-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Calistoga';src:url('/fonts/calistoga-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Karla';src:url('/fonts/karla-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Karla';src:url('/fonts/karla-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap;}
+@font-face{font-family:'Karla';src:url('/fonts/karla-latin-700-normal.woff2') format('woff2');font-weight:700;font-display:swap;}
+@font-face{font-family:'Patrick Hand';src:url('/fonts/patrick-hand-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'IBM Plex Mono';src:url('/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap;}
+/* Layout: matches the portfolio case-study system (campaign-manager.html): cream page, 1100px column,
+   "01 - eyebrow" + Calistoga h2 + Karla 17px text, paper cards with hairlines, deep-blue rounded footer. Light only, like the site. */
+:root{
+  --sky:#A9D3F5;--cream:#F5EEDD;--paper:#FBF7EE;
+  --ink:#16587B;--body:#0F3550;--muted:#4A6478;--hairline:#C9D5DC;
+  --sun:#FFC845;--on-ink:#F5EEDD;--on-sun:#0F3550;
+  --deep:#16587B;--on-deep:#F5EEDD;
+  --shade:15,53,80;
+  --shadow:0 14px 34px rgba(15,53,80,.10),0 2px 6px rgba(15,53,80,.04);
+  --f-display:'Calistoga',Georgia,serif;
+  --f-body:'Karla',system-ui,-apple-system,sans-serif;
+  --f-hand:'Patrick Hand','Comic Sans MS',cursive;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --spring:cubic-bezier(.34,1.3,.4,1);--ease:cubic-bezier(.23,.7,.32,1);
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--f-body);line-height:1.55;color:var(--body);background:var(--cream);overflow-x:hidden;}
+::selection{background:var(--ink);color:var(--on-ink);}
+img{max-width:100%;display:block;height:auto;}
+a{color:var(--ink);}
+a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px;}
+p{margin:0;}
+
+/* ---------- nav (site) ---------- */
+.nav-wrap{position:fixed;top:16px;left:0;right:0;z-index:100;display:flex;justify-content:center;padding:0 18px;}
+nav{display:flex;align-items:center;background:color-mix(in srgb,var(--paper) 85%,transparent);backdrop-filter:blur(12px);
+  border-radius:999px;padding:7px 8px;box-shadow:0 6px 22px rgba(var(--shade),.10),inset 0 0 0 1px var(--hairline);}
+.nav-mark{width:34px;height:34px;border-radius:12px;background:var(--ink);display:grid;place-items:center;margin-right:8px;transform:rotate(-4deg);flex-shrink:0;}
+.nav-mark svg{display:block;width:22px;height:22px;}
+nav a{text-decoration:none;color:var(--body);font-size:.87rem;font-weight:500;padding:9px 14px;border-radius:999px;transition:background .25s;}
+nav a:hover{background:var(--hairline);color:var(--ink);}
+nav a.talk{background:var(--sun);color:var(--on-sun);font-weight:700;margin-left:6px;}
+
+/* ---------- page + shared type (same scale as the other case studies) ---------- */
+.cs{--gap-section:112px;padding:128px 24px 0;}
+.wrap{max-width:1100px;margin:0 auto;}
+.read{max-width:760px;}
+.center{margin-inline:auto;text-align:center;}
+.cs-back{display:block;width:max-content;font-weight:700;font-size:.92rem;color:var(--ink);text-decoration:none;}
+.cs-back:hover{text-decoration:underline;}
+.cs-tags{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;margin-top:40px;font-weight:700;font-size:12px;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+h1,h2{font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;}
+h1{margin-top:18px;font-size:clamp(2rem,5vw,3rem);line-height:1.08;}
+.cs-summary{margin-top:20px;font-size:1.2rem;line-height:1.55;color:var(--body);max-width:760px;}
+.cs-summary .hand{font-family:var(--f-hand);font-size:1.3rem;}
+.cs-meta{display:flex;gap:24px;margin-top:44px;padding:24px 0;border-top:1.5px solid var(--hairline);border-bottom:1.5px solid var(--hairline);}
+.cs-meta > div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;}
+.cs-meta dt{font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.cs-meta dd{font-weight:700;font-size:.95rem;line-height:1.4;color:var(--body);}
+
+.sec{margin-top:var(--gap-section);}
+.eyebrow{font-weight:700;font-size:12.5px;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);}
+h2{margin-top:10px;font-size:clamp(1.75rem,4vw,2.2rem);line-height:1.08;}
+.text{font-size:17px;line-height:1.55;color:var(--body);}
+h2 + .text{margin-top:24px;}
+.text + .text{margin-top:16px;}
+.text b{color:var(--ink);}
+.label{font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.title{font-family:var(--f-body);font-weight:700;font-size:18.4px;line-height:1.3;letter-spacing:-.01em;color:var(--body);}
+.hl{background:linear-gradient(transparent 55%,color-mix(in srgb,var(--sky) 80%,transparent) 55%,color-mix(in srgb,var(--sky) 80%,transparent) 92%,transparent 92%);padding-inline:2px;}
+.card{background:var(--paper);border:1px solid var(--hairline);border-radius:16px;}
+
+/* ---------- hero: MacBook Pro (space black, notch), drawn in CSS from devices.css (MIT) proportions; 1u = 1/740 of its width ---------- */
+.stage{margin-top:40px;background:var(--paper);border:1px solid var(--hairline);border-radius:16px;padding:56px 5% 48px;overflow:hidden;
+  background-image:radial-gradient(color-mix(in srgb,var(--sky) 45%,transparent) 1px,transparent 1.2px);background-size:22px 22px;}
+.mbp{container-type:inline-size;width:100%;max-width:960px;margin:0 auto;}
+.mbp-in{--u:calc(100cqw / 740);position:relative;width:100cqw;}
+.mbp-lid{position:relative;width:calc(618 * var(--u));margin:0 auto;padding:calc(9 * var(--u)) calc(9 * var(--u)) calc(23 * var(--u));
+  background:#0d0d0d;border-radius:calc(20 * var(--u)) calc(20 * var(--u)) 0 0;box-shadow:inset 0 0 0 calc(2 * var(--u)) #5b5e62;}
+.mbp-lid::after{content:"";position:absolute;left:calc(2 * var(--u));right:calc(2 * var(--u));bottom:calc(2 * var(--u));height:calc(22 * var(--u));
+  background:linear-gradient(#202022,#0d0d0d);border-radius:0 0 calc(4 * var(--u)) calc(4 * var(--u));}
+.mbp-notch{position:absolute;z-index:2;top:calc(11 * var(--u));left:50%;width:calc(64 * var(--u));height:calc(12 * var(--u));margin-left:calc(-32 * var(--u));
+  background:#0d0d0d;border-radius:0 0 calc(5 * var(--u)) calc(5 * var(--u));}
+.mbp-notch::after{content:"";position:absolute;top:calc(4 * var(--u));left:50%;width:calc(4 * var(--u));height:calc(4 * var(--u));margin-left:calc(-2 * var(--u));border-radius:50%;background:#1d2a33;}
+.mbp-screen{position:relative;z-index:1;aspect-ratio:600/375;border:calc(2 * var(--u)) solid #121212;border-radius:calc(10 * var(--u)) calc(10 * var(--u)) 0 0;overflow:hidden;background:#ECE6DC;}
+.mbp-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.mbp-base{position:relative;z-index:3;width:100%;height:calc(22 * var(--u));margin-top:calc(-10 * var(--u));
+  background:linear-gradient(#4a4c4f,#2c2d2f 55%,#1d1e20);border-radius:calc(2 * var(--u)) calc(2 * var(--u)) calc(14 * var(--u)) calc(14 * var(--u));
+  box-shadow:inset 0 calc(1 * var(--u)) 0 #6b6e72,0 calc(24 * var(--u)) calc(36 * var(--u)) calc(-14 * var(--u)) rgba(var(--shade),.45);}
+.mbp-base::after{content:"";position:absolute;top:0;left:50%;width:calc(120 * var(--u));height:calc(9 * var(--u));margin-left:calc(-60 * var(--u));
+  background:linear-gradient(#2a2b2d,#3b3d40);border-radius:0 0 calc(10 * var(--u)) calc(10 * var(--u));box-shadow:inset 0 0 calc(4 * var(--u)) rgba(0,0,0,.6);}
+
+/* ---------- 04 design board ---------- */
+.board{margin-top:40px;background:#ECE6DC;border-radius:16px;padding:40px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;overflow:hidden;}
+.board-objs{position:relative;min-height:300px;}
+.board-objs img{position:absolute;filter:drop-shadow(0 6px 10px rgba(46,38,31,.22));}
+.board-objs .o1{width:38%;left:0;top:0;transform:rotate(-12deg);}
+.board-objs .o2{width:30%;right:6%;top:4%;transform:rotate(10deg);}
+.board-objs .o3{width:34%;left:22%;bottom:0;transform:rotate(-6deg);}
+.board-objs .o4{width:15%;right:14%;bottom:8%;transform:rotate(22deg);}
+.board-spec{display:grid;gap:16px;align-content:center;}
+.swatches{display:flex;gap:10px;flex-wrap:wrap;}
+.sw{display:grid;gap:6px;font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:.04em;}
+.sw i{width:56px;height:56px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);}
+.specimen{background:#FCFAF5;border-radius:12px;padding:14px 18px;display:grid;gap:6px;box-shadow:0 1px 2px rgba(46,38,31,.12);}
+.specimen .tab{font-family:var(--f-mono);font-size:22px;letter-spacing:.06em;color:#22303A;}
+.specimen .hw{font-family:var(--f-hand);font-size:26px;color:#2B2926;line-height:1.1;}
+.specimen img{width:100%;max-width:420px;border-radius:6px;}
+
+/* ---------- 05 vibe-coded steps ---------- */
+.steps{list-style:none;margin-top:40px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;counter-reset:st;}
+.step{position:relative;padding:22px 20px 20px;display:grid;gap:8px;align-content:start;}
+.step::before{counter-increment:st;content:counter(st,decimal-leading-zero);font-family:var(--f-display);font-size:34px;line-height:1;color:var(--sky);}
+.step:not(:last-child)::after{content:"";position:absolute;top:38px;right:-13px;width:10px;height:10px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg);opacity:.45;}
+.step b{font-size:17px;line-height:1.3;color:var(--ink);}
+.step p{font-size:15px;line-height:1.5;}
+.tool{justify-self:start;margin-top:6px;font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--hairline);border-radius:30px;padding:4px 10px;background:var(--cream);}
+
+/* ---------- 02 phrasebook + chat ---------- */
+.phrasebook{margin-top:40px;overflow:hidden;}
+.pb-head,.pb-row{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);align-items:center;gap:12px;padding:16px 28px;}
+.pb-head{border-bottom:1.5px solid var(--hairline);}
+.pb-row + .pb-row{border-top:1px dashed var(--hairline);}
+.pb-raw{font-family:var(--f-hand);font-size:21px;line-height:1.25;color:var(--body);}
+.pb-arrow{color:var(--ink);text-align:center;font-size:18px;}
+.pb-work{font-weight:500;font-size:17px;color:var(--ink);}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center;}
+.chat{padding:22px;display:grid;gap:14px;box-shadow:var(--shadow);}
+.chat-top{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--muted);padding-bottom:12px;border-bottom:1.5px solid var(--hairline);}
+.msg{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start;}
+.av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--on-ink);background:var(--ink);}
+.av.me{background:var(--sky);color:var(--body);}
+.who{font-weight:700;font-size:14px;}
+.who span{font-weight:400;color:var(--muted);font-size:12.5px;margin-left:6px;}
+.bubble{font-size:15.5px;line-height:1.45;margin-top:2px;}
+.thought{margin-top:6px;font-family:var(--f-hand);font-size:18px;color:var(--muted);border-left:2px solid var(--sky);padding-left:10px;}
+
+/* ---------- 03 annotated screen ---------- */
+.anno{position:relative;margin-top:40px;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+.pin{position:absolute;left:var(--x);top:var(--y);width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:var(--ink);color:var(--on-ink);font-weight:700;font-size:13px;display:grid;place-items:center;box-shadow:0 0 0 5px color-mix(in srgb,var(--sky) 70%,transparent);}
+.keys{list-style:none;margin-top:32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 32px;counter-reset:k;}
+.keys li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;font-size:16px;line-height:1.5;}
+.keys li::before{counter-increment:k;content:counter(k);width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--on-ink);font-weight:700;font-size:12.5px;display:grid;place-items:center;}
+.keys b{display:block;color:var(--ink);}
+
+/* ---------- 06 one message, four ways ---------- */
+.raw{margin-top:40px;display:flex;justify-content:center;}
+.raw-card{padding:16px 20px;max-width:540px;transform:rotate(-.8deg);box-shadow:var(--shadow);}
+.raw-card p{font-family:var(--f-hand);font-size:21px;line-height:1.3;color:var(--body);margin-top:4px;}
+.grid4{margin-top:32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
+.card4{padding:22px;display:grid;gap:12px;align-content:start;}
+.card4 h3{font-family:var(--f-display);font-weight:400;font-size:22px;color:var(--ink);}
+.out{background:var(--sky);border-radius:4px 16px 16px 16px;padding:12px 16px;font-size:16px;line-height:1.5;color:var(--body);}
+
+/* ---------- key decisions: instead of → chose → because ---------- */
+.decisions{list-style:none;margin-top:40px;display:grid;gap:16px;}
+.dec{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) minmax(0,1.3fr);align-items:center;gap:16px;padding:20px 24px;}
+.dec-from{font-size:16px;line-height:1.4;color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 70%,transparent);}
+.dec-arrow{color:var(--ink);font-size:18px;text-align:center;}
+.dec-to{font-weight:700;font-size:16.5px;line-height:1.4;color:var(--ink);}
+.dec-why{font-size:15.5px;line-height:1.5;padding-left:16px;border-left:1.5px solid var(--hairline);}
+
+/* ---------- footer (site) ---------- */
+.cs-footer{margin-top:120px;background:var(--deep);color:var(--on-deep);border-radius:80px 80px 0 0;padding:112px 24px 40px;}
+.cs-closing{max-width:720px;margin:0 auto;}
+.cs-closing h2{margin-top:0;color:var(--on-deep);}
+.cs-closing .text{color:color-mix(in srgb,var(--on-deep) 82%,transparent);}
+.cs-closing h2 + .text{margin-top:20px;}
+.next-card{margin-top:56px;display:flex;align-items:center;gap:24px;padding:28px 32px;border-radius:16px;background:color-mix(in srgb,var(--on-deep) 7%,transparent);border:1.5px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+.next-text{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+.next-text .label{color:color-mix(in srgb,var(--on-deep) 70%,transparent);}
+.next-title{font-family:var(--f-display);font-size:24px;line-height:1.15;letter-spacing:-.01em;color:var(--on-deep);}
+.next-cta{flex:none;padding:14px 24px;border-radius:999px;background:var(--sun);color:var(--on-sun);font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;transition:transform .3s var(--spring);}
+.next-cta:hover{transform:translateY(-2px);}
+.cs-bottom{max-width:1100px;margin:96px auto 0;padding-top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid color-mix(in srgb,var(--on-deep) 18%,transparent);}
+.cs-bottom a{font-weight:700;font-size:.92rem;color:var(--on-deep);text-decoration:none;}
+.cs-bottom a:hover{text-decoration:underline;}
+.cs-bottom small{font-size:.85rem;color:color-mix(in srgb,var(--on-deep) 65%,transparent);}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){.steps{grid-template-columns:repeat(3,minmax(0,1fr));}.step:nth-child(3)::after{display:none;}}
+@media (max-width:900px){
+  .cs{--gap-section:88px;}
+  .cs-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px 24px;}
+  .two,.board,.grid4{grid-template-columns:minmax(0,1fr);}
+  .dec{grid-template-columns:minmax(0,1fr);gap:6px;}
+  .dec-arrow{display:none;}
+  .dec-why{padding-left:0;border-left:0;padding-top:8px;border-top:1px dashed var(--hairline);}
+  .steps{grid-template-columns:minmax(0,1fr);gap:14px;}
+  .step{grid-template-columns:52px minmax(0,1fr);column-gap:14px;row-gap:4px;}
+  .step::before{grid-row:span 3;}
+  .step::after{display:none;}
+  .keys{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .board-objs{min-height:240px;}
+  .cs-footer{border-radius:40px 40px 0 0;padding-top:80px;}
+  .next-card{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:640px){
+  nav a:not(.talk){display:none;}
+  .cs{--gap-section:72px;padding:108px 16px 0;}
+  .cs-summary{font-size:1.08rem;}
+  .keys{grid-template-columns:minmax(0,1fr);}
+  .pb-head,.pb-row{grid-template-columns:minmax(0,1fr);gap:4px;padding:14px 18px;}
+  .pb-head span:nth-child(2),.pb-arrow{display:none;}
+  .board{padding:24px;}
+  .stage{padding:28px 5% 0;}
+  .pin{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:11px;box-shadow:0 0 0 3px color-mix(in srgb,var(--sky) 70%,transparent);}
+  .cs-footer{padding:64px 16px 32px;}
+  .next-card{padding:24px;}
+  .cs-bottom{margin-top:64px;}
+}
+@media (prefers-reduced-motion:reduce){.next-cta{transition:none;}}
+</style>
+</head>
+<body>
+
+<div class="nav-wrap">
+  <nav aria-label="Site">
+    <span class="nav-mark" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 200 200"><path d="M44 148 L44 68 L72 102 L100 52 L128 102 L156 68 L156 148" fill="none" stroke="#F5EEDD" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <a href="/#about">About</a><a href="/#work">Work</a><a href="/#play">Playground</a>
+    <a class="talk" href="mailto:mistry.mridula6@gmail.com">Let&rsquo;s talk</a>
+  </nav>
+</div>
+
+<main class="cs">
+  <div class="wrap">
+  <header>
+    <a class="cs-back" href="/#play">&larr; Back</a>
+    <h1>The Corporate Phrasebook I Wish I Had</h1>
+    <p class="cs-summary">Rephrase turns <span class="hand">"ugh, this deadline is impossible"</span> into a message you can actually send at work, and shows you why it works.</p>
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Designer who builds</dd></div>
+      <div><dt>Platform</dt><dd>Desktop &amp; mobile</dd></div>
+      <div><dt>Built with</dt><dd>Figma, Claude Code, Gemini</dd></div>
+      <div><dt>Links</dt><dd><a href="https://rephrase-lovat.vercel.app">Live app</a> · <a href="https://github.com/mridula07/Rephrase">GitHub</a></dd></div>
+    </dl>
+    <figure class="stage" aria-label="Rephrase on a MacBook Pro">
+      <div class="mbp"><div class="mbp-in">
+        <div class="mbp-lid"><span class="mbp-notch" aria-hidden="true"></span>
+          <div class="mbp-screen"><img src="/images/case-studies/rephrase/v2-result.webp" width="1440" height="900" alt="Rephrase: an open blue folder on a desk. The left page has a messy draft and three sets of choices; the right page shows the rewritten message and why it works."></div>
+        </div>
+        <div class="mbp-base" aria-hidden="true"></div>
+      </div></div>
+    </figure>
+  </header>
+
+  <!-- 01 -->
+  <section class="sec" aria-labelledby="s1">
+    <div class="read">
+      <p class="eyebrow">01 - Why I built it</p>
+      <h2 id="s1">Everyone around me was vibe-coding apps</h2>
+      <p class="text">My feed was full of people shipping whole apps in a weekend with AI, mostly games and fun experiments. I wanted to point the same tools at something more useful: a problem I had actually lived through, taken all the way from an idea to a live product people can use at work.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="sec" aria-labelledby="s2">
+    <div class="read">
+      <p class="eyebrow">02 - The problem</p>
+      <h2 id="s2">Nobody teaches you how to talk at work</h2>
+      <p class="text">When I started working, I thought you just talk normally. Then I noticed everyone around me spoke a different language. They said the same things I wanted to say, but in a way that got taken seriously.</p>
+    </div>
+    <div class="phrasebook card" role="table" aria-label="What I thought versus how it was said at work">
+      <div class="pb-head" role="row"><span class="label" role="columnheader">Unfiltered</span><span aria-hidden="true"></span><span class="label" role="columnheader">Corporate-ready</span></div>
+      <div class="pb-row" role="row"><span class="pb-raw" role="cell">i'm drowning, i can't take more</span><span class="pb-arrow" aria-hidden="true">→</span><span class="pb-work" role="cell">I don't have the bandwidth this week.</span></div>
+      <div class="pb-row" role="row"><span class="pb-raw" role="cell">this is never getting done by friday</span><span class="pb-arrow" aria-hidden="true">→</span><span class="pb-work" role="cell">Flagging a risk on Friday's deadline.</span></div>
+      <div class="pb-row" role="row"><span class="pb-raw" role="cell">why is this my job?</span><span class="pb-arrow" aria-hidden="true">→</span><span class="pb-work" role="cell">Can we align on who owns this?</span></div>
+    </div>
+
+    <div class="two" style="margin-top:88px">
+      <div>
+        <h3 class="title" style="font-size:20.8px">So I said yes to everything</h3>
+        <p class="text">Extra work, impossible deadlines, tasks that weren't mine. Not because I agreed, but because I didn't know how to push back without sounding unprofessional.</p>
+      </div>
+      <div class="chat card" aria-label="An example chat">
+        <div class="chat-top"># design-team</div>
+        <div class="msg"><span class="av" aria-hidden="true">PM</span><div><p class="who">Manager <span>4:52 PM</span></p><p class="bubble">Can you also pick up the onboarding screens? Need them by tomorrow 🙏</p></div></div>
+        <div class="msg"><span class="av me" aria-hidden="true">M</span><div><p class="who">Me <span>4:53 PM</span></p><p class="bubble">Sure, will do!</p><p class="thought">already working till 10pm this week…</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="sec" aria-labelledby="s3">
+    <div class="read">
+      <p class="eyebrow">03 - The solution</p>
+      <h2 id="s3">From what you mean to what you can send</h2>
+      <p class="text">Rephrase is one screen. You write the message the way you'd say it to a friend, make three quick choices, and get back <span class="hl">a chat-length message you can paste into Slack or Teams</span>, with one line on the move it made.</p>
+    </div>
+    <figure class="anno">
+      <img src="/images/case-studies/rephrase/v2-result.webp" width="1440" height="900" alt="The Rephrase screen with numbered markers on its six parts.">
+      <span class="pin" style="--x:17%;--y:31%" aria-hidden="true">1</span>
+      <span class="pin" style="--x:17%;--y:65%" aria-hidden="true">2</span>
+      <span class="pin" style="--x:17%;--y:73%" aria-hidden="true">3</span>
+      <span class="pin" style="--x:46%;--y:79%" aria-hidden="true">4</span>
+      <span class="pin" style="--x:83%;--y:33%" aria-hidden="true">5</span>
+      <span class="pin" style="--x:53%;--y:48%" aria-hidden="true">6</span>
+    </figure>
+    <ol class="keys">
+      <li><span><b>Pick a situation</b>Optional. Each one carries its own guidance, like framing a deadline as a risk.</span></li>
+      <li><span><b>Sending to</b>Manager, peer, senior or client. This changes the shape of the message.</span></li>
+      <li><span><b>How firm</b>Gentle, balanced or firm. This changes how strongly it's said.</span></li>
+      <li><span><b>Translate</b>Your draft goes to the AI with all three choices.</span></li>
+      <li><span><b>The message</b>Ready to copy, with who it's for and how long it is.</span></li>
+      <li><span><b>Why this works</b>Names the technique, so over time you need the tool less.</span></li>
+    </ol>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec" aria-labelledby="s4b">
+    <div class="read">
+      <p class="eyebrow">04 - Key decisions</p>
+      <h2 id="s4b">Fewer controls, each one mapped to how people think</h2>
+    </div>
+    <ol class="decisions">
+      <li class="dec card"><span class="dec-from">A formality slider, Casual to Formal</span><span class="dec-arrow" aria-hidden="true">→</span><span class="dec-to">"Sending to" + "How firm"</span><p class="dec-why">Nobody thinks "70% formal". They think "it's my manager, and I need to hold my ground".</p></li>
+      <li class="dec card"><span class="dec-from">Tips shown before you start</span><span class="dec-arrow" aria-hidden="true">→</span><span class="dec-to">"Why this works" after the rewrite</span><p class="dec-why">An explanation only means something once there's a message to explain.</p></li>
+      <li class="dec card"><span class="dec-from">Version history with arrows</span><span class="dec-arrow" aria-hidden="true">→</span><span class="dec-to">One Retry button</span><p class="dec-why">Every version is another paid API call, and comparing drafts confused more than it helped.</p></li>
+      <li class="dec card"><span class="dec-from">Email-length messages</span><span class="dec-arrow" aria-hidden="true">→</span><span class="dec-to">Chat length only</span><p class="dec-why">These conversations happen on Slack and Teams, not in long emails.</p></li>
+    </ol>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec" aria-labelledby="s4">
+    <div class="read">
+      <p class="eyebrow">05 - Design &amp; theme</p>
+      <h2 id="s4">An open folder on a desk, not another AI dashboard</h2>
+      <p class="text">Most AI tools look the same: dark panels, glowing gradients, a sparkle in every corner. I wanted Rephrase to feel like sitting down at your desk with a file in front of you: your messy draft on the left page, the clean version on the right, and the clutter of a working day around it.</p>
+    </div>
+    <div class="board">
+      <div class="board-objs" aria-hidden="true">
+        <img class="o1" src="/images/case-studies/rephrase/headphones.webp" alt="">
+        <img class="o2" src="/images/case-studies/rephrase/calculator.webp" alt="">
+        <img class="o3" src="/images/case-studies/rephrase/paper.webp" alt="">
+        <img class="o4" src="/images/case-studies/rephrase/shaving.webp" alt="">
+      </div>
+      <div class="board-spec">
+        <div class="swatches" aria-label="Colour palette">
+          <span class="sw"><i style="background:#ECE6DC"></i>Desk</span>
+          <span class="sw"><i style="background:#B3C3CF"></i>Folder</span>
+          <span class="sw"><i style="background:#FCFAF5"></i>Paper</span>
+          <span class="sw"><i style="background:#7AC3F0"></i>Marker</span>
+          <span class="sw"><i style="background:#2B2926"></i>Ink</span>
+        </div>
+        <div class="specimen"><span class="label">Folder tab · IBM Plex Mono</span><span class="tab">REPHRASE</span></div>
+        <div class="specimen"><span class="label">Interface · Patrick Hand</span><span class="hw">What do you want to say?</span></div>
+        <div class="specimen"><span class="label">Selected option · coloured in like a marker</span><img src="/images/case-studies/rephrase/pills-row.webp" width="1170" height="198" alt="Situation pills: Unrealistic deadline is selected and filled with a blue marker; the others are outlined."></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec" aria-labelledby="s5">
+    <div class="read">
+      <p class="eyebrow">06 - How I vibe-coded it</p>
+      <h2 id="s5">From a Figma file to a live product</h2>
+      <p class="text">I directed the build with AI and reviewed every screen against the design. The decisions stayed mine; AI did the typing.</p>
+    </div>
+    <ol class="steps">
+      <li class="step card"><b>Designed it</b><p>Every state in Figma: empty, writing, result, phone.</p><span class="tool">Figma</span></li>
+      <li class="step card"><b>Built it with AI</b><p>Described the screens in plain words; Claude Code wrote the app. I compared every screen with Figma.</p><span class="tool">Claude Code</span></li>
+      <li class="step card"><b>Connected the AI</b><p>One API route sends your draft to the Gemini API. If it's busy, the Groq API answers instead.</p><span class="tool">Gemini API · Groq API</span></li>
+      <li class="step card"><b>Wrote the rules</b><p>The instructions that make a message to a client sound different from one to a peer. Plain English, no code.</p><span class="tool">Prompt</span></li>
+      <li class="step card"><b>Shipped it</b><p>Pushed to GitHub, and Vercel put it live in minutes.</p><span class="tool">GitHub · Vercel</span></li>
+    </ol>
+  </section>
+
+  <!-- 06 -->
+  <section class="sec" aria-labelledby="s6">
+    <div class="read center">
+      <p class="eyebrow">07 - The logic</p>
+      <h2 id="s6">One message, four ways</h2>
+      <p class="text">Who you're writing to changes the shape of the message.</p>
+    </div>
+    <div class="raw">
+      <div class="raw-card card"><span class="label">The draft</span><p>this deadline is impossible. we're all burnt out and nobody asked us before committing to friday</p></div>
+    </div>
+    <div class="grid4">
+      <article class="card4 card"><h3>Manager</h3><p class="out">Flagging a risk on Friday's deadline. At this pace we won't hit it without cutting quality, and the team's already stretched. Could we talk today about moving the date or trimming scope?</p></article>
+      <article class="card4 card"><h3>Peer</h3><p class="out">Honestly, Friday isn't doable without cutting corners. Want to push back on it together before planning?</p></article>
+      <article class="card4 card"><h3>Senior</h3><p class="out">Friday's deadline is at risk; we'll need a new date or a smaller scope to deliver it well. Happy to share options today.</p></article>
+      <article class="card4 card"><h3>Client</h3><p class="out">Hi, we want this release to meet the standard you expect, so we'd like to propose a revised date. Could we find 15 minutes this week to agree on the plan?</p></article>
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer class="cs-footer">
+  <div class="cs-closing">
+    <h2>That&rsquo;s all, folks! :)</h2>
+    <p class="text">For years, my ideas stopped at the prototype. A clickable Figma file was as far as they got. With Rephrase, I typed a messy thought into a box I'd designed, pressed a button, and watched it come back as something I'd actually send.</p>
+    <p class="text">AI didn't just make this faster. It let me cross the line from designing a product to building one. Seeing something I imagined live on the internet, working, felt amazing, and I'm not going back to stopping at the prototype.</p>
+    <div class="next-card">
+      <div class="next-text">
+        <p class="label">Try it yourself</p>
+        <p class="next-title">Type the message you&rsquo;ve been putting off</p>
+      </div>
+      <a class="next-cta" href="https://rephrase-lovat.vercel.app">Open Rephrase &rarr;</a>
+    </div>
+  </div>
+  <div class="cs-bottom">
+    <a href="/#play">&larr; Back</a>
+    <small>&copy; Mridula Mistry</small>
+  </div>
+</footer>
+</body>
+</html>

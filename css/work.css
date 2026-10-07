@@ -80,3 +80,14 @@
     transition:background .3s,transform .3s var(--spring);}
   .run:hover{transform:translateY(-2px);}
   .run.soon{opacity:.55;pointer-events:none;}
+  /* Rephrase card: secondary text link, revealed on card hover/focus; always visible on touch */
+  .term-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 22px;}
+  .term-more{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;color:var(--ink);
+    text-decoration:none;opacity:0;transform:translateX(-6px);
+    transition:opacity .35s var(--ease),transform .35s var(--ease);}
+  .term-more span{transition:transform .3s var(--spring);}
+  .term:hover .term-more,.term:focus-within .term-more{opacity:1;transform:none;}
+  .term-more:hover{text-decoration:underline;text-underline-offset:4px;}
+  .term-more:hover span{transform:translateX(3px);}
+  @media (hover:none){.term-more{opacity:1;transform:none;}}
+  @media (prefers-reduced-motion:reduce){.term-more,.term-more span{transition:none;}}
