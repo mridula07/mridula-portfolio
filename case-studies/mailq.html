@@ -48,9 +48,21 @@
   .cs-fig.screen img{box-shadow:var(--shadow);}          /* screens: radius + tinted shadow */
   /* documentation board is 1440 wide in Figma: full-bleed up to 1440, scrolls inside itself when narrow */
   .cs-bleed{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);}
-  .doc-board{max-width:1440px;margin-left:auto;margin-right:auto;overflow-x:auto;overscroll-behavior-x:contain;
-    -webkit-overflow-scrolling:touch;}
-  .doc-board img{display:block;width:100%;min-width:900px;height:auto;}
+  /* window 634:8312: 1440 × 888, no fill (page background), padding 64 top / 100 sides around the 1240-wide sheet 669:2.
+     Padding is in % of width so the sheet keeps its Figma proportion (1240/1440) at every width.
+     The full sheet scrolls vertically inside; a 48px fade in the window colour hints there's more, hidden at the end. */
+  .doc-window{position:relative;max-width:1440px;margin-left:auto;margin-right:auto;aspect-ratio:1440/888;}
+  .doc-window::after{content:"";position:absolute;left:0;right:0;bottom:0;height:48px;pointer-events:none;
+    background:linear-gradient(to bottom,transparent,var(--cream));transition:opacity .25s var(--ease);}
+  .doc-window.at-end::after{opacity:0;}
+  .doc-board{height:100%;overflow-x:hidden;overflow-y:auto;padding:4.444% 6.944%;background:var(--cream);
+    -webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--hairline) transparent;}
+  .doc-board::-webkit-scrollbar{width:6px;}
+  .doc-board::-webkit-scrollbar-track{background:transparent;}
+  .doc-board::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:3px;}
+  .doc-board:focus-visible{outline:2px solid var(--ink);outline-offset:-2px;}
+  .doc-board img{display:block;width:100%;height:auto;border-radius:16px;}
+  @media (max-width:899px){ .doc-window{aspect-ratio:auto;height:70vh;} }
 
   /* ---------- 03 trade-off cards 631:7156 ---------- */
   .tradeoffs{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;}
@@ -339,10 +351,12 @@
   </article>
 
   <!-- documentation board is 1440 wide in Figma, so it sits outside the 1100 column -->
-  <figure class="cs-fig cs-bleed mt-48" aria-label="Button documentation sheet">
-    <div class="doc-board" tabindex="0">
-      <img src="/images/case-studies/mailq/documentation-board.webp" width="1440" height="888" loading="lazy"
-           alt="Documentation sheet for the Button component: title and description, a live preview, and the Anatomy section numbering the label, leading icon and trailing icon with their text style, font and icon names.">
+  <figure class="cs-fig cs-bleed mt-48">
+    <div class="doc-window">
+      <div class="doc-board" tabindex="0" role="region" aria-label="Button documentation, scrollable">
+        <img src="/images/case-studies/mailq/button-documentation-full.webp" width="1240" height="5612" loading="lazy"
+             alt="Full documentation sheet for the MailQ Button component. Overview with a live preview; Anatomy numbering the label, leading icon and trailing icon with their text style and icon names; Variants and Properties listing the type, state, label and icon properties, with a grid of Primary, Secondary and Tertiary buttons across Default, Hover, Pressed, Focus and Disabled, plus icon-only buttons; States and Colour Tokens tables mapping each type and state to its semantic background, border and label tokens; Usage guidance on when to use each type, with do and don't lists; Spacing and Border Tokens showing padding, icon gap, corner radius, border and height with their tokens; and Accessibility, showing the focus ring on every type and AA contrast checks in light and dark themes.">
+      </div>
     </div>
   </figure>
 
@@ -422,6 +436,18 @@
     <small>&copy; Mridula Mistry</small>
   </div>
 </footer>
+
+<script>
+  /* 10 documentation window: hide the bottom fade once the sheet is scrolled to the end */
+  (function(){
+    var win=document.querySelector('.doc-window'),board=win&&win.querySelector('.doc-board');
+    if(!board)return;
+    function update(){win.classList.toggle('at-end',board.scrollTop+board.clientHeight>=board.scrollHeight-1);}
+    board.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update);
+    update();
+  })();
+</script>
 
 </body>
 </html>
