@@ -118,14 +118,37 @@
     }
   }
 
-  /* ---------- key learnings 634:9170 (same as Campaign Manager) ---------- */
-  .learnings{list-style:none;margin:40px 0 0;padding:0;}
-  .learnings li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;}
-  .learnings li + li{border-top:1.5px solid var(--hairline);}
-  .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
-    font-size:72px;line-height:.9;color:var(--sky);}
-  body.dim .learn-num{color:var(--hairline);}
-  .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+  /* ---------- 12 Putting it to the test 680:2 ----------
+     Pill swatches and the button use MailQ's own product colours (teal/600 → blue/600), a deliberate exception to the site tokens. */
+  @font-face{font-family:'Geist';src:url('/fonts/geist-latin-600-normal.woff2') format('woff2');
+    font-weight:600;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Geist Mono';src:url('/fonts/geist-mono-latin-500-normal.woff2') format('woff2');
+    font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Karla';src:url('/fonts/karla-latin-400-italic.woff2') format('woff2');
+    font-weight:400;font-style:italic;font-display:swap;}
+  .ptt{--teal:#196D63;--blue:#5E89B4;}
+  .ptt-label{font-weight:700;font-size:12.5px;line-height:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);}
+  .ptt-label + .cs-h2{margin-top:10px;}
+  .chains{margin-top:56px;display:flex;justify-content:center;gap:64px;padding:56px 0;background:var(--paper);
+    border:1.5px solid var(--hairline);border-radius:12px;}
+  .chain{display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .chain-blue{display:none;--c:var(--blue);}
+  .tk{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:12px;background:var(--cream);
+    border:1.5px solid var(--hairline);font-family:'Geist Mono',ui-monospace,monospace;font-weight:500;font-size:14px;
+    line-height:normal;color:var(--body);white-space:nowrap;}
+  .tk-dot{flex:none;width:16px;height:16px;border-radius:50%;background:var(--c,var(--teal));transition:background-color .6s ease;}
+  .cs .tk-cap{margin-top:8px;font-style:italic;font-size:13px;line-height:normal;color:var(--muted);text-align:center;}
+  .tk-arrow{display:block;width:10px;height:28px;margin:10px 0;overflow:visible;color:var(--ink);opacity:.45;transition:opacity .3s ease;}
+  .tk-arrow.on{opacity:1;}
+  .tk-btn{padding:14px 34px;border-radius:10px;background:var(--c,var(--teal));transition:background-color .6s ease;
+    font-family:'Geist',var(--f-body);font-weight:600;font-size:18px;line-height:normal;color:#fff;white-space:nowrap;}
+  .cs .ptt-close{max-width:880px;margin:64px auto 0;font-family:var(--f-display);font-weight:400;font-synthesis:none;
+    font-size:26px;line-height:1.25;letter-spacing:-.01em;color:var(--ink);text-align:center;}
+  /* reduced motion: no loop, show the before and after side by side */
+  @media (prefers-reduced-motion:reduce){
+    .chain-blue{display:flex;}
+    .tk-dot,.tk-btn,.tk-arrow{transition:none;}
+  }
 
   /* ---------- dark footer 618:5099 ---------- */
   .cs-footer{margin-top:var(--g128,128px);background:var(--deep);color:var(--on-deep);border-radius:80px 80px 0 0;
@@ -167,12 +190,17 @@
     .cs-summary{font-size:1.08rem;}
     .band{padding:56px 20px;border-radius:20px;}
     .band-title{font-size:36px;}
-    .learnings li{gap:18px;}
-    .learn-num{width:64px;font-size:48px;}
+    .tk{gap:8px;padding:8px 12px;font-size:12.5px;}
+    .tk-dot{width:14px;height:14px;}
+    .tk-btn{padding:12px 28px;font-size:16px;}
+    .cs .ptt-close{font-size:22px;}
     .ld-pill{font-size:8px;padding:4px 8px;bottom:10px;}
     .cs-footer{padding:64px 16px 32px;}
     .next-card{padding:24px;}
     .cs-bottom{margin-top:64px;}
+  }
+  @media (max-width:599px){
+    .chains{flex-direction:column;align-items:center;gap:48px;}
   }
   @media (max-width:560px){
     .tradeoffs,.stats{grid-template-columns:minmax(0,1fr);}
@@ -200,7 +228,7 @@
 
     <!-- Header 618:12 -->
     <header>
-      <a class="cs-back" href="/#work">&larr; Back to work</a>
+      <a class="cs-back" href="/#work">&larr; Back</a>
       <ul class="cs-tags">
         <li>UX Case Study</li><li>Design System</li><li>MailQ</li><li>Take-home</li>
       </ul>
@@ -372,46 +400,40 @@
       </figure>
     </section>
 
-    <!-- Key learnings 634:9170 -->
-    <section class="mt-128" aria-labelledby="s-learnings">
-      <h2 class="cs-h2" id="s-learnings">Lessons beyond the interface</h2>
-      <ol class="learnings">
-        <li>
-          <span class="learn-num" aria-hidden="true">01</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Earn Every Layer</h3>
-            <p class="cs-text">I built a Component tier and tested it on 6 components. All 39 tokens were 1:1 copies of Semantic, so I retired it. A new layer now needs 3–5 real use cases first.</p>
-          </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">02</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Naming Is Architecture</h3>
-            <p class="cs-text">A strict property / role / emphasis / state structure made the rules enforceable. Renaming late also showed the cost: docs drift unless they update with the system.</p>
-          </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">03</span>
-          <div class="learn-body">
-            <h3 class="cs-title">A Migration Isn’t Done Until It’s Verified</h3>
-            <p class="cs-text">Moving components to Semantic tokens only counted as done once a full sweep of light and dark screens found zero old tokens left.</p>
-          </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">04</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Structure Matters as Much as Tokens</h3>
-            <p class="cs-text">Icons lost their colour because of inconsistent layers, not wrong tokens. Rebuilding 28 icons into one flat set fixed it for good.</p>
-          </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">05</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Standards Cost Time Per Component</h3>
-            <p class="cs-text">Only Button meets the full documentation and accessibility standard so far. Setting the template is quick; applying it everywhere needs real time.</p>
-          </div>
-        </li>
-      </ol>
+    <!-- 12 Putting it to the test 680:2 -->
+    <section class="mt-128 ptt" aria-labelledby="s-test">
+      <p class="ptt-label">Putting it to the test</p>
+      <h2 class="cs-h2" id="s-test">What If the Brand Colour Changes Tomorrow?</h2>
+      <p class="cs-text">Midway through a project, the team decides the brand should be blue instead of teal. In MailQ, that is one edit: the Primitive behind primary. Every token name below it stays the same, and the change flows through on its own.</p>
+      <div class="chains">
+        <div class="chain chain-teal" aria-label="Token chain with the teal brand" role="group">
+          <div class="tk" data-step="0"><span class="tk-dot"></span><span class="tk-name">teal/600</span></div>
+          <p class="tk-cap">Primitive</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk" data-step="1"><span class="tk-dot"></span>primary/600</div>
+          <p class="tk-cap">Alias</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk" data-step="2"><span class="tk-dot"></span>surface/action/default</div>
+          <p class="tk-cap">Semantic</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk-btn" data-step="3">Compose</div>
+          <p class="tk-cap">Result</p>
+        </div>
+        <div class="chain chain-blue" aria-label="Token chain with the blue brand" role="group">
+          <div class="tk" data-step="0"><span class="tk-dot"></span><span class="tk-name">blue/600</span></div>
+          <p class="tk-cap">Primitive</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk" data-step="1"><span class="tk-dot"></span>primary/600</div>
+          <p class="tk-cap">Alias</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk" data-step="2"><span class="tk-dot"></span>surface/action/default</div>
+          <p class="tk-cap">Semantic</p>
+          <svg class="tk-arrow" viewBox="0 0 10 28" aria-hidden="true"><path d="M5 0v28M10 23l-5 5-5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tk-btn" data-step="3">Compose</div>
+          <p class="tk-cap">Result</p>
+        </div>
+      </div>
+      <p class="ptt-close">A design system isn’t measured by how much it holds. It’s measured by how little you have to change when everything else does.</p>
     </section>
   </article>
 </main>
@@ -432,7 +454,7 @@
   </div>
 
   <div class="cs-bottom">
-    <a href="/#work">&larr; Back to work</a>
+    <a href="/#work">&larr; Back</a>
     <small>&copy; Mridula Mistry</small>
   </div>
 </footer>
@@ -446,6 +468,34 @@
     board.addEventListener('scroll',update,{passive:true});
     window.addEventListener('resize',update);
     update();
+  })();
+  /* 12 brand-change chain: teal ⇄ blue every 3.2s while on screen; static pair under reduced motion */
+  (function(){
+    var sec=document.querySelector('.ptt'),chain=sec&&sec.querySelector('.chain-teal');
+    if(!chain||!('IntersectionObserver' in window))return;
+    var rm=matchMedia('(prefers-reduced-motion: reduce)'),
+        steps=chain.querySelectorAll('[data-step]'),arrows=chain.querySelectorAll('.tk-arrow'),
+        name=chain.querySelector('.tk-name'),COL=['#196D63','#5E89B4'],NAME=['teal/600','blue/600'],
+        brand=0,timers=[],loop=null,visible=false;
+    function paint(i,b){steps[i].style.setProperty('--c',COL[b]);if(i===0)name.textContent=NAME[b];}
+    function later(fn,ms){timers.push(setTimeout(fn,ms));}
+    function swap(){
+      var b=brand=1-brand;
+      paint(0,b);
+      [350,750,1150].forEach(function(ms,i){later(function(){arrows[i].classList.add('on');paint(i+1,b);},ms);});
+      later(function(){for(var i=0;i<arrows.length;i++)arrows[i].classList.remove('on');},2000);
+    }
+    function stop(){
+      timers.forEach(clearTimeout);timers=[];clearInterval(loop);loop=null;
+      for(var i=0;i<steps.length;i++)paint(i,brand);          /* settle any half-finished switch */
+      for(var j=0;j<arrows.length;j++)arrows[j].classList.remove('on');
+    }
+    function start(){
+      if(loop||rm.matches)return;
+      loop=setTimeout(function(){swap();loop=setInterval(swap,3200);},1000);
+    }
+    new IntersectionObserver(function(e){visible=e[0].isIntersecting;visible?start():stop();},{threshold:.3}).observe(chain);
+    rm.addEventListener&&rm.addEventListener('change',function(){if(rm.matches)brand=0;stop();if(visible)start();});
   })();
 </script>
 

@@ -125,14 +125,34 @@
   .detail-fig img{display:block;width:100%;height:auto;}
   .detail-fig.ui img{border-radius:7px;}      /* Figma frames are 6.72px radius, no shadow */
 
-  /* ---------- 08 key learnings 28:459 ---------- */
-  .learnings{list-style:none;margin:40px 0 0;padding:0;}
-  .learnings li{display:flex;gap:28px;align-items:flex-start;padding:28px 0;}
-  .learnings li + li{border-top:1.5px solid var(--hairline);}
-  .learn-num{flex:none;width:104px;font-family:var(--f-display);font-weight:400;font-synthesis:none;
-    font-size:72px;line-height:.9;color:var(--sky);}
-  body.dim .learn-num{color:var(--hairline);}
-  .learn-body{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+  /* ---------- 08 outcome 64:166 ---------- */
+  .outcome{margin-top:40px;display:flex;align-items:center;gap:48px;padding:48px 56px;border-radius:16px;
+    background:var(--sky);color:var(--ink);transition:background .6s var(--ease),box-shadow .6s var(--ease);}
+  /* lamp: --sky is only a shade lighter than the page, so add a hairline edge to keep the card distinct */
+  body.dim .outcome{box-shadow:inset 0 0 0 1.5px var(--hairline);}
+  .cs .out-big{flex:none;font-family:var(--f-display);font-weight:400;font-synthesis:none;font-size:150px;line-height:.9;
+    letter-spacing:-3px;white-space:nowrap;}
+  .out-big small{font-size:.5em;}
+  .out-cmp{flex:1 1 0;min-width:0;}
+  .out-title{font-weight:700;font-size:26px;line-height:1.3;}
+  .out-row{display:flex;flex-direction:column;gap:8px;margin-top:28px;}
+  .out-row + .out-row{margin-top:16px;}
+  .out-label{display:flex;justify-content:space-between;gap:16px;font-size:16px;line-height:normal;white-space:nowrap;color:var(--body);}
+  .out-label b{font-weight:700;}
+  /* the "30% saved" outline is pinned to the last 30% so only the fills grow */
+  .out-track{position:relative;height:18px;}
+  .out-fill{display:block;height:100%;border-radius:999px;background:var(--ink);}
+  .out-track .full{width:100%;}
+  .out-track .rex{width:70%;background:var(--sun);border-radius:999px 0 0 999px;}
+  .out-saved{position:absolute;top:0;right:0;bottom:0;width:30%;display:flex;align-items:center;justify-content:center;
+    border-radius:0 999px 999px 0;border:1.5px dashed color-mix(in srgb,var(--ink) 55%,transparent);border-left:0;
+    font-weight:700;font-size:12px;line-height:normal;white-space:nowrap;color:var(--ink);}
+  /* bar animation: final state is the default; JS adds .out-anim (start state), then .out-play once in view */
+  .outcome.out-anim .out-fill{width:0;}
+  .outcome.out-anim .out-saved{opacity:0;}
+  .outcome.out-play .out-track .full{width:100%;transition:width 1.1s cubic-bezier(.22,1,.36,1);}
+  .outcome.out-play .out-track .rex{width:70%;transition:width 1.1s cubic-bezier(.22,1,.36,1) .35s;}
+  .outcome.out-play .out-saved{opacity:1;transition:opacity .5s ease 1.3s;}
 
   /* ---------- dark footer 43:166 ---------- */
   .cs-footer{margin-top:80px;background:var(--deep);color:var(--on-deep);border-radius:80px 80px 0 0;
@@ -188,6 +208,7 @@
     .detail,.detail.flip{flex-direction:column;align-items:stretch;gap:28px;}
     .detail-fig{flex:none;max-width:100%;width:auto;}
     .detail-fig.states{max-width:488px;}
+    .outcome{flex-direction:column;align-items:stretch;gap:28px;padding:40px 32px;}
     .cs-footer{border-radius:40px 40px 0 0;padding-top:80px;}
     .next-card{flex-direction:column;align-items:flex-start;}
   }
@@ -195,8 +216,10 @@
     nav a:not(.talk):not(.nav-mark){display:none;}
     .cs{--gap-section:72px;padding:108px 16px 0;}
     .cs-summary{font-size:1.08rem;}
-    .learnings li{gap:18px;}
-    .learn-num{width:64px;font-size:48px;}
+    .outcome{padding:32px 24px;}
+    .cs .out-big{font-size:112px;}
+    .out-title{font-size:22px;}
+    .out-label{font-size:15px;}
     .cs-footer{padding:64px 16px 32px;}
     .next-card{padding:24px;}
     .cs-bottom{margin-top:64px;}
@@ -224,7 +247,7 @@
 
     <!-- Header 28:160 -->
     <header>
-      <a class="cs-back" href="/#work">&larr; Back to work</a>
+      <a class="cs-back" href="/#work">&larr; Back</a>
       <ul class="cs-tags">
         <li>UX Case Study</li><li>AI Campaign Manager</li><li>Version 2.0</li><li>2026</li>
       </ul>
@@ -587,40 +610,25 @@
       </div>
     </section>
 
-    <!-- 08 Key learnings 28:459 -->
-    <section class="cs-sec" aria-labelledby="s-learnings">
-      <p class="cs-eyebrow">08 - Key Learnings</p>
-      <h2 class="cs-h2" id="s-learnings">Lessons beyond the interface</h2>
-      <ol class="learnings">
-        <li>
-          <span class="learn-num" aria-hidden="true">01</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Every Decision Has a Trade-off</h3>
-            <p class="cs-text">There is rarely a perfect solution. Designing means balancing speed and depth, guidance and flexibility, automation and control, while understanding what matters most in a given context.</p>
+    <!-- 08 Outcome 64:166 -->
+    <section class="cs-sec" aria-labelledby="s-outcome">
+      <p class="cs-eyebrow">08 - Outcome</p>
+      <h2 class="cs-h2" id="s-outcome">One workspace, measurably faster</h2>
+      <p class="cs-text">Before launching V1, we tested Rex internally against the traditional way of building a campaign: planning, writing, scheduling and publishing across separate tools.</p>
+      <div class="outcome">
+        <p class="out-big">30<small>%</small></p>
+        <div class="out-cmp">
+          <p class="out-title">less time to build a campaign</p>
+          <div class="out-row">
+            <p class="out-label"><span>Traditional workflow</span><b>100%</b></p>
+            <div class="out-track" role="img" aria-label="Traditional workflow: 100% of the time"><span class="out-fill full"></span></div>
           </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">02</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Great Experiences Are Built Across Systems</h3>
-            <p class="cs-text">The most meaningful improvements often come from connecting workflows, information, and decisions together. Individual screens matter, but the experience between them matters more.</p>
+          <div class="out-row">
+            <p class="out-label"><span>With Rex</span><b>70%</b></p>
+            <div class="out-track" role="img" aria-label="With Rex: 70% of the time, 30% saved"><span class="out-fill rex"></span><span class="out-saved">30% saved</span></div>
           </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">03</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Trust Must Be Designed</h3>
-            <p class="cs-text">People are more likely to adopt a product when they understand what is happening and why. Transparency, feedback, and visibility can be just as important as functionality.</p>
-          </div>
-        </li>
-        <li>
-          <span class="learn-num" aria-hidden="true">04</span>
-          <div class="learn-body">
-            <h3 class="cs-title">Progress Beats Perfection</h3>
-            <p class="cs-text">Waiting for the perfect solution can slow down learning. Shipping, testing, and refining ideas often leads to better outcomes than trying to solve everything upfront.</p>
-          </div>
-        </li>
-      </ol>
+        </div>
+      </div>
     </section>
 
   </article>
@@ -643,10 +651,26 @@
   </div>
 
   <div class="cs-bottom">
-    <a href="/#work">&larr; Back to work</a>
+    <a href="/#work">&larr; Back</a>
     <small>&copy; Mridula Mistry</small>
   </div>
 </footer>
+
+<script>
+  /* 08 outcome: grow the bars once when the card scrolls into view (skipped for reduced motion / no IO) */
+  (function(){
+    var card=document.querySelector('.outcome');
+    if(!card||!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    card.classList.add('out-anim');
+    var io=new IntersectionObserver(function(e){
+      if(!e[0].isIntersecting)return;
+      io.disconnect();
+      card.offsetWidth;                                     /* commit the start state before transitioning */
+      card.classList.add('out-play');
+    },{threshold:.4});
+    io.observe(card);
+  })();
+</script>
 
 </body>
 </html>
