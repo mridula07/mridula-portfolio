@@ -38,7 +38,7 @@
   h1,h2,h3{font-family:var(--f-body);font-weight:700;color:var(--ink);}
   /* Calistoga: hero headline, section headings, case study card titles, stat numbers */
   .hero h1,.sec-head h2,.case-txt h3,.stat-card .big,footer h2,.quote .qm{
-    font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;letter-spacing:-.01em;}
+    font-family:var(--f-display);font-weight:400;font-style:normal;font-synthesis:none;}
   img{max-width:100%;}
 
 
@@ -73,7 +73,7 @@
      since footer isn't part of the normal .sec-to-.sec padding rhythm. */
   #kind{padding-bottom:140px;}
   .sec-head{margin-bottom:50px;}
-  .sec-head h2{font-size:clamp(1.75rem,3.6vw,2.3125rem);line-height:1.08;}
+  .sec-head h2{font-size:clamp(1.75rem,3.6vw,2.3125rem);line-height:1.15;letter-spacing:0;}
   .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
   .rv.in{opacity:1;transform:none;}
 
@@ -95,7 +95,7 @@
   .quote{background:var(--paper);border-radius:22px;padding:28px 26px;box-shadow:inset 0 0 0 1.5px var(--hairline);
     display:flex;flex-direction:column;transition:transform .45s var(--spring),box-shadow .45s;}
   .quote:hover{transform:translateY(-5px);box-shadow:inset 0 0 0 1.5px var(--hairline),0 22px 44px rgba(var(--shade),.12);}
-  .quote .qm{font-size:2.3rem;line-height:.6;color:var(--ink);margin-bottom:16px;}
+  .quote .qm{font-size:2.3rem;line-height:.6;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px;}
   .quote p{color:var(--body);line-height:1.55;font-size:.92rem;}
   .who{display:flex;align-items:center;gap:13px;margin-top:auto;padding-top:22px;}
   .who img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--hairline);}
@@ -105,7 +105,7 @@
     background:var(--paper);box-shadow:inset 0 0 0 1.5px var(--hairline);
     transition:transform .45s var(--spring);}
   .stat-card:hover{transform:translateY(-5px);}
-  .stat-card .big{font-size:2.3125rem;line-height:1.02;color:var(--ink);}
+  .stat-card .big{font-size:2.3125rem;line-height:1.02;letter-spacing:-.01em;color:var(--ink);}
   .stat-card .cap{font-size:.92rem;line-height:1.5;color:var(--body);}
   .stat-card.deep{background:var(--deep);box-shadow:none;}
   .stat-card.deep .big,.stat-card.deep .cap{color:var(--on-deep);}

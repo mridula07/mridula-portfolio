@@ -9,7 +9,7 @@
   .hero-head{position:relative;z-index:6;max-width:840px;pointer-events:none;}
   .hero-name{font-family:var(--f-body);font-weight:700;font-size:.75rem;line-height:normal;letter-spacing:.06em;
     text-transform:uppercase;color:var(--body);margin-bottom:26px;}
-  h1{font-size:clamp(2.125rem,5.6vw,3.125rem);line-height:1.02;}
+  h1{font-size:clamp(2.125rem,5.6vw,3.125rem);line-height:1.1;letter-spacing:-.01em;}
   h1 .qp{color:var(--ink);white-space:nowrap;}
   .hero h1{text-wrap:balance;}
   h1 .h1-end{white-space:nowrap;} /* keep "shipped product." together on its own line */

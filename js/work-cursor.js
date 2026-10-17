@@ -1,6 +1,6 @@
 (function(){
   const cursor = document.getElementById('caseCursor');
-  const cases = document.querySelectorAll('.case');
+  const cases = document.querySelectorAll('a.case');
   if(!cursor || !cases.length) return;
   if(!(window.APP && window.APP.fine)) return; /* touch/coarse pointers: cards stay plain links */
 

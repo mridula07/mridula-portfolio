@@ -6,7 +6,7 @@
     background:radial-gradient(90% 60% at 50% 0%,color-mix(in srgb,var(--on-deep) 7%,transparent),transparent 60%);pointer-events:none;}
   .foot-kicker{font-size:.82rem;font-weight:700;font-style:normal;letter-spacing:.08em;text-indent:.08em;text-transform:uppercase;
     color:color-mix(in srgb,var(--on-deep) 55%,transparent);margin-bottom:20px;position:relative;z-index:2;}
-  footer h2{font-size:clamp(1.75rem,4vw,2.625rem);line-height:1.08;color:var(--on-deep);
+  footer h2{font-size:clamp(1.75rem,4vw,2.625rem);line-height:1.1;letter-spacing:-.01em;color:var(--on-deep);
     max-width:16ch;margin:0 auto;position:relative;z-index:2;}
   footer h2 .co{color:var(--on-deep);}
   .foot-actions{display:inline-flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:28px;position:relative;z-index:2;}
