@@ -7,6 +7,9 @@
   /* wins over .rv.in{transform:none} (style.css) via source order, same specificity */
   .case:hover{transform:translateY(-6px);box-shadow:inset 0 0 0 1.5px var(--hairline),0 24px 48px rgba(var(--shade),.14);}
   @media (pointer:fine){.case{cursor:none;}}
+  /* full-width lead card: image and text side by side (stacks at <=900px, responsive.css) */
+  .case-wide{grid-column:1/-1;flex-direction:row;}
+  .case-wide .case-media{flex:0 0 58%;}
   .case-media{position:relative;aspect-ratio:16/10;overflow:hidden;display:grid;place-items:center;}
   .case-media img.cov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
     transform:scale(1.02);transition:transform .8s var(--ease);}
@@ -19,11 +22,6 @@
   .mq img.cov-screen{position:relative;display:block;width:84%;height:auto;border-radius:10px;box-shadow:var(--shadow);
     transform:scale(1.02);transition:transform .8s var(--ease);}
   .case:hover .mq img.cov-screen{transform:scale(1.06);}
-  /* Smart Food Safe placeholder: not a link, no hover lift, normal cursor; dashed media frame */
-  .case-soon:hover{transform:none;box-shadow:inset 0 0 0 1.5px var(--hairline);}
-  @media (pointer:fine){.case-soon{cursor:default;}}
-  .sfs{background:#DDE8DF;border:1.5px dashed var(--hairline);border-radius:24px 24px 0 0;}
-  body.dim .sfs{background:#1C4547;}
   /* Rephrase: solid fill until images/rephrase-cover.webp is dropped in as img.cov */
   .rp{background:#E9DCC4;}
   body.dim .rp{background:#3D3729;}
@@ -42,7 +40,6 @@
   .badge.feat{background:var(--ink);color:var(--on-ink);}
   /* Featured sits on the thumbnail, top-left, 16px inset */
   .case-media .badge{position:absolute;top:16px;left:16px;z-index:1;margin-bottom:0;}
-  .badge.soon{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);}
   .badge.live{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:var(--on-ink);}
   .badge.live::before{content:"";width:7px;height:7px;border-radius:50%;background:#7BD88F;}
   .case-txt h3{font-size:clamp(1.25rem,1.7vw,1.5rem);line-height:1.2;letter-spacing:0;margin-bottom:11px;}
