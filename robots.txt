@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mridula-portfolio-five.vercel.app/sitemap.xml

@@ -12,3 +12,9 @@
 
 # Node dependencies (if you ever add them)
 node_modules/
+
+# Vercel local folder
+.vercel/
+
+# Logs
+*.log
