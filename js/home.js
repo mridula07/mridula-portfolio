@@ -37,12 +37,11 @@
     });
   });
 
-  /* ── Fix log: phone preview follows the cursor, broken screen turns into the fix ── */
+  /* ── Fix log: phone preview follows the cursor ── */
   var fixRow = $('.fix-row[data-preview]'), fixes = $('.fixes'), pv = $('.fix-preview');
   if (fixRow && pv && finePointer) {
-    var ft = null;
-    fixRow.addEventListener('mouseenter', function () { pv.classList.add('on'); clearTimeout(ft); pv.classList.remove('fixed'); ft = setTimeout(function () { pv.classList.add('fixed'); }, 900); });
-    fixRow.addEventListener('mouseleave', function () { pv.classList.remove('on', 'fixed'); clearTimeout(ft); });
+    fixRow.addEventListener('mouseenter', function () { pv.classList.add('on'); });
+    fixRow.addEventListener('mouseleave', function () { pv.classList.remove('on'); });
     fixes.addEventListener('mousemove', function (e) {
       var b = fixes.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
       pv.style.left = (x > b.width - 280 ? x - 256 : x + 36) + 'px';
