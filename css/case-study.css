@@ -1,0 +1,58 @@
+/* Case study pages. Loads after base.css.
+   Maps the case-study tokens onto the site palette so the page-level
+   styles inside each case study keep working. */
+
+:root {
+  --f-display: var(--serif);
+  --f-body: var(--sans);
+  --body: #2E2E2E;
+  --hairline: var(--line);
+  --paper: #F7F7F5;
+  --cream: var(--bg);
+  --sky: var(--sky-bottom);
+  --sun: var(--footer);
+  --on-sun: #FFFFFF;
+  --on-ink: #FFFFFF;
+  --on-deep: #FFFFFF;
+  --shade: 17, 17, 17;
+  --shadow: 0 1px 2px rgba(17, 17, 17, .04), 0 8px 24px rgba(17, 17, 17, .06);
+}
+
+/* Case study markup was written against a zero-margin reset */
+:where(.cs, .cs-next) * { margin: 0; padding: 0; }
+:where(.cs, .cs-next) h1, :where(.cs, .cs-next) h2, :where(.cs, .cs-next) h3 { font-weight: 400; color: var(--ink); }
+.cs { color: var(--body); }
+.cs h1, .cs .cs-h2 { text-wrap: balance; }
+.cs-text { text-wrap: pretty; }
+
+/* Closing block, replaces the old dark footer */
+.cs-next { padding: var(--section) 24px 0; }
+.cs-next__inner { max-width: 1100px; margin: 0 auto; padding-top: 56px; border-top: 1px solid var(--line); }
+.cs-next .cs-h2 { margin: 0; }
+.cs-next .cs-text { margin-top: 16px; max-width: 720px; color: var(--ink-2); }
+.next-card { margin-top: 48px; display: flex; align-items: center; gap: 24px; padding: 28px 32px; border-radius: 20px; background: var(--paper); transition: background .3s ease; }
+.next-card:hover { background: var(--well); }
+.next-text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.next-text .cs-label { color: var(--ink-2); font-weight: 500; font-size: 14px; letter-spacing: 0; text-transform: none; }
+.next-title { font-family: var(--serif); font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; color: var(--ink); }
+.cs-next + .footer { margin-top: var(--section); }
+
+@media (max-width: 760px) {
+  .cs-next { padding-inline: 16px; }
+  .next-card { flex-direction: column; align-items: flex-start; padding: 24px; }
+}
+
+/* Extra families used inside individual case studies */
+:root { --f-hand: 'Patrick Hand', 'Comic Sans MS', cursive; --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+
+/* Elevation 2: lifts product screenshots off the white page */
+:root { --elev-2: 0 0 0 1px rgba(17, 17, 17, .05), 0 2px 4px rgba(17, 17, 17, .05), 0 8px 20px rgba(17, 17, 17, .07); }
+/* Full screens only. Component cut-outs (.dec-card, .detail-fig.states) are
+   transparent PNGs with their own shadows, so they sit on a grey card instead. */
+.cs-screen img,
+.detail-fig.ui img,
+.cs-fig.screen img,
+.ld { box-shadow: var(--elev-2); }
+.ld { border-radius: 12px; overflow: hidden; }
+.cs-screen img { border-radius: 12px; }
+.detail-fig.states { padding: 32px; border-radius: 16px; background: var(--paper); }
