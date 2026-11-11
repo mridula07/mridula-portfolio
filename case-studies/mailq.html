@@ -106,16 +106,16 @@
      Two stacked exports of the same screen; the dark one is revealed by an animated clip-path.
      Seam and LIGHT/DARK pills use fixed palette tokens (they sit on the screenshots, so they don't flip in lamp mode). */
   @property --split{syntax:'<percentage>';inherits:true;initial-value:50%;}
-  .ld{--split:50%;--ld-seam:var(--sun);position:relative;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);
+  .ld{--split:50%;--ld-seam:#2E8A80;position:relative;overflow:hidden;border-radius:12px;box-shadow:var(--shadow);
     aspect-ratio:1100/611;}
   .ld img{position:absolute;inset:0;display:block;width:100%;height:100%;}
   .ld-dark{position:absolute;inset:0;clip-path:inset(0 0 0 var(--split));}
   .ld-edge{position:absolute;top:0;bottom:0;left:var(--split);width:0;pointer-events:none;}
   .ld-edge::before{content:"";position:absolute;top:0;bottom:0;left:-.86px;width:1.72px;background:var(--ld-seam);}
   .ld-pill{position:absolute;bottom:17.2px;padding:5.16px 10.3px;border-radius:999px;border:.86px solid;
-    font-family:var(--f-body);font-weight:700;font-size:9.45px;line-height:normal;letter-spacing:.04em;white-space:nowrap;}
-  .ld-pill.light{right:13px;background:var(--on-deep);border-color:var(--on-sun);color:var(--on-sun);}
-  .ld-pill.dark{left:14.6px;background:var(--on-sun);border-color:var(--on-deep);color:var(--on-deep);}
+    font-family:'Geist Mono',ui-monospace,monospace;font-weight:400;font-size:9.45px;line-height:normal;letter-spacing:.04em;white-space:nowrap;}
+  .ld-pill.light{right:13px;background:rgba(255,255,255,.92);border-color:rgba(0,0,0,.12);color:#121717;}
+  .ld-pill.dark{left:14.6px;background:rgba(18,23,23,.92);border-color:rgba(255,255,255,.12);color:#E5EDEB;}
   @media (prefers-reduced-motion:no-preference){
     /* wipe in right→left (1.4s), hold dark (1.2s), wipe back (1.4s), hold light (1.2s) */
     .ld{animation:ld-wipe 5.2s infinite;}
@@ -222,6 +222,8 @@
 .mq-search{width:100%;max-width:296px;display:flex;align-items:center;gap:4px;padding:8px;border-radius:8px;background:#F4F5F5;color:#929B9A;font-size:12px;white-space:nowrap;overflow:hidden;}
 @media (max-width:900px){.mq-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (max-width:560px){.mq-grid{grid-template-columns:minmax(0,1fr);}.mq-board{padding:12px;border-radius:18px;}}
+  /* Screens use the Figma shadow, no ring */
+  body .cs-fig.screen img, body .ld{box-shadow:0 2px 6px rgba(15,53,80,.04),0 14px 34px rgba(15,53,80,.10);}
 </style>
 </head>
 <body>
@@ -243,7 +245,7 @@
     <header>
       <a class="cs-back" href="/#work">&larr; Back</a>
       <ul class="cs-tags">
-        <li>UX Case Study</li><li>Design System</li><li>MailQ</li><li>Take-home</li>
+        <li>UX Case Study</li><li>Design System</li>
       </ul>
       <h1>Designing the system behind a calmer inbox</h1>
       <p class="cs-summary">MailQ is a desktop email client that uses AI to summarize threads and cut through inbox noise. I built its design system from the ground up: a three-tier token architecture, light and dark theming, a documented component library, and developer handoff.</p>
@@ -257,7 +259,7 @@
 
     <!-- Hero screen 627:1475 -->
     <figure class="cs-fig screen mt-56">
-      <img src="/images/case-studies/mailq/hero-email-list.webp" width="1100" height="611"
+      <img src="/images/case-studies/mailq/hero-email-list.webp" width="1100" height="612"
            alt="MailQ inbox in light mode: a teal Compose button and folder list on the left, and a list of emails with sender, coloured team label, subject, preview and time.">
     </figure>
 
@@ -312,7 +314,7 @@
         <h3 class="cs-h2">Typography</h3>
         <p class="cs-text">Type is set in Geist, on a deliberately tight 11–18px scale that steps up by roughly a Major Second. An email client is dense: senders, subjects, timestamps and labels all compete for one row, so the scale gives enough hierarchy to scan without big jumps.</p>
         <figure class="cs-fig mt-48">
-          <img src="/images/case-studies/mailq/typography.webp" width="1100" height="438" loading="lazy"
+          <img src="/images/case-studies/mailq/typography.webp" width="1100" height="454" loading="lazy"
                alt="Type specimen: Geist as the primary UI typeface in Regular 400, Medium 500 and SemiBold 600, and a type scale from Heading 16/24 down to Caption 11/16.">
         </figure>
       </div>
@@ -355,7 +357,7 @@
         <p class="cs-text"><strong>Alias</strong> gives colour a role. Teal becomes primary, grey becomes neutral, red becomes error. If MailQ is ever rebranded, this is the only layer that changes.</p>
         <p class="cs-text"><strong>Semantic</strong> describes purpose, like the fill of an action or the colour of body text. Components only ever use this layer, so no screen refers to a raw colour.</p>
         <figure class="cs-fig mt-48">
-          <img src="/images/case-studies/mailq/token-layer-diagram.webp" width="1100" height="1220" loading="lazy"
+          <img src="/images/case-studies/mailq/token-layer-diagram.webp" width="1100" height="1212" loading="lazy"
                alt="Token layer diagram. 97 Primitives: colour ramps plus spacing, radius and border-width scales. 68 Alias: each hue mapped to a role, such as teal to primary and red to error. 57 Semantic: purpose tokens for text, surface, border, icon and overlay, each with a light and dark value.">
         </figure>
       </div>
@@ -365,8 +367,8 @@
         <h3 class="cs-h2">Seamless theme switching through Semantic tokens</h3>
         <p class="cs-text">I built dark mode into the variables themselves. The Semantic collection has two modes, Light and Dark, so every token carries a value for each theme, and each colour changes only as much as it needs to: body text flips from near-black to near-white, while the teal action colour just gets slightly lighter. Components only ask for tokens, so switching a frame to Dark re-themes everything inside it, with nothing redrawn or recoloured by hand.</p>
         <figure class="ld mt-48" role="img" aria-label="The same MailQ inbox screen shown in light and dark themes, with a divider sweeping across to reveal one theme over the other.">
-          <img src="/images/case-studies/mailq/light-dark-split-light.webp" width="1100" height="611" loading="lazy" alt="">
-          <div class="ld-dark"><img src="/images/case-studies/mailq/light-dark-split-dark.webp" width="1100" height="611" loading="lazy" alt=""></div>
+          <img src="/images/case-studies/mailq/light-dark-split-light.webp" width="1100" height="612" loading="lazy" alt="">
+          <div class="ld-dark"><img src="/images/case-studies/mailq/light-dark-split-dark.webp" width="1100" height="612" loading="lazy" alt=""></div>
           <div class="ld-edge" aria-hidden="true"><span class="ld-pill light">LIGHT</span><span class="ld-pill dark">DARK</span></div>
         </figure>
       </div>
@@ -426,7 +428,7 @@
       <p class="cs-text">Token names map one to one to CSS custom properties: slashes become hyphens, so a designer’s text/action/hover is a developer’s var(--text-action-hover). There’s no translation table to maintain.</p>
       <p class="cs-text">Every colour a component uses comes from a Semantic token, so dark mode never touches component styles; it only redefines the values underneath.</p>
       <figure class="cs-fig mt-48">
-        <img src="/images/case-studies/mailq/token-code.webp" width="1100" height="442" loading="lazy"
+        <img src="/images/case-studies/mailq/token-code.webp" width="1100" height="443" loading="lazy"
              alt="CSS for the secondary button using only Semantic tokens: var(--surface-neutral-raised), var(--border-action-default), var(--text-action-default) and a hover state; a dark-mode rule redefines --surface-neutral-raised under [data-theme=&quot;dark&quot;] without changing the button's CSS.">
       </figure>
     </section>
