@@ -57,11 +57,11 @@
   window.addEventListener('resize', replace);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(replace);
 
-  /* ── Footer: liquid trail reveals the photo under the cursor (desktop only) ── */
+  /* ── Footer: liquid trail reveals the photo under the cursor, or the finger on touch screens ── */
   var foot = $('.footer'), dots = $('#foot-dots');
-  if (foot && dots && finePointer && !reduce) {
+  if (foot && dots && !reduce) {
     var NS = 'http://www.w3.org/2000/svg', N = 22, pts = [], cs = [], R = [];
-    for (var i = 0; i < N; i++) { var c = document.createElementNS(NS, 'circle'); c.setAttribute('r', '0'); dots.appendChild(c); cs.push(c); pts.push({ x: 0, y: 0 }); R.push(150 * Math.pow(1 - i / N, 0.85) + 18); }
+    for (var i = 0; i < N; i++) { var c = document.createElementNS(NS, 'circle'); c.setAttribute('r', '0'); dots.appendChild(c); cs.push(c); pts.push({ x: 0, y: 0 }); R.push((150 * Math.pow(1 - i / N, 0.85) + 18) * (foot.clientWidth < 760 ? 0.6 : 1)); }
     var tx = 0, ty = 0, inside = false, size = 0, lastT = performance.now(), running = false, raf = 0, seeded = false;
     var toLocal = function (e) { var b = foot.getBoundingClientRect(), s = Math.max(b.width / 1440, b.height / 720), ox = (b.width - 1440 * s) / 2, oy = (b.height - 720 * s) / 2; return { x: (e.clientX - b.left - ox) / s, y: (e.clientY - b.top - oy) / s }; };
     var tick = function (now) {
@@ -78,12 +78,23 @@
       for (var j = 0; j < N; j++) { cs[j].setAttribute('cx', pts[j].x.toFixed(1)); cs[j].setAttribute('cy', pts[j].y.toFixed(1)); cs[j].setAttribute('r', Math.max(0, R[j] * size * br).toFixed(1)); }
       if (inside || size > 0.002) raf = requestAnimationFrame(tick); else { running = false; seeded = false; }
     };
-    foot.addEventListener('pointermove', function (e) {
+    var move = function (e) {
       var p = toLocal(e); tx = p.x; ty = p.y;
       if (!seeded) { for (var q = 0; q < N; q++) { pts[q].x = tx; pts[q].y = ty; } seeded = true; }
       inside = true;
       if (!running) { running = true; lastT = performance.now(); raf = requestAnimationFrame(tick); }
-    });
-    foot.addEventListener('pointerleave', function () { inside = false; });
+    };
+    var off = function () { inside = false; };
+    if (finePointer) {
+      foot.addEventListener('pointermove', move);
+      foot.addEventListener('pointerleave', off);
+    } else {
+      /* touch: drag a finger across the footer; passive so the page still scrolls */
+      var touch = function (e) { if (e.touches[0]) move(e.touches[0]); };
+      foot.addEventListener('touchstart', touch, { passive: true });
+      foot.addEventListener('touchmove', touch, { passive: true });
+      foot.addEventListener('touchend', off);
+      foot.addEventListener('touchcancel', off);
+    }
   }
 })();
