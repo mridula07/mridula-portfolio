@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Whole Truth | Mridula Mistry</title>
+<link rel="canonical" href="https://mridula-portfolio-five.vercel.app/case-studies/the-whole-truth">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mridula Mistry">
+<meta property="og:title" content="The Whole Truth | Mridula Mistry">
+<meta property="og:description" content="Five fixes to help mobile shoppers buy from The Whole Truth: a mobile product page audit with before and after screens, a test plan and expected impact.">
+<meta property="og:url" content="https://mridula-portfolio-five.vercel.app/case-studies/the-whole-truth">
+<meta property="og:image" content="https://mridula-portfolio-five.vercel.app/images/social/og-home.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Analytics: paste the same Clarity / GA4 snippets used on index.html here. -->
+
+<meta name="description" content="Five fixes to help mobile shoppers buy from The Whole Truth: a mobile product page audit with before and after screens, a test plan and expected impact." />
+<link rel="icon" type="image/svg+xml" href="/images/mm-favicon.svg" />
+<link rel="preload" href="/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/case-study.css">
+<script src="/js/main.js" defer></script>
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="/images/mm-favicon.svg" type="image/svg+xml">
+<style>
+/* The Whole Truth case study. Built 1:1 from Figma frame 314:3011 (Portfolio file). */
+:where(.cs) *{margin:0;padding:0;}
+.cs img{max-width:100%;display:block;height:auto;}
+.cs{padding:128px 24px 0;color:var(--ink-2);}
+.tw{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:112px;}
+.tw a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px;}
+
+/* intro */
+.tw-back{display:block;width:max-content;font-weight:700;font-size:14.7px;line-height:18px;color:var(--ink);text-decoration:none;}
+.tw-back:hover{text-decoration:underline;}
+.tw-tags{margin-top:40px;font-weight:700;font-size:12px;line-height:18px;letter-spacing:.72px;text-transform:uppercase;color:var(--muted);white-space:pre-wrap;}
+.tw h1{margin-top:16px;max-width:860px;font-family:var(--serif);font-weight:400;font-size:48px;line-height:52.8px;letter-spacing:-.48px;color:var(--ink);text-wrap:wrap;}
+.tw-lede{margin-top:20px;max-width:860px;font-size:19.2px;line-height:29.76px;color:var(--ink-2);text-wrap:pretty;}
+.tw-meta{margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.tw-meta div{display:flex;flex-direction:column;gap:6px;}
+.tw-meta dt{font-weight:700;font-size:11.5px;line-height:14px;letter-spacing:.69px;text-transform:uppercase;color:var(--muted);}
+.tw-meta dd{font-weight:700;font-size:15.2px;line-height:21.28px;color:var(--ink-2);}
+
+/* shared */
+.tw-sec{display:flex;flex-direction:column;gap:20px;}
+.tw-head{display:flex;flex-direction:column;gap:8px;}
+.tw-label{font-weight:700;font-size:12.5px;line-height:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);}
+.tw h2{font-family:var(--serif);font-weight:400;font-size:35.2px;line-height:40.48px;color:var(--ink);text-wrap:wrap;}
+.tw-text{max-width:760px;font-size:17px;line-height:26.35px;color:var(--ink-2);text-wrap:pretty;}
+.tw-text b{font-weight:600;color:var(--ink);}
+.tw-k{font-weight:700;font-size:11.5px;line-height:14px;letter-spacing:.69px;text-transform:uppercase;}
+
+/* setup cards */
+.tw-cards{padding-top:20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.tw-card{display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:16px;background:#F7F7F5;border:1px solid var(--line);}
+.tw-card h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:32.2px;color:var(--ink);}
+.tw-card dl{display:flex;flex-direction:column;gap:16px;}
+.tw-card dl div{display:flex;flex-direction:column;gap:4px;}
+.tw-card dt{color:var(--ink-2);}
+.tw-card dd{font-size:15.5px;line-height:23px;color:var(--ink-2);}
+
+/* phones */
+.tw-stage{display:flex;justify-content:center;align-items:flex-end;gap:72px;padding:48px 40px;border-radius:16px;background:#F7F7F5;border:1px solid var(--line);}
+.tw-stage--3,.tw-stage--4{gap:32px;}
+.tw-phone{display:flex;flex-direction:column;align-items:center;gap:12px;flex:0 0 auto;width:300px;}
+.tw-stage--3 .tw-phone{width:250px;}
+.tw-stage--4 .tw-phone{width:220px;}
+.tw-phone img{width:100%;aspect-ratio:300/650;object-fit:cover;border-radius:7.33%/3.38%;box-shadow:0 2px 6px rgba(15,53,80,.04),0 14px 34px rgba(15,53,80,.10);}
+.tw-phone figcaption{font-weight:600;font-size:13px;line-height:18px;color:var(--ink);white-space:nowrap;}
+.tw-phone--before figcaption{font-weight:500;color:var(--muted);}
+.tw-arrow{flex:0 0 auto;font-size:40px;line-height:48px;color:var(--muted);}
+
+.tw-shot{position:relative;width:100%;}
+.tw-mark{position:absolute;left:calc(var(--x)/360*100%);top:calc(var(--y)/780*100%);width:calc(var(--w)/360*100%);height:calc(var(--h)/780*100%);border:2px solid var(--ink);border-radius:8px;pointer-events:none;}
+.tw-mark i{position:absolute;top:-11px;right:-11px;width:22px;height:22px;border-radius:11px;display:grid;place-items:center;background:var(--ink);color:#fff;font-style:normal;font-weight:700;font-size:11.5px;line-height:1;box-shadow:0 0 0 2px #fff;}
+.tw-mark--l i{right:auto;left:-11px;}
+
+/* what changed */
+.tw-changes{list-style:none;padding-top:8px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.tw-changes li{display:flex;flex-direction:column;gap:8px;padding-top:18px;}
+.tw-changes h3{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;line-height:22px;color:var(--ink);}
+.tw-n{flex:0 0 24px;width:24px;height:24px;border-radius:12px;display:grid;place-items:center;background:var(--ink);color:#fff;font-weight:700;font-size:12px;line-height:15px;}
+.tw-changes p{font-size:15px;line-height:22.5px;color:var(--ink-2);}
+
+
+/* fix: problem block, then fix block */
+.tw-pair{display:flex;flex-direction:column;gap:20px;}
+.tw-block2{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:48px;align-items:center;padding:40px;border-radius:16px;background:#F7F7F5;border:1px solid var(--line);}
+.tw-phones{display:flex;justify-content:center;align-items:flex-end;gap:24px;min-width:0;}
+.tw-phones .tw-phone{flex:1 1 0;min-width:0;max-width:300px;width:auto;}
+.tw-phones--1 .tw-phone{max-width:300px;}
+.tw-copy{display:flex;flex-direction:column;gap:16px;}
+.tw-copy > .tw-k{color:var(--muted);}
+.tw-list{list-style:none;display:flex;flex-direction:column;gap:20px;}
+.tw-list li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;align-items:start;}
+.tw-list h3{font-weight:600;font-size:16px;line-height:22px;color:var(--ink);}
+.tw-list p{margin-top:4px;font-size:15px;line-height:22.5px;color:var(--ink-2);}
+.tw-n--o{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink);}
+.tw-hurt{margin-top:4px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;}
+.tw-hurt .tw-k{color:var(--muted);}
+.tw-hurt p:last-child{font-size:15.5px;line-height:23px;color:var(--ink);}
+.tw-mark--p{border-style:dashed;}
+.tw-mark--p i{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink),0 0 0 2px #fff;}
+.tw-phone figcaption{white-space:normal;text-align:center;}
+@media (max-width:1000px){
+  .tw-block2{grid-template-columns:1fr;gap:32px;padding:32px 24px;}
+  .tw-phones{justify-content:flex-start;overflow-x:auto;padding:14px 4px 4px;}
+  .tw-phones .tw-phone{flex:0 0 220px;max-width:none;}
+  .tw-phones > :first-child{margin-left:auto;}
+  .tw-phones > :last-child{margin-right:auto;}
+}
+@media (max-width:760px){
+  .tw-block2{padding:24px 16px;}
+  .tw-phones .tw-phone{flex-basis:200px;}
+}
+
+/* measure */
+.tw-measure{display:flex;flex-direction:column;gap:48px;}
+.tw-steps{list-style:none;padding-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.tw-steps li{display:flex;flex-direction:column;gap:8px;padding:20px;border-radius:14px;background:#F7F7F5;border:1px solid var(--line);}
+.tw-steps .tw-num{font-family:var(--serif);font-size:32px;line-height:36px;color:var(--ink);}
+.tw-steps h3{font-weight:600;font-size:16px;line-height:22px;color:var(--ink);}
+.tw-steps p{font-size:15px;line-height:22.5px;color:var(--ink-2);}
+.tw-block{display:flex;flex-direction:column;gap:32px;}
+.tw-block h3{font-weight:600;font-size:18px;line-height:26px;color:var(--ink);}
+.tw-block .tw-text{max-width:none;}
+
+/* tables */
+.tw-tablewrap{overflow-x:auto;}
+.tw-table{width:100%;border-collapse:collapse;table-layout:fixed;}
+.tw-table th{padding:0 0 12px;text-align:left;color:var(--muted);vertical-align:top;}
+.tw-table td{padding:16px 0;font-size:15.5px;line-height:23px;color:var(--ink-2);vertical-align:top;}
+.tw-table th+th,.tw-table td+td{padding-left:16px;}
+.tw-table tbody tr:first-child td{border-top:1px solid var(--line);}
+.tw-table td:first-child{font-weight:600;color:var(--ink);}
+.tw-table--test col:nth-child(1){width:300px;}
+.tw-table--test col:nth-child(2){width:216px;}
+.tw-table--lift col:nth-child(1){width:360px;}
+.tw-table--lift col:nth-child(2){width:416px;}
+
+/* impact */
+.tw-combined{display:flex;align-items:center;gap:20px;padding:24px 28px;border-radius:16px;background:#F7F7F5;border:1px solid var(--line);}
+.tw-big{flex:0 0 auto;font-family:var(--serif);font-size:56px;line-height:56px;color:var(--ink);white-space:nowrap;}
+.tw-combined p{flex:1 1 0;min-width:0;font-size:15.5px;line-height:23px;color:var(--ink-2);}
+
+.cs + .footer{margin-top:112px;}
+
+@media (max-width:1100px){
+  .tw-stage{overflow-x:auto;justify-content:flex-start;}
+  .tw-stage > :first-child{margin-left:auto;}
+  .tw-stage > :last-child{margin-right:auto;}
+}
+@media (max-width:900px){
+  .tw-cards{grid-template-columns:1fr;}
+  .tw-steps{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .tw-meta{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:760px){
+  .cs{padding:112px 16px 0;}
+  .tw{gap:88px;}
+  .tw h1{font-size:36px;line-height:40px;letter-spacing:-.36px;}
+  .tw-lede{font-size:17px;line-height:26.35px;}
+  .tw h2{font-size:30px;line-height:34.5px;}
+  .tw-stage,.tw-stage--3,.tw-stage--4{gap:20px;padding:28px 20px;}
+  .tw-phone,.tw-stage--3 .tw-phone,.tw-stage--4 .tw-phone{width:220px;}
+  .tw-arrow{display:none;}
+  .tw-changes{grid-template-columns:1fr;gap:4px;}
+  .tw-changes li:empty{display:none;}
+  .tw-steps{grid-template-columns:1fr;}
+  .tw-combined{flex-direction:column;align-items:flex-start;}
+  .tw-table{min-width:620px;}
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav-shell">
+<nav class="nav" aria-label="Main">
+<a href="/" class="wordmark">Mridula Mistry</a>
+<div class="nav-links"><a href="/#work">Work</a><a href="/about">About</a><a href="/#kind">Testimonial</a><a href="https://drive.google.com/file/d/1Jns75wjYnaLUI4F77qrDoTa8SmW4ctKh/view?usp=sharing" target="_blank" rel="noopener">Resume</a></div>
+<div class="nav-right"><a href="/#talk" class="nav-cta">Let’s talk</a><button class="nav-menu" type="button" aria-label="Menu" aria-expanded="false"><span></span></button></div>
+</nav>
+<div class="nav-sheet"><a href="/#work">Work</a><a href="/about">About</a><a href="/#kind">Testimonial</a><a href="https://drive.google.com/file/d/1Jns75wjYnaLUI4F77qrDoTa8SmW4ctKh/view?usp=sharing" target="_blank" rel="noopener">Resume</a></div>
+</header>
+
+<main id="main" class="cs">
+<div class="tw">
+
+<header>
+  <a class="tw-back" href="/#work">&larr; Back</a>
+  <p class="tw-tags">UX case study   ·   Conversion</p>
+  <h1>Five fixes to help mobile shoppers buy from The Whole Truth</h1>
+  <p class="tw-lede">The Whole Truth sells clean-label protein, and a quarter of its revenue comes from its own website. I audited the mobile product page for a first-time protein buyer and found five places where it makes buying harder than it should be. Each fix comes with what I’d measure to prove it worked.</p>
+  <dl class="tw-meta">
+    <div><dt>Brand</dt><dd>The Whole Truth</dd></div>
+    <div><dt>Type</dt><dd>Take-home assignment</dd></div>
+    <div><dt>Platform</dt><dd>Mobile web</dd></div>
+    <div><dt>Timeline</dt><dd>48 hours</dd></div>
+  </dl>
+</header>
+
+<section class="tw-sec" aria-labelledby="setup-h">
+  <div class="tw-head"><p class="tw-label">The setup</p><h2 id="setup-h">One brief, one brand, one buyer</h2></div>
+  <div class="tw-cards">
+    <div class="tw-card"><h3>The brief</h3><dl>
+      <div><dt class="tw-k">Goal</dt><dd>More mobile visitors completing a purchase</dd></div>
+      <div><dt class="tw-k">Flow</dt><dd>Browse → Product page → Add to cart → Checkout</dd></div>
+      <div><dt class="tw-k">Tested on</dt><dd>Ragi Cocoa Whey, 1 kg · new user · Chrome, Android</dd></div>
+    </dl></div>
+    <div class="tw-card"><h3>The brand</h3><dl>
+      <div><dt class="tw-k">What</dt><dd>Clean-label D2C food, every ingredient on the front of the pack</dd></div>
+      <div><dt class="tw-k">Scale</dt><dd>~₹216 Cr revenue (FY25), preparing for IPO</dd></div>
+      <div><dt class="tw-k">Own website</dt><dd>~25% of sales, the channel this audit is about</dd></div>
+    </dl></div>
+    <div class="tw-card"><h3>The buyer</h3><dl>
+      <div><dt class="tw-k">Who</dt><dd>A first-time protein buyer on their phone</dd></div>
+      <div><dt class="tw-k">Mindset</dt><dd>Health-conscious, reads labels, picked this brand for its transparency</dd></div>
+      <div><dt class="tw-k">Unsure about</dt><dd>Which variant or pack size is right for them</dd></div>
+    </dl></div>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="f1-h">
+  <div class="tw-head"><p class="tw-label">Fix 01</p><h2 id="f1-h">Lead with the reason to buy</h2></div>
+  <div class="tw-pair">
+    <div class="tw-block2 tw-block2--problem">
+      <div class="tw-phones tw-phones--2"><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix1-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: the first screen shows a title and a large pack shot"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:19;--y:250;--w:315;--h:87"><i>1</i></span><span class="tw-mark tw-mark--p" style="--x:19;--y:340;--w:322;--h:322"><i>2</i></span></span></div><figcaption>First screen</figcaption></figure><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix2-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before, scrolled: a faded thumbnail strip under the gallery"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:26;--y:404;--w:308;--h:79"><i>3</i></span></span></div><figcaption>After scrolling</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">The problem</p>
+        <ol class="tw-list"><li><span class="tw-n tw-n--o" aria-hidden="true">1</span><div><h3>Two weights in one title</h3><p>“15 g” is protein per scoop and “1 KG” is the pack size, so a first-time buyer can’t tell what they’re getting.</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">2</span><div><h3>Nothing but a title and a pack</h3><p>The first screen is the title and a big pack shot, nothing else.</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">3</span><div><h3>A faded thumbnail strip</h3><p>It repeats what the gallery dots already say and pushes the price below the first screen.</p></div></li></ol>
+        <div class="tw-hurt"><p class="tw-k">Why it hurts</p><p>Before the first scroll, the buyer learns what it’s called, not why it’s worth buying or how much they get.</p></div>
+      </div>
+    </div>
+    <div class="tw-block2">
+      <div class="tw-phones tw-phones--1"><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix1-after.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After: a clearer title, the product shown with cocoa and a shaker, and the price on the first screen"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:229;--w:336;--h:66"><i>1</i></span><span class="tw-mark" style="--x:12;--y:299;--w:336;--h:310"><i>2</i></span></span></div><figcaption>After</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">What changed</p>
+        <ol class="tw-list"><li><span class="tw-n" aria-hidden="true">1</span><div><h3>Title says exactly what it is</h3><p>Protein type added, and dividers separate protein per scoop from pack size.</p></div></li><li><span class="tw-n" aria-hidden="true">2</span><div><h3>Hero shows the product, not just the pack</h3><p>Cocoa and a ready shaker sit beside the pack, showing the flavour and what it becomes.</p></div></li><li><span class="tw-n" aria-hidden="true">3</span><div><h3>Faded thumbnail strip removed</h3><p>The gallery dots already signal more images. Dropping the strip pulls the price into the first screen.</p></div></li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="f2-h">
+  <div class="tw-head"><p class="tw-label">Fix 02</p><h2 id="f2-h">One price. One clear number.</h2></div>
+  <div class="tw-pair">
+    <div class="tw-block2 tw-block2--problem">
+      <div class="tw-phones tw-phones--1"><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix2-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: a loud EMI card, a separate ₹530 OFF tag and a coupon line"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:24;--y:551;--w:316;--h:74"><i>1</i></span><span class="tw-mark tw-mark--p" style="--x:186;--y:508;--w:88;--h:34"><i>2</i></span><span class="tw-mark tw-mark--p" style="--x:24;--y:622;--w:274;--h:32"><i>2</i></span></span></div><figcaption>Before</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">The problem</p>
+        <ol class="tw-list"><li><span class="tw-n tw-n--o" aria-hidden="true">1</span><div><h3>EMI doesn’t read as a way to pay</h3><p>The EMI card is the loudest thing in the price block, but it looks like an ad, not an option to pay.</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">2</span><div><h3>Two signals, one discount, no connection</h3><p>The ₹530 OFF tag and the “code CLEANEST (auto-applied)” line sit apart, and nothing says they’re the same ₹530.</p></div></li></ol>
+        <div class="tw-hurt"><p class="tw-k">Why it hurts</p><p>The buyer pieces the price together at the moment they’re deciding, which adds doubt instead of confidence.</p></div>
+      </div>
+    </div>
+    <div class="tw-block2">
+      <div class="tw-phones tw-phones--1"><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix2-after.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After: one offers box with the applied discount and the pay-later option, and per-kg prices on each pack"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:381;--w:336;--h:132"><i>1</i></span><span class="tw-mark" style="--x:11;--y:356;--w:98;--h:23"><i>2</i></span><span class="tw-mark" style="--x:12;--y:551;--w:336;--h:85"><i>3</i></span></span></div><figcaption>After</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">What changed</p>
+        <ol class="tw-list"><li><span class="tw-n" aria-hidden="true">1</span><div><h3>Offers grouped in one box</h3><p>What’s already applied and how else to pay sit together, in plain words.</p></div></li><li><span class="tw-n" aria-hidden="true">2</span><div><h3>Tax note folded into the price</h3><p>“Incl. of all taxes” sits under the price, one less line in the block.</p></div></li><li><span class="tw-n" aria-hidden="true">3</span><div><h3>Per-kg price on each pack</h3><p>The 2 kg pack shows it’s cheaper per kg, so the bigger pack sells itself.</p></div></li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="f3-h">
+  <div class="tw-head"><p class="tw-label">Fix 03</p><h2 id="f3-h">One control. Always with context.</h2></div>
+  <div class="tw-pair">
+    <div class="tw-block2 tw-block2--problem">
+      <div class="tw-phones tw-phones--2"><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix3-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: two quantity counters showing different numbers"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:22;--y:452;--w:316;--h:48"><i>1</i></span><span class="tw-mark tw-mark--p" style="--x:22;--y:520;--w:316;--h:58"><i>1</i></span></span></div><figcaption>Two counters after adding</figcaption></figure><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix3-before-2.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: a sticky bar with Add to cart and Buy now and no details"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:5;--y:680;--w:350;--h:54"><i>2</i></span></span></div><figcaption>Sticky bar, after scrolling</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">The problem</p>
+        <ol class="tw-list"><li><span class="tw-n tw-n--o" aria-hidden="true">1</span><div><h3>Same counter, twice</h3><p>Tap Add to cart and the button turns into a second counter under the first one, showing a different number.</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">2</span><div><h3>A sticky bar that hides the details</h3><p>Scroll down and a bar asks you to Add to cart or Buy now, with no price, pack or quantity.</p></div></li></ol>
+        <div class="tw-hurt"><p class="tw-k">Why it hurts</p><p>The buyer can’t tell what’s actually in the cart, and has to scroll back up to check what they’re buying.</p></div>
+      </div>
+    </div>
+    <div class="tw-block2">
+      <div class="tw-phones tw-phones--3"><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix3-after-1.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After, before adding: a single Add to cart button"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:651;--w:336;--h:58"><i>1</i></span></span></div><figcaption>Before adding</figcaption></figure><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix3-after-2.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After tapping Add to cart: the button splits into a counter and Go to cart"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:651;--w:336;--h:58"><i>1</i></span></span></div><figcaption>Tapped Add to cart</figcaption></figure><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix3-after-3.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After, scrolled down: a sticky bar with price, pack, quantity and Add to cart"><span aria-hidden="true"><span class="tw-mark" style="--x:13;--y:678;--w:114;--h:46"><i>2</i></span><span class="tw-mark" style="--x:168;--y:674;--w:178;--h:54"><i>3</i></span></span></div><figcaption>Scrolled down</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">What changed</p>
+        <ol class="tw-list"><li><span class="tw-n" aria-hidden="true">1</span><div><h3>One button, then one counter</h3><p>A single Add to cart. Tap it and it splits into a counter and Go to cart.</p></div></li><li><span class="tw-n" aria-hidden="true">2</span><div><h3>Sticky bar shows what you’re buying</h3><p>Price, pack and quantity sit beside a single Add to cart.</p></div></li><li><span class="tw-n" aria-hidden="true">3</span><div><h3>Buy now moves to the cart</h3><p>No second purchase button asking for a choice the buyer doesn’t need yet.</p></div></li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="f4-h">
+  <div class="tw-head"><p class="tw-label">Fix 04</p><h2 id="f4-h">Show the limit before, not after</h2></div>
+  <div class="tw-pair">
+    <div class="tw-block2 tw-block2--problem">
+      <div class="tw-phones tw-phones--3"><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix4-before-1.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: the counter and Add to cart with no limit mentioned"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:26;--y:489;--w:308;--h:126"><i>1</i></span></span></div><figcaption>Picking a quantity</figcaption></figure><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix4-before-2.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: a snackbar says only 4 units can be added per order"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:18;--y:590;--w:324;--h:48"><i>2</i></span></span></div><figcaption>Tapped Add to cart</figcaption></figure><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix4-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: with the 2 kg pack, only 2 boxes were added"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:26;--y:525;--w:308;--h:48"><i>3</i></span><span class="tw-mark tw-mark--p" style="--x:55;--y:590;--w:250;--h:48"><i>3</i></span></span></div><figcaption>What got added</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">The problem</p>
+        <ol class="tw-list"><li><span class="tw-n tw-n--o" aria-hidden="true">1</span><div><h3>No limit shown upfront</h3><p>Nothing near the pack size or quantity mentions a limit, and the counter keeps letting you add more.</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">2</span><div><h3>The limit shows up only after you tap</h3><p>A snackbar says “Only 4 units of this product can be added per order.”</p></div></li><li><span class="tw-n tw-n--o" aria-hidden="true">3</span><div><h3>The limit doesn’t match the counter</h3><p>“4 units” means 4 kg. With the 2 kg pack, 4 boxes still fail and only 2 go through.</p></div></li></ol>
+        <div class="tw-hurt"><p class="tw-k">Why it hurts</p><p>The page waits for the error, then explains it in a unit that doesn’t match the counter. Every failed try is a chance to give up or buy less.</p></div>
+      </div>
+    </div>
+    <div class="tw-block2">
+      <div class="tw-phones tw-phones--2"><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix4-after-1.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After, before adding: Max 4 packs per order shown under Add to cart"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:685;--w:240;--h:26"><i>1</i></span></span></div><figcaption>Before adding</figcaption></figure><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix4-after-2.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After, at the limit: the plus button greys out and the line explains the max"><span aria-hidden="true"><span class="tw-mark" style="--x:12;--y:629;--w:126;--h:58"><i>2</i></span><span class="tw-mark" style="--x:12;--y:685;--w:240;--h:26"><i>3</i></span></span></div><figcaption>At the limit</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">What changed</p>
+        <ol class="tw-list"><li><span class="tw-n" aria-hidden="true">1</span><div><h3>Limit shown before the first tap</h3><p>A quiet line under Add to cart states the cap upfront.</p></div></li><li><span class="tw-n" aria-hidden="true">2</span><div><h3>The counter stops at the cap</h3><p>At the max, + greys out and the line says why. No error to recover from.</p></div></li><li><span class="tw-n" aria-hidden="true">3</span><div><h3>The limit follows the pack size</h3><p>“Max 4 packs” for 1 kg, “Max 2 packs” for 2 kg. Same word as the pack cards.</p></div></li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="f5-h">
+  <div class="tw-head"><p class="tw-label">Fix 05</p><h2 id="f5-h">Proof before the decision</h2></div>
+  <div class="tw-pair">
+    <div class="tw-block2 tw-block2--problem">
+      <div class="tw-phones tw-phones--1"><figure class="tw-phone tw-phone--before"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix5-before.webp" width="720" height="1560" loading="lazy" decoding="async" alt="Before: the rating appears below the Add to cart button"><span aria-hidden="true"><span class="tw-mark tw-mark--p" style="--x:24;--y:526;--w:312;--h:52"><i>1</i></span></span></div><figcaption>Before</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">The problem</p>
+        <ol class="tw-list"><li><span class="tw-n tw-n--o" aria-hidden="true">1</span><div><h3>Rating below the buy button</h3><p>The 4.7★ rating sits below Add to cart.</p></div></li></ol>
+        <div class="tw-hurt"><p class="tw-k">Why it hurts</p><p>For a brand that sells trust, the proof shows up after the decision.</p></div>
+      </div>
+    </div>
+    <div class="tw-block2">
+      <div class="tw-phones tw-phones--1"><figure class="tw-phone"><div class="tw-shot"><img src="/images/case-studies/the-whole-truth/fix5-after.webp" width="720" height="1560" loading="lazy" decoding="async" alt="After: rating, review count and 1K+ bought in past month under the title"><span aria-hidden="true"><span class="tw-mark tw-mark--l" style="--x:12;--y:298;--w:180;--h:26"><i>1</i></span><span class="tw-mark" style="--x:196;--y:298;--w:152;--h:26"><i>2</i></span></span></div><figcaption>After</figcaption></figure></div>
+      <div class="tw-copy">
+        <p class="tw-k">What changed</p>
+        <ol class="tw-list"><li><span class="tw-n" aria-hidden="true">1</span><div><h3>Rating moves up, under the title</h3><p>4.7★ and the review count sit on the first screen. Tapping it jumps to Reviews.</p></div></li><li><span class="tw-n" aria-hidden="true">2</span><div><h3>Recent demand, in one line</h3><p>“1K+ bought in past month” tells a first-time buyer others chose this recently.</p></div></li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tw-measure" aria-labelledby="m-h">
+  <div class="tw-sec">
+    <div class="tw-head"><p class="tw-label">How I’d measure</p><div><h2 id="m-h">How I’d know it worked</h2><p class="tw-text">It was never shipped, so there are no real numbers. This is the plan I’d hand to the growth team.</p></div></div>
+    <ol class="tw-steps">
+      <li><span class="tw-num">01</span><h3>Spot</h3><p>GA4 funnel: where do users drop?</p></li>
+      <li><span class="tw-num">02</span><h3>Understand</h3><p>Session recordings and heatmaps: why?</p></li>
+      <li><span class="tw-num">03</span><h3>Design &amp; check</h3><p>Fix in Figma, review it, quick test with 5 users.</p></li>
+      <li><span class="tw-num">04</span><h3>Launch &amp; watch</h3><p>A/B test or ship and monitor, based on risk.</p></li>
+    </ol>
+  </div>
+  <div class="tw-block">
+    <h3>Does each fix need a test?</h3>
+    <div class="tw-tablewrap"><table class="tw-table tw-table--test">
+      <colgroup><col><col><col></colgroup>
+      <thead><tr><th class="tw-k" scope="col">Fix</th><th class="tw-k" scope="col">Test?</th><th class="tw-k" scope="col">Why</th></tr></thead>
+      <tbody>
+        <tr><td>Lead with the reason</td><td>Should test</td><td>First impression; the title also affects search</td></tr>
+        <tr><td>Offers box</td><td>Must test</td><td>Changes how the price is shown</td></tr>
+        <tr><td>One control</td><td>Must test</td><td>Changes the core buying controls</td></tr>
+        <tr><td>Limit upfront</td><td>No test, just fix</td><td>It’s a bug</td></tr>
+        <tr><td>Proof up top</td><td>Could skip</td><td>Moves an existing element, low risk</td></tr>
+      </tbody>
+    </table></div>
+    <p class="tw-text">Rule: test when the change is risky or the outcome is uncertain; ship and monitor when it’s low risk or fixes something broken.</p>
+  </div>
+</section>
+
+<section class="tw-sec" aria-labelledby="i-h">
+  <div class="tw-head"><p class="tw-label">Expected impact</p><h2 id="i-h">What I expect to move</h2></div>
+  <div class="tw-combined"><span class="tw-big">+6–10%</span><p>Expected relative lift in product page to order conversion. Not a sum: fixes 01, 02 and 05 all lift add-to-cart, so their effects overlap. A target to test, not a result.</p></div>
+  <div class="tw-tablewrap"><table class="tw-table tw-table--lift">
+    <colgroup><col><col><col></colgroup>
+    <thead><tr><th class="tw-k" scope="col">Fix</th><th class="tw-k" scope="col">Primary metric</th><th class="tw-k" scope="col">Expected lift</th></tr></thead>
+    <tbody>
+      <tr><td>Lead with the reason</td><td>Add-to-cart rate</td><td>+2–4%</td></tr>
+      <tr><td>Offers box</td><td>Add-to-cart rate</td><td>+3–5%</td></tr>
+      <tr><td>One control</td><td>Cart-to-checkout rate</td><td>+4–7%</td></tr>
+      <tr><td>Limit upfront</td><td>Orders with 2+ packs</td><td>+1–2%</td></tr>
+      <tr><td>Proof up top</td><td>Add-to-cart rate (new visitors)</td><td>+3–6%</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+
+</div>
+</main>
+
+<footer class="footer">
+<svg class="footer__reveal" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><filter id="goo" filterUnits="userSpaceOnUse" x="0" y="0" width="1440" height="720"><feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b"></feGaussianBlur><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -14"></feColorMatrix></filter><mask id="foot-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1440" height="720"><rect width="1440" height="720" fill="black"></rect><g filter="url(#goo)" fill="white"><g id="foot-dots"></g></g></mask></defs><g mask="url(#foot-mask)"><image href="/images/shared/footer-boats.webp" x="0" y="0" width="1440" height="720" preserveAspectRatio="xMidYMid slice" transform="translate(1440 0) scale(-1 1)"></image></g></svg>
+<div class="footer__content">
+<div class="footer__intro">
+<span class="footer__hello">you’ve reached the shore of <span class="footer__pin" aria-hidden="true">📍</span>Wandoor Beach, Port Blair</span>
+<h2>Got something tangled?<br>Let’s sort it out.</h2>
+</div>
+<div class="footer__actions">
+<a href="mailto:mistry.mridula6@gmail.com" class="btn btn--white">mistry.mridula6@gmail.com <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M14.1669 13.3335V5.8335H6.66686V7.50016H11.3252L6.0752 12.7418L7.25853 13.9252L12.5002 8.67516V13.3335H14.1669Z" fill="currentColor"/></svg></a>
+<div class="socials"><a href="https://www.linkedin.com/in/mridulamistry" class="gicon" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M4.56768 2.58594C4.30429 2.58594 4.04348 2.63782 3.80014 2.73861C3.5568 2.8394 3.3357 2.98714 3.14946 3.17338C2.96321 3.35963 2.81548 3.58073 2.71468 3.82407C2.61389 4.06741 2.56201 4.32822 2.56201 4.5916C2.56201 4.85499 2.61389 5.1158 2.71468 5.35914C2.81548 5.60248 2.96321 5.82358 3.14946 6.00982C3.3357 6.19607 3.5568 6.3438 3.80014 6.4446C4.04348 6.54539 4.30429 6.59727 4.56768 6.59727C4.83107 6.59727 5.09188 6.54539 5.33521 6.4446C5.57855 6.3438 5.79966 6.19607 5.9859 6.00982C6.17214 5.82358 6.31988 5.60248 6.42067 5.35914C6.52147 5.1158 6.57335 4.85499 6.57335 4.5916C6.57335 4.32822 6.52147 4.06741 6.42067 3.82407C6.31988 3.58073 6.17214 3.35963 5.9859 3.17338C5.79966 2.98714 5.57855 2.8394 5.33521 2.73861C5.09188 2.63782 4.83107 2.58594 4.56768 2.58594ZM8.46718 8.1171V19.2445H11.9221V13.7418C11.9221 12.2898 12.1953 10.8836 13.9956 10.8836C15.7712 10.8836 15.7932 12.5437 15.7932 13.8334V19.2454H19.2499V13.1432C19.2499 10.1457 18.6046 7.8421 15.1011 7.8421C13.419 7.8421 12.2915 8.76519 11.8304 9.63877H11.7837V8.1171H8.46718ZM2.83701 8.1171H6.29743V19.2445H2.83701V8.1171Z" fill="currentColor"/></svg></a><a href="https://www.behance.net/mistrymridula6" class="gicon" aria-label="Behance" target="_blank" rel="noopener"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M7.15291 5.25342C7.69283 5.25342 8.17866 5.30017 8.62416 5.3955C9.066 5.49022 9.4458 5.64545 9.76358 5.86117C10.0783 6.07628 10.324 6.3632 10.5006 6.72192C10.672 7.07667 10.7572 7.52033 10.7572 8.04467C10.7572 8.613 10.6286 9.08692 10.3713 9.46642C10.1128 9.84653 9.72905 10.1567 9.22 10.3968C9.913 10.5985 10.4294 10.9487 10.7692 11.4473C11.112 11.9506 11.2797 12.5528 11.2797 13.2587C11.2797 13.8313 11.1704 14.3241 10.9516 14.7373C10.7408 15.1447 10.4344 15.4951 10.0587 15.7584C9.67002 16.0295 9.23559 16.2282 8.77633 16.3451C8.29488 16.4713 7.79914 16.5348 7.30141 16.5339H1.8335V5.25342H7.15291ZM6.83116 9.81109C7.27116 9.81109 7.63539 9.70567 7.92383 9.49483C8.20983 9.28583 8.34825 8.94117 8.34825 8.46909C8.34825 8.20631 8.30211 7.99028 8.20983 7.821C8.12106 7.65746 7.98876 7.52167 7.82758 7.42867C7.65915 7.32921 7.4735 7.26235 7.28033 7.23158C7.06968 7.19225 6.8557 7.17352 6.64141 7.17567H4.31766V9.81109H6.83116ZM6.96958 14.6135C7.21433 14.6135 7.44716 14.5924 7.66625 14.5429C7.88716 14.4953 8.08333 14.4183 8.25016 14.3037C8.417 14.1937 8.5545 14.0443 8.6535 13.8536C8.75341 13.6648 8.802 13.4182 8.802 13.1221C8.80139 12.5415 8.63852 12.1266 8.31341 11.8773C7.988 11.6298 7.55166 11.5069 7.01725 11.5069H4.31766V14.6144L6.96958 14.6135ZM14.8208 14.5759C15.1576 14.9047 15.6416 15.0691 16.2728 15.0691C16.7251 15.0691 17.1156 14.9551 17.4443 14.7272C17.7688 14.4989 17.9668 14.2551 18.0429 14.003H20.0183C19.7012 14.9857 19.2199 15.6878 18.5617 16.1104C17.9118 16.5348 17.1207 16.7457 16.1967 16.7457C15.5539 16.7457 14.9733 16.6427 14.4551 16.4368C13.9566 16.2437 13.5064 15.944 13.136 15.5586C12.7717 15.1645 12.4896 14.7018 12.3064 14.1973C12.1051 13.6393 12.0058 13.0497 12.0131 12.4566C12.0137 11.8455 12.1142 11.2759 12.3147 10.7479C12.5049 10.2387 12.7961 9.77317 13.1708 9.37934C13.5412 8.99434 13.9824 8.69061 14.4945 8.46817C15.0331 8.24068 15.6131 8.12768 16.1977 8.13634C16.8882 8.13634 17.4929 8.27078 18.0117 8.53967C18.5143 8.79785 18.9503 9.16866 19.2859 9.62317C19.6177 10.0754 19.857 10.5921 20.0037 11.1733C20.1503 11.752 20.2026 12.3579 20.1604 12.991H14.2653C14.2662 13.6363 14.4835 14.2478 14.8208 14.5759ZM17.3985 10.285C17.1317 9.98984 16.6807 9.83034 16.1289 9.83034C15.7714 9.82972 15.4738 9.89053 15.2361 10.0128C15.0186 10.1235 14.8253 10.2765 14.6677 10.4628C14.5304 10.6329 14.4282 10.8286 14.3671 11.0385C14.3153 11.214 14.2813 11.3943 14.2653 11.5766H17.9155C17.8623 11.0046 17.6662 10.582 17.3985 10.285ZM13.807 6.01058H18.3802V7.12433H13.807V6.01058Z" fill="currentColor"/></svg></a><a href="https://x.com/uxdetangled" class="gicon" aria-label="X" target="_blank" rel="noopener"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M12.5401 9.735L18.5535 2.75H17.1326L11.9168 8.81833L7.74598 2.75H2.92432L9.23098 11.9258L2.92432 19.25H4.34515L9.85432 12.8425L14.2543 19.25H19.0576L12.5218 9.735H12.5401ZM10.5876 11.9992L9.94598 11.0825L4.86765 3.81333H7.05848L11.156 9.68L11.7976 10.5967L17.1326 18.2233H14.9418L10.5876 11.9992Z" fill="currentColor"/></svg></a><a href="https://www.instagram.com/uxdetangled/" class="gicon" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M10.9992 6.76206C9.87504 6.76206 8.79692 7.20863 8.00201 8.00354C7.20711 8.79844 6.76054 9.87656 6.76054 11.0007C6.76054 12.1249 7.20711 13.203 8.00201 13.9979C8.79692 14.7928 9.87504 15.2394 10.9992 15.2394C12.1234 15.2394 13.2015 14.7928 13.9964 13.9979C14.7913 13.203 15.2379 12.1249 15.2379 11.0007C15.2379 9.87656 14.7913 8.79844 13.9964 8.00354C13.2015 7.20863 12.1234 6.76206 10.9992 6.76206ZM10.9992 13.7535C10.6376 13.7535 10.2795 13.6823 9.94542 13.5439C9.61133 13.4055 9.30777 13.2026 9.05207 12.9469C8.79637 12.6912 8.59353 12.3877 8.45515 12.0536C8.31676 11.7195 8.24554 11.3614 8.24554 10.9998C8.24554 10.6382 8.31676 10.2801 8.45515 9.94603C8.59353 9.61194 8.79637 9.30838 9.05207 9.05267C9.30777 8.79697 9.61133 8.59414 9.94542 8.45575C10.2795 8.31737 10.6376 8.24614 10.9992 8.24614C11.7295 8.24614 12.4299 8.53626 12.9463 9.05267C13.4628 9.56909 13.7529 10.2695 13.7529 10.9998C13.7529 11.7301 13.4628 12.4305 12.9463 12.9469C12.4299 13.4634 11.7295 13.7535 10.9992 13.7535ZM15.4056 5.61806C15.1435 5.61806 14.8922 5.72217 14.7069 5.90749C14.5216 6.09281 14.4175 6.34415 14.4175 6.60623C14.4175 6.86831 14.5216 7.11965 14.7069 7.30497C14.8922 7.49028 15.1435 7.59439 15.4056 7.59439C15.6677 7.59439 15.919 7.49028 16.1044 7.30497C16.2897 7.11965 16.3938 6.86831 16.3938 6.60623C16.3938 6.34415 16.2897 6.09281 16.1044 5.90749C15.919 5.72217 15.6677 5.61806 15.4056 5.61806ZM18.822 5.60156C18.6101 5.05342 18.2859 4.55563 17.8702 4.14015C17.4546 3.72466 16.9567 3.40065 16.4085 3.18889C15.7671 2.94804 15.0895 2.81785 14.4046 2.80389C13.5219 2.76539 13.2423 2.75439 11.0038 2.75439C8.76529 2.75439 8.47837 2.75439 7.60295 2.80389C6.91865 2.81806 6.2417 2.94824 5.60095 3.18889C5.05273 3.40065 4.55482 3.72466 4.13918 4.14015C3.72353 4.55563 3.39933 5.05342 3.18737 5.60156C2.94682 6.24294 2.81695 6.92052 2.80329 7.60539C2.76387 8.48723 2.75195 8.76681 2.75195 11.0062C2.75195 13.2456 2.75195 13.5298 2.80329 14.4071C2.81704 15.0927 2.94629 15.7692 3.18737 16.4118C3.39943 16.96 3.72377 17.4579 4.13958 17.8734C4.55539 18.2889 5.05348 18.6128 5.60187 18.8245C6.24127 19.0746 6.91858 19.2141 7.60479 19.237C8.48754 19.2755 8.76712 19.2874 11.0056 19.2874C13.2441 19.2874 13.531 19.2874 14.4065 19.237C15.0913 19.2233 15.7689 19.0934 16.4103 18.8529C16.9583 18.6405 17.456 18.3162 17.8716 17.9006C18.2872 17.485 18.6115 16.9873 18.8239 16.4393C19.065 15.7976 19.1942 15.1211 19.208 14.4355C19.2474 13.5536 19.2593 13.2741 19.2593 11.0346C19.2593 8.79523 19.2593 8.51106 19.208 7.63381C19.1969 6.93926 19.0664 6.2518 18.822 5.60156ZM17.7055 14.3392C17.7004 14.8676 17.604 15.3911 17.4205 15.8866C17.2826 16.2429 17.0718 16.5666 16.8016 16.8367C16.5313 17.1068 16.2076 17.3174 15.8511 17.455C15.3608 17.6366 14.8431 17.733 14.3203 17.7401C13.4495 17.7804 13.2038 17.7905 10.9708 17.7905C8.73595 17.7905 8.5077 17.7905 7.62037 17.7401C7.09788 17.7329 6.58045 17.6365 6.09045 17.455C5.73281 17.3181 5.40781 17.1079 5.13641 16.8377C4.865 16.5676 4.65322 16.2436 4.5147 15.8866C4.33486 15.3961 4.2385 14.879 4.22962 14.3566C4.1902 13.4858 4.18104 13.2401 4.18104 11.0071C4.18104 8.77414 4.18104 8.54498 4.22962 7.65673C4.23485 7.12868 4.3313 6.60551 4.5147 6.11031C4.79429 5.38706 5.3672 4.81781 6.09045 4.54098C6.58045 4.35943 7.09788 4.26302 7.62037 4.25589C8.49212 4.21648 8.73687 4.20548 10.9708 4.20548C13.2047 4.20548 13.4339 4.20548 14.3203 4.25589C14.8431 4.26291 15.3608 4.35933 15.8511 4.54098C16.2074 4.67917 16.5309 4.8901 16.8011 5.1603C17.0713 5.4305 17.2823 5.75405 17.4205 6.11031C17.6003 6.60077 17.6967 7.11791 17.7055 7.64023C17.745 8.51198 17.755 8.75673 17.755 10.9906C17.755 13.2246 17.755 13.4638 17.7156 14.3401L17.7055 14.3392Z" fill="currentColor"/></svg></a><a href="https://medium.com/@mridulamistry" class="gicon" aria-label="Medium" target="_blank" rel="noopener"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M19.846 8.28673C19.956 8.28673 20.066 8.30507 20.1668 8.33257V7.7734C20.0752 7.7734 19.9743 7.76423 19.8827 7.76423H19.8643C19.3602 7.76423 18.746 7.8834 18.306 8.1034C17.811 8.33257 17.371 8.6809 17.0043 9.13006C16.4177 9.8634 16.0602 10.8442 15.9685 11.9534V12.6226C16.0235 15.1342 17.3802 17.1417 19.791 17.1417C19.9285 17.1417 20.0568 17.1417 20.1852 17.1234V15.0884C18.9293 14.7217 18.031 13.3284 18.1227 11.6876C18.2143 10.0467 20.1852 11.6876 20.1852 11.6876V11.2109H18.1685C18.2418 9.52423 18.8468 8.30506 19.8643 8.28673H19.846ZM15.0518 15.7851V6.16923C15.0518 5.37173 15.391 5.14256 16.051 4.9959H16.0693V4.8584H12.4485L9.0935 12.7509L5.7385 4.8584H1.8335V4.9959H1.85183C2.51183 5.15173 2.851 5.37173 2.851 6.16923V15.5467C2.851 16.3442 2.51183 16.5734 1.85183 16.7201H1.8335V16.8576H4.4735V16.7201H4.45516C3.79516 16.5642 3.456 16.3442 3.456 15.5467V6.71007L7.7735 16.8576H8.021L12.4577 6.4259V15.7759C12.4027 16.4084 12.0727 16.6009 11.4677 16.7384H11.4493V16.8759H16.051V16.7384H16.0327C15.4368 16.6009 15.0977 16.4084 15.0335 15.7667L15.0518 15.7851Z" fill="currentColor"/></svg></a></div>
+</div>
+</div>
+<div class="footer__photo"><img decoding="async" width="2752" height="1376" src="/images/shared/footer-boats.webp" alt="Boats on a beach in the Andaman Islands" loading="lazy"></div>
+<div class="footer__bar"><span>© 2026 Mridula Mistry</span><a href="/" data-top>Back to top <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 18V9.91l3.29 3.3 1.42-1.42L12 6.09l-5.71 5.7 1.42 1.42L11 9.91V18z" fill="currentColor"></path></svg></a><span>Made with <span class="heart">♥</span> using Figma &amp; Claude</span></div>
+</footer>
+</body>
+</html>
